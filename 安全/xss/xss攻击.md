@@ -62,6 +62,8 @@ DOM 型 XSS 跟前两种 XSS 的区别：DOM 型 XSS 攻击中，取出和执行
 
  - 改成纯前端渲染，把代码和数据分隔开。静态HTML,JavaScript 通过 Ajax 加载业务数据
  - 对 HTML 做充分转义。
+ - 不要相信任何用户的输入,无论是在前端还是后端
+ - 利用HttpOnly,设置Cookie的HttpOnly属性后，JavaScript便无法读取Cookie的值，这样也很好的防范XSS攻击。
 
 #### 预防 DOM 型 XSS 攻击
 
