@@ -7,13 +7,17 @@ const Promise = require('../手写promise/promise')
 
 let promise1 = new Promise((resolve, reject) => { /* executor */
     console.log('promise1开始执行')
-    setTimeout(() => {
-        resolve('foo')
-    }, 300);
+    // setTimeout(() => {
+    //      resolve('foo') // 遍历数组执行
+    // }, 300);
+    resolve('foo')
 })
 
-promise1.then((value) => {
-    console.log(value)
+promise1.then((value) => { // push进回调数组
+    console.log(value) 
+    return  value;
+}).then((value)=>{
+    console.log(value,'value')
 })
 
 
