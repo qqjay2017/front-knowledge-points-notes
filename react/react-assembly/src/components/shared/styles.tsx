@@ -1,5 +1,11 @@
 import { css } from "styled-components";
 
+
+/**
+ * 导出很多对象
+ */
+
+ 
 export const color = {
 	// Palette
 	primary: "#FF4785",
