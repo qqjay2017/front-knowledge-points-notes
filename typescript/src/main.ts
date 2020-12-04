@@ -60,5 +60,24 @@ const sum1 = <T extends number>(a:T,b:T):T=>{
 }
 
 // 泛型约束
+// 希望T有length属性
+const getType = <T extends {length:number}>(obj:T)=>{
+    console.log(obj.length)
+}
+// 传入的参数必须有length属性
+getType([1,23])
+
+// 默认泛型,不传递 默认给类型
+
+interface DStr<T=string> {
+    name:T
+}
+
+// 约束属性
+const getVal = <T,K>(obj:T,key,K)=>{
+
+}
+
+
 
 export { }
