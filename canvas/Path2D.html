@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function draw() {
+            var canvas = document.getElementById('canvas');
+            if (canvas.getContext) {
+                var ctx = canvas.getContext('2d');
+                var rectangle = new Path2D();
+                rectangle.rect(10,10,50,10);
+
+                var circle = new Path2D();
+                circle.arc(50,50,50,Math.PI*2,-2,false)
+
+                var p = new Path2D("M10 10 h 80 v 80 h -80 Z")
+
+              
+                ctx.fill(rectangle);
+                
+                ctx.fill(p);
+                ctx.lineWidth =10;
+                ctx.lineCap  ='round';
+                ctx.stroke(circle)
+            }
+        }
+    </script>
+</head>
+
+<body onload="draw()">
+    <canvas id="canvas" width="600px" height="600px"></canvas>
+</body>
+
+</html>

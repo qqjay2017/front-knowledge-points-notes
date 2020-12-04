@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        .wrapper {
+            position: relative;
+            width: 400px;
+            height: 250px;
+            margin: 100px auto 0px;
+            border: 1px solid red;
+            overflow: hidden;
+        }
+
+        .wrapper .sliderPage {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            height: 250px;
+            width: 2000px;
+        }
+
+        .wrapper .sliderPage li {
+            width: 400px;
+            height: 250px;
+            float: left;
+
+        }
+
+        .wrapper .sliderPage li img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .wrapper .btn {
+            width: 40px;
+            height: 40px;
+            color: aliceblue;
+            background: #000;
+            text-align: center;
+            line-height: 40px;
+            position: absolute;
+            top: 50%;
+            margin-top: -20px;
+            opacity: .3;
+            cursor: pointer;
+        }
+
+        .wrapper .btn:hover {
+            opacity: 1;
+        }
+
+        .wrapper .leftBtn {
+            left: 10px;
+
+        }
+
+        .wrapper .rightBtn {
+            right: 10px;
+        }
+
+        .wrapper .sliderIndex {
+            position: absolute;
+            width: 100%;
+            bottom: 10px;
+            text-align: center;
+
+        }
+
+        .wrapper .sliderIndex span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 8px;
+            background: #ccc;
+        }
+
+        .wrapper .sliderIndex .active {
+            background: rgb(30, 7, 136);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <ul class="sliderPage">
+            <li><img src="./cat1.jpg"></li>
+            <li><img src="./cat2.jpg"></li>
+            <li><img src="./cat3.jpg"></li>
+            <li><img src="./cat4.jpg"></li>
+            <li><img src="./cat1.jpg"></li>
+        </ul>
+        <div class="btn leftBtn">&lt;</div>
+        <div class="btn rightBtn">&gt;</div>
+        <div class="sliderIndex">
+            <span class="active"></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+
+
+    <script src="./index.js"></script>
+    <script>
+        var timer = null;
+        var sliderPage = document.getElementsByClassName('sliderPage')[0];
+        //移动的距离
+        var moveWidth = sliderPage.children[0].offsetWidth;
+        var num = sliderPage.children.length - 1;
+
+        var leftBtn = document.getElementsByClassName('leftBtn')[0];
+        var rightBtn = document.getElementsByClassName('rightBtn')[0];
+
+        var flag = true;
+        var index = 0;
+
+        var sliderIndex = document.getElementsByClassName('sliderIndex')[0].getElementsByTagName('span');
+
+        leftBtn.onclick = function () {
+
+            autoMove('right-->left')
+            console.log('leftBtn');
+
+
+        }
+        rightBtn.onclick = function () {
+
+            autoMove('left-->right');
+            console.log('rightBtn');
+
+
+        }
+        for (var i = 0; i < sliderIndex.length; i++) {
+            (function (myIndex) {
+                sliderIndex[i].onclick = function () {
+                    flag = false;
+                    index = myIndex;
+                    move(sliderPage, {
+                        'left': -index * moveWidth
+                    }, function () {
+                        flag = true;
+                        timer = setTimeout(() => {
+                            autoMove();
+                        }, 1500);
+                        changeIndex(index);
+                    })
+                }
+            })(i)
+        }
+
+        //direction
+
+        //默认轮播方向  left-->right  (当direction==left->right或者undefined的的时候)
+        //点击left按钮,right-->left
+        function autoMove(direction) {
+            if (flag) {
+                flag = false;
+
+                clearTimeout(timer);
+
+                if (!direction || direction == 'left-->right') {
+                    index++;
+                    move(sliderPage, {
+                        'left': sliderPage.offsetLeft - moveWidth
+                    }, function () {
+                        if (sliderPage.offsetLeft == -num * moveWidth) {
+                            sliderPage.style.left = '0px';
+                            index = 0;
+                        }
+                        timer = setTimeout(() => {
+                            autoMove();
+                        }, 1500);
+                        flag = true;
+                        changeIndex(index);
+
+                    })
+                } else if (direction == 'right-->left') {
+                    console.log('111');
+                    if (sliderPage.offsetLeft == 0) {
+                        sliderPage.style.left = -num * moveWidth + 'px';
+                        index = num;
+                    }
+                    index--;
+                    move(sliderPage, {
+                        'left': sliderPage.offsetLeft + moveWidth
+                    }, function () {
+                        timer = setTimeout(() => {
+                            autoMove();
+                        }, 1500);
+                        flag = true;
+                        changeIndex(index);
+                    })
+                }
+            }
+        }
+
+        function changeIndex(index) {
+
+            for (var i = 0; i < sliderIndex.length; i++) {
+                sliderIndex[i].className = '';
+            }
+            sliderIndex[index].className = 'active';
+
+        }
+        timer = setTimeout(() => {
+            autoMove();
+        }, 1000);
+    </script>
+</body>
+
+</html>

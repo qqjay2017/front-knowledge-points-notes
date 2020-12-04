@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div style="height: 100px;width: 100px;background: red;position: absolute;
+top: 0;left: 0;">11
+</div>
+
+<script>
+    var div = document.getElementsByTagName('div')[0];
+    var disX,
+        disY;
+    var flag = true;
+    // div.onclick = function(e){
+    //     var event = e||window.event;
+    //     // disX = event.pageX - parseInt(this.style.left);
+    //     // disY = event.pageY - parseInt(this.style.top);
+    //     flag = true;
+    // };
+    div.onmousedown = function (e) {
+        var event = e || window.event;
+
+        disX = event.pageX - parseInt(div.style.left);
+        disY = event.pageY - parseInt(div.style.top);
+
+    };
+    document.onmousemove = function (e) {
+        var event = e || window.event;
+
+        div.style.left = (event.pageX - disX) + 'px';
+        div.style.top = (event.pageY - disY) + 'px';
+
+
+    };
+    document.onmouseup = function (e) {
+        div.onmousemove = null;
+        flag = true;
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //利用闭包，实现变量私有化    
+        function Deng (name,wife){
+            var prepareWife = "xiaozhang";
+
+            this.name= name;
+            this.wife = wife;
+            this.divorce =function(){
+                this.wife=prepareWife;
+            }
+            this.changeWife = function(target){
+                prepareWife=target;
+            }
+            this.sayPrepareWife =function(){
+                console.log(prepareWife);
+            }
+        }
+
+        var deng = new Deng("deng","xiaoli");
+    </script>
+</body>
+</html>

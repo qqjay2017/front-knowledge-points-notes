@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function a() {
+            //console.log("I'am a function.");
+        }
+        //b是实例化对象，a是构造函数
+        var b = new a();
+
+        console.log(b.__proto__ == a.prototype); //true
+        //对象具有属性__proto__，可称为隐式原型，一个对象的隐式原型指向构造该对象的构造函数的原型，这也保证了实例能够访问在构造函数原型中定义的属性和方法。
+        console.log(Object.getPrototypeOf(b) == a.prototype); //true,标准方法返回的结果和上述一样
+
+        //任意一个函数（包括构造函数）都有一个prototype属性，指向该函数的原型对象，同样任意一个构造函数实例化的对象，都有一个__proto__属性（__proto__并非标准属性，ECMA-262第5版将该属性或指针称为[[Prototype]]，可通过Object.getPrototypeOf()标准方法访问该属性），指向构造函数的原型对象。
+
+
+        //区别：prototype是构造函数访问原型对象，__proto__是对象实例访问原型对象。
+
+        //__proto__是每个对象都有的一个属性，而prototype是函数才会有的属性!!! 
+        // 使用Object.getPrototypeOf()代替__proto__!!!
+
+        function Foo(){}
+        var Boo = {name: "Boo"};
+        Foo.prototype = Boo;
+        var f = new Foo()
+        console.log(f.__proto__ === Foo.prototype); // true
+        console.log(f.__proto__ === Boo);   // true
+        Object.getPrototypeOf(f) === f.__proto__;   // true
+
+
+        //总结：实例化函数的__proto__指向他的构造函数的prototype
+        //对象具有属性__proto__，可称为隐式原型，一个对象的隐式原型指向构造该对象的构造函数的原型，这也保证了实例能够访问在构造函数原型中定义的属性和方法。
+        
+    </script>
+</body>
+
+</html>

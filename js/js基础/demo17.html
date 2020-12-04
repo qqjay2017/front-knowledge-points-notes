@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // var reg = /^\d|\d$/gm;
+        // var str = "121wofiwueiocjw22";
+        // console.log(str.match(reg));
+
+    //     var reg = /(\w)\1(\w)\2/g;
+    //     var str = "aabb";
+    //    console.log(str.replace(reg, "$2$2$1$1"));
+
+        // var str = "the-first-name";
+        // //处理后变成小驼峰写法
+
+        // var reg = /-(\w)/g;
+        // console.log(str.replace(reg,function($,$1){
+        //     return $1.toUpperCase();
+        // }));
+
+        // var str = "aaaaabbbbbbccccc";
+        // var reg = /(\w)\1*/g;
+        // console.log(str.replace(reg,"$1"));
+
+
+        
+        var reg =/(?=(\B)(\d{3})+$)/g;
+        var str ="1000000001100000";
+        console.log(str.replace(reg,"."));
+
+    </script>
+</body>
+
+</html>

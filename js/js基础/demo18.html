@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var value = 'window';
+        var obj = {
+            value: 'obj',
+
+        }
+
+        function show(name,age) {
+            console.log(this.value);
+            return {
+                name:name,
+                age:age
+            }
+        }
+        // show();
+        // show.call(obj);
+        // show.call(null);
+
+        // obj.show = show
+        // obj.show()
+        // delete obj.show
+
+        // Function.prototype.newCall = function(obj){
+        //     obj.fn = this;
+        //     obj.fn();
+        //     delete obj.fn;
+        // }
+        // show.newCall(obj)
+
+        // var result = show.call(obj,'cg','18');
+
+        // Function.prototype.newCall = function(){
+        //     var xxx = arguments[0];
+        //     var arr = [];
+        //     for(var i=1;i<arguments.length;i++){
+        //         arr.push('arguments['+i+']');
+        //     }
+        //     xxx.fn = this;
+        //     var result = eval('xxx.fn('+arr.join(',')+')');
+        //     delete xxx.fn;
+        //     return result;
+        // }
+
+
+        Function.prototype.newApply = function (xxx,args){
+            var xxx = xxx || window;
+            xxx.fn = this;
+
+            if(!args){
+                var result = xxx.fn();
+                delete xxx.fn;
+                return result
+            }else {
+                var arr = [];
+                for(var i=0;i<args.length;i++){
+                    arr.push(args[i]);
+                }
+                var result = eval('xxx.fn('+arr.join(',')+')');
+                return result;
+            }
+            
+        }
+        
+    </script>
+</body>
+
+</html>

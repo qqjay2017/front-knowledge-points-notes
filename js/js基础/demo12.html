@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    div {
+        height: 100px;
+        width: 100px;
+        background: deeppink;
+    }
+
+</style>
+<body>
+<div>111</div>
+<a href="javascript:void(0)">21212</a>
+<ul>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+    <li>6</li>
+    <li>7</li>
+    <li>8</li>
+</ul>
+
+<script>
+    // var div = document.getElementsByTagName('div')[0];
+    //
+    // div.onclick = function (e) {
+    //     console.log(e);
+    //     e.stopPropagation();
+    // };
+    //
+    // function stopBubble(e) {
+    //     if (e.stopPropagation) {
+    //         e.stopPropagation();
+    //     }else {
+    //         e.cancelBubble = true;
+    //     }
+    // }
+
+    // div.onclick = function (e) {
+    //     var event = e||window.event;
+    //     //ie里面没有e,只有chrome才有.
+    //     //事件对象e里面有个重要属性target,事件源对象
+    //     //左边的是火狐的,右边的是ie 的,chrome 两个都有
+    //     var target = event.target || event.srcElement;
+    // }
+
+    var ul = document.getElementsByTagName('ul')[0];
+    ul.onclick = function (e) {
+        var event = e||window.event;
+        var target = event.target ||event.srcElement;
+        console.log(target.innerText);
+    }
+
+
+
+</script>
+</body>
+</html>

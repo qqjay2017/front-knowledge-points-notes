@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        /* div {
+            width: 100px;
+            height: 100px;
+            background: orange;
+            position: absolute;
+            left: 1000px;
+            top: 0px;
+        }
+
+        span {
+            width: 1px;
+            height: 100px;
+            background: rebeccapurple;
+            position: absolute;
+            left: 300px;
+            top: 0;
+        } */
+        .wraper1 {
+            width: 1000px;
+            height: 80px;
+            position: absolute;
+            left: -920px;
+            top: 100px;
+            background: orange;
+        }
+
+        .wraper2 {
+            width: 1000px;
+            height: 80px;
+            position: absolute;
+            left: -920px;
+            top: 200px;
+            background: orange;
+        }
+
+        .wraper3 {
+            width: 1000px;
+            height: 80px;
+            position: absolute;
+            left: -920px;
+            top: 300px;
+            background: orange;
+        }
+
+        .show {
+            width: 80px;
+            height: 80px;
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            background: yellow;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div>11</div>
+    <span></span> -->
+    <div class="wraper1">
+    </div>
+    <div class="wraper2">
+    </div>
+    <div class="wraper3">
+    </div>
+    <script>
+        // var div = document.getElementsByTagName('div')[0];
+        // var timer = null;
+        // var speed;
+        // div.onclick = function () {
+        //     move(this);
+        // }
+        var timer = null;
+        var wraper = document.getElementsByTagName('div');
+        for (var i = 0; i < wraper.length; i++) {
+            wraper[i].onmouseenter = function () {
+                move(this, 0);
+            };
+            wraper[i].onmouseleave = function () {
+                move(this, -920);
+            }
+
+        }
+        // wraper.onmouseenter = function () {
+
+        // }
+        // wraper.onmouseleave = function () {
+        //     move(this, -980);
+        // }
+
+        //target指obj的left
+        function move(obj, target) {
+            clearInterval(obj.timer);
+            //平缓运动
+            // speed = obj.offsetLeft>300?-20:20;
+            // speed=(300-obj.offsetLeft)/14;
+            // speed = speed>0?Math.ceil(speed):Math.floor(speed);
+            // timer = setInterval(function(){
+            //     if(Math.abs(300-obj.offsetLeft)<Math.abs(speed)){
+            //         clearInterval(timer);
+            //         obj.style.left ='300px';
+            //     }else {
+            //     obj.style.left = obj.offsetLeft +speed +'px'; 
+            //     }
+            // }, 100);
+
+            //越来越慢,从右向左都可以
+            obj.timer = setInterval(function () {
+                speed = (target - obj.offsetLeft) / 4;
+                speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+                if (obj.offsetLeft === target) {
+                    clearInterval(obj.timer)
+                } else {
+                    obj.style.left = obj.offsetLeft + speed + 'px';
+                }
+            }, 100)
+        }
+    </script>
+</body>
+
+</html>

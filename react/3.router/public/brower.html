@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #root {
+            border: 1px solid red;
+            height: 100px;
+
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+  
+    </div>
+    <ul>
+        <li><a href="#/a">/a</a></li>
+        <li><a href="#/b">/b</a></li>
+    </ul>
+    <script>
+      var historyObj =   window.history
+      // 监听路径改变事件
+      // 前进和后退时候触发onpopstate
+      window.onpopstate = (event)=>{
+          console.log(event)
+      }
+      window.onpushstate = (event)=>{
+            console.log(event)
+      }
+      (function(historyObj){
+          let oldPushState = historyObj.pushState;  // 缓存原生的pushState
+          historyObj.pushState = function(state,title,pathname){
+              let result = oldPushState.apply(historyObj,arguments);
+              if(typeof window.onpushstate === 'function'){
+                window.onpushstate({
+                    state,pathname,
+                    type:'pushstate'
+                })
+              }
+              return result;
+          }
+      })(historyObj)
+      setTimeout(() => {
+        historyObj.pushState({page:1},{title:'page11'},'/page1')
+      }, 1000);
+    </script>
+</body>
+</html>

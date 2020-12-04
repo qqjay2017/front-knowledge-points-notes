@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // var arr = [3, 55, 77];
+        // Array.prototype.push = function (target) {
+        //     for (var i = 0; i < target.length; i++) {
+        //         this[this.length] = target[i];
+        //         // this.length++;
+        //     }
+        // }
+        // var target = [6, 58, 9896];
+        // arr.push(target);
+//属性要为索引值，（数字），必须有length属性，最好加上push
+// var obj = {
+//     "0":"a",
+//     "1":"b",
+//     "2":"v",
+//     name:"abc",
+//     age:1234,
+//     length:3,
+//     push:Array.prototype.push,
+//     // splice:Array.prototype.splice
+// }
+
+// Array.prototype.push = function(target){
+//     this[this.length] = target;
+//     this.length++;
+// }
+
+var obj = {
+"2":"a",
+"3":"b",
+"length":2,
+"push":Array.prototype.push
+}
+obj.push('c');
+obj.push('d');
+//最后obj变成怎么样了呢
+
+    </script>
+</body>
+
+</html>

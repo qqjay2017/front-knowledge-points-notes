@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+    </style>
+    <script>
+        function draw() {
+            var canvas = document.getElementById('canvas')
+            if (canvas.getContext) {
+                var ctx = canvas.getContext('2d');
+
+                roundedRect(ctx, 12, 12, 150, 150, 15);
+
+                roundedRect(ctx, 53, 53, 49, 33, 10);
+                roundedRect(ctx, 53, 119, 49, 16, 6);
+
+                ctx.beginPath();
+                ctx.arc(37, 37, 13, Math.PI / 7, -Math.PI / 7, false);
+                ctx.lineTo(31, 37);
+                // ctx.stroke()
+                ctx.fill();
+                for (var i = 0; i < 7; i++) {
+                    ctx.fillRect(51 + i * 16, 35, 4, 4)
+                }
+
+
+                ctx.beginPath();
+                ctx.moveTo(83, 116);
+                ctx.lineTo(83, 102);
+                // bezierCurveTo  cp1x, cp1y, cp2x, cp2y, x, y
+                ctx.bezierCurveTo(83, 94, 89, 88, 97, 88);
+                ctx.bezierCurveTo(105, 88, 111, 94, 111, 102);
+                ctx.lineTo(111, 116);
+                ctx.lineTo(106.333, 111.333);
+                ctx.lineTo(101.666, 116);
+                ctx.lineTo(97, 111.333);
+                ctx.lineTo(92.333, 116);
+                ctx.lineTo(87.666, 111.333);
+                ctx.lineTo(83, 116);
+                ctx.fill();
+
+                ctx.fillStyle = "white";
+                ctx.beginPath();
+                ctx.moveTo(91, 96);
+                ctx.bezierCurveTo(88, 96, 87, 99, 87, 101);
+                ctx.bezierCurveTo(87, 103, 88, 106, 91, 106);
+                ctx.bezierCurveTo(94, 106, 95, 103, 95, 101);
+                ctx.bezierCurveTo(95, 99, 94, 96, 91, 96);
+                ctx.moveTo(103, 96);
+                ctx.bezierCurveTo(100, 96, 99, 99, 99, 101);
+                ctx.bezierCurveTo(99, 103, 100, 106, 103, 106);
+                ctx.bezierCurveTo(106, 106, 107, 103, 107, 101);
+                ctx.bezierCurveTo(107, 99, 106, 96, 103, 96);
+                ctx.fill();
+
+
+
+            }
+
+        }
+
+        /**
+         * 封装的一个用于绘制圆角矩形的函数.
+         * 起点x
+         * 起点y
+         * 宽度
+         * 高度
+         * 半径
+         * */
+        function roundedRect(ctx, x, y, width, height, radius) {
+            ctx.beginPath();
+            // 下移一点点,做起点
+            ctx.moveTo(x, y + radius);
+            // 画左边的边,
+            ctx.lineTo(x, y + height - radius)
+            // quadraticCurveTo(cp1x, cp1y, x, y)
+            // 左下角的弧度
+            ctx.quadraticCurveTo(x, y + height, x + radius, y + height);
+            // 下边的线
+            ctx.lineTo(x + width - radius, y + height);
+            // 右下角的弧度
+            ctx.quadraticCurveTo(x + width, y + height, x + width, y + height - radius);
+            // 右边的线
+            ctx.lineTo(x + width, y + radius);
+            // 右上角的弧度
+            ctx.quadraticCurveTo(x + width, y, x + width - radius, y);
+            // 上面的直线
+            ctx.lineTo(x + radius, y);
+
+            ctx.quadraticCurveTo(x, y, x, y + radius)
+
+
+            ctx.stroke()
+
+        }
+    </script>
+</head>
+
+<body onload="draw()">
+    <canvas id="canvas" width="500" height="500"></canvas>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>111</div>
+<input type="text" value="请输入用户名">
+<script>
+    var div = document.getElementsByTagName('div')[0];
+    // onkeypress = function (e) {
+    //     console.log(e.code);
+    // // };
+    // onkeydown = function (e) {
+    //     console.log(e.key);
+    // }
+
+    var input = document.getElementsByTagName('input')[0];
+    input.onfocus = function () {
+        this.value = '';
+    }
+    input.onblur = function () {
+        this.value = '请输入用户名';
+    }
+
+</script>
+</body>
+</html>

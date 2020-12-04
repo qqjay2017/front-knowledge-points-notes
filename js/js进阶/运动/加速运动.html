@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            background: rebeccapurple;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+    <script>
+        var div = document.getElementsByTagName('div')[0];
+        div.onclick = function () {
+            startMove(this);
+        }
+
+        function startMove(obj) {
+            // var timer = null;
+            var ispeed = 40;
+            var a,
+            u = 0.8;
+            clearInterval(obj.timer);
+            obj.timer = setInterval(function () {
+                a = (300-obj.offsetLeft)/8;
+                ispeed+=a;
+                ispeed *=u;
+                if(Math.abs(ispeed)<1 && Math.abs(300-obj.offsetLeft)<1){
+                console.log('over');    
+                clearInterval(obj.timer);
+            }else{
+                obj.style.left = obj.offsetLeft + ispeed  + 'px';
+            }
+            }, 100)
+            
+        }
+    </script>
+</body>
+
+</html>

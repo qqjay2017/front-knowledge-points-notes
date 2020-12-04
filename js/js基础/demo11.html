@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+    </ul>
+<script>
+    // var li = document.getElementsByTagName('li');
+    // var len = li.length;
+    // for(var i =0;i<len;i++){
+    //     (function(i){
+    //         li[i].addEventListener('click',function(){
+    //             console.log(i);
+    //         },false)
+    //     })(i)
+    // }
+function addEvent(elem,type,handle){
+    if(elem.addEventListener){
+        elem.addEventListener(type,handle,false);
+        console.log('aa');
+    }else if(elem.attachEvent){
+        elem.attachEvent('on'+type,function(){
+            handle.call(elem);
+        });
+    }else {
+        elem['on'+type] = handle;
+    }
+}
+var li = document.getElementsByTagName('li')[0];
+
+</script>
+
+</body>
+</html>

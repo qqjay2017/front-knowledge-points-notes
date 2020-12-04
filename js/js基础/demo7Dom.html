@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        ul {
+            list-style: none;
+            width: 200px;
+            height: 200px;
+        }
+        li {
+            width: 20px;
+            height: 20px;
+            float: left;
+            box-sizing: border-box;
+            border: 1px solid red;
+        }
+    </style>
+
+</head>
+<body>
+    <ul>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+        <li img-data="0"></li>
+    </ul>
+    <script>
+        var ul = document.getElementsByTagName('ul')[0];
+        // console.log(ul);
+        ul.onmouseover = function (e) {
+            var event = e|| window.event;
+            var target = event.target || event.srcElement;
+            target.style.background = "rgb(0,255,"+target.getAttribute('img-data')+")";
+            target.setAttribute('img-data',parseInt(target.getAttribute('img-data'))+60);
+        }
+    </script>
+
+</body>
+</html>

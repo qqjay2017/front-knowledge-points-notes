@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // var a = 5;
+        // function test(){
+        //     a=0;
+        //     console.log(a);
+        //     console.log(this.a);
+        //     var a;
+        //     console.log(a);
+        // }
+        // test();
+        // console.log("---------------")
+        // new test();
+
+        // var obj = {
+        //     a: function () {
+        //         console.log(this.name)
+        //     },
+        //     name: 'aaabb'
+        // }
+        // obj.a();
+
+        var name = "222"
+        var a = {
+            name: "111",
+            say: function () {
+                console.log(this.name);
+            }
+        }
+        var fun = a.say;
+        fun()//222;fun中的this指向window
+        a.say()//111;this指向a
+        var b = {
+            name: "333",
+            say: function (fun) {
+                //this--->b
+                
+                fun();
+                //运行fun()
+                //但是不是this.fun()...是外面的那个fun
+               
+            }
+        }
+        b.say(a.say);//222 
+        b.say = a.say;
+        b.say();//333
+
+
+    </script>
+</body>
+
+</html>

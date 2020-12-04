@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+    var script = document.createElement('script');
+
+    if (script.readyState) {   //ie
+        script.onreadystatechange = function () {
+            if (script.readyState == "complate" || script.readyState == "loaded") {
+                test();
+            }
+        }
+    } else {  //  除了ie
+        script.onload = function () {
+            test();
+        }
+    }
+    document.appendChild(script);
+
+
+
+    function loadScript(url,callback) {
+        var  script = document.createElement('script');
+        script.type = 'text/javascript';
+
+        if (script.readyState){
+            script.readystatechange = function () {
+                if (script.readyState == "complate" || script.readyState =="loaded"){
+                    tools[callback];
+                }
+            }
+        }else {
+            script.onload = function () {
+                tools[callback];
+            }
+        }
+        script.src = url;//防止没加载到文件
+        document.head.appendChild(script);
+    }
+</script>
+</body>
+</html>

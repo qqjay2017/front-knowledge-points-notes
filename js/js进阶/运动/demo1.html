@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        ul {
+            position: relative;
+            width: 800px;
+            height: 80px;
+            /* border: 1px solid black; */
+            margin: 100px auto 0;
+        }
+
+        ul li.nav {
+            height: 78px;
+            width: 198px;
+            border: 1px solid #ccc;
+            color: #f00;
+            text-align: center;
+            line-height: 78px;
+            float: left;
+        }
+
+        ul li.bg {
+            width: 200px;
+            height: 80px;
+            background: pink;
+            opacity: .5;
+            position: absolute;
+
+        }
+    </style>
+</head>
+
+<body>
+    <ul>
+        <li class="nav">111</li>
+        <li class="nav">222</li>
+        <li class="nav">333</li>
+        <li class="nav">444</li>
+        <li class="bg">555</li>
+    </ul>
+    <script>
+        var oliArray = Array.prototype.slice.call(document.getElementsByClassName('nav'), 0);
+        var bg = document.getElementsByClassName('bg')[0];
+        oliArray.forEach((element) => {
+            element.onmouseenter = function () {
+
+                startMove(bg, this.offsetLeft);
+            }
+        });
+
+
+
+        function startMove(obj, target) {
+
+;
+            var ispeed = 40;
+            var a,
+                u = 0.8;
+            clearInterval(obj.timer);
+            obj.timer = setInterval(function () {
+                a = (target - obj.offsetLeft) / 8;
+                ispeed += a;
+                ispeed *= u;
+                if (Math.abs(ispeed) <= 1 && Math.abs(target - obj.offsetLeft) <= 1) {
+                    console.log('over');
+                    clearInterval(obj.timer);
+                    obj.style.left = target;
+                } else {
+
+                    obj.style.left = obj.offsetLeft + ispeed + 'px';
+                }
+            }, 10)
+        }
+    </script>
+</body>
+
+</html>

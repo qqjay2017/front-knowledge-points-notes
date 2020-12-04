@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .wraper1 {
+            width: 100px;
+            height: 80px;
+            position: absolute;
+            left: 0px;
+            top: 100px;
+            background: orange;
+        }
+
+        .wraper2 {
+            width: 100px;
+            height: 80px;
+            position: absolute;
+            left: 0px;
+            top: 200px;
+            background: orange;
+        }
+
+        .wraper3 {
+            width: 100px;
+            height: 80px;
+            position: absolute;
+            left: 0px;
+            top: 300px;
+            background: orange;
+        }
+    </style>
+</head>
+<style>
+</style>
+
+<body>
+    <div class="wraper1"></div>
+    <div class="wraper2"></div>
+    <div class="wraper3"></div>
+
+
+    <script>
+        function getStyle(obj, attr) {
+            if (obj.currentStyle) {
+                return obj.currentStyle[attr];
+            } else {
+                return getComputedStyle(obj, false)[attr];
+            }
+        }
+        var speed, icur;
+        var timer = null;
+
+        function move(obj, target, attr) {
+            clearInterval(obj.timer);
+
+            obj.timer = setInterval(function () {
+                if (attr === 'opacity') {
+                    icur = parseFloat(getStyle(obj,attr) * 100);
+                } else {
+                    icur = parseFloat(getStyle(obj, attr));
+                }
+                console.log(icur);
+
+                speed = (target - icur) / 7;
+                speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+                if (target == icur) {
+                    clearInterval(obj.timer);
+                } else {
+                    if (attr == 'opacity') {
+                        obj.style.opacity = (icur + speed) / 100;
+                    } else {
+                        obj.style[attr] = icur + speed + 'px';
+                    }
+                }
+            }, 100)
+        }
+        var div1 = document.getElementsByTagName('div')[0];
+        var div2 = document.getElementsByTagName('div')[1];
+        var div3 = document.getElementsByTagName('div')[2];
+        div1.onclick = function () {
+            move(this, 500, 'width');
+        }
+        div2.onclick = function (){
+            move(this,1000,'height');
+        }
+        div3.onclick = function (){
+            move(this,60,'opacity');
+    }
+    </script>
+</body>
+
+</html>

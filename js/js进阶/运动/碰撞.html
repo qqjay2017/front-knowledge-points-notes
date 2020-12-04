@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            background: orange;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+    <script>
+        var div = document.getElementsByTagName('div')[0];
+        // div.onclick = function () {
+        //     starMove(this,200,100);
+        // }
+        var lastX = div.offsetLeft;
+        var lastY = div.offsetTop;
+        div.onmousedown = function (e) {
+            clearInterval(this.timer);
+            var event = e || window.event;
+            var disX = e.clientX - this.offsetLeft;
+            var disY = e.clientY - this.offsetTop;
+            var that = this;
+            var speedX = 0;
+            var speedY = 0;
+            document.onmousemove = function (e) {
+                var newLeft = e.clientX - disX;
+                var newTop = e.clientY - disY;
+                that.style.left = newLeft + 'px';
+                that.style.top = newTop + 'px';
+
+                speedX = newLeft - lastX;
+                speedY = newLeft - lastY;
+
+                lastX = newLeft;
+                lastY = newTop;
+
+
+            }
+            document.onmouseup = function () {
+                document.onmousemove = null;
+                document.onmouseup = null;
+                starMove(that, speedX, speedY);
+            }
+
+        }
+
+        function starMove(obj, speedX, speedY) {
+            clearInterval(obj.timer);
+            // var speedX = 2000,
+            //     speedY = 300;
+            obj.timer = setInterval(function () {
+                speedY += 6;
+                var newLeft = obj.offsetLeft + speedX;
+                var newTop = obj.offsetTop + speedY;
+                if (newTop >= document.documentElement.clientHeight - obj.offsetHeight) {
+                    speedY *= -1;
+
+                    speedX *= 0.8;
+                    speedY *= 0.8;
+                    newTop = document.documentElement.clientHeight - obj.offsetHeight;
+                };
+                if (newTop <= 0) {
+                    speedY *= -1;
+
+                    speedX *= 0.8;
+                    speedY *= 0.8;
+                    newTop = 0;
+                };
+                if (newLeft <= 0) {
+                    speedX *= -1;
+                    speedX *= 0.8;
+                    speedY *= 0.8;
+                    newLeft = 0;
+                };
+                if (newLeft >= document.documentElement.clientWidth - obj.offsetWidth) {
+                    speedX *= -1;
+
+                    speedX *= 0.8;
+                    speedY *= 0.8;
+                    newLeft = document.documentElement.clientWidth - obj.offsetWidth
+                }
+                
+                if (Math.abs(speedX) < 1) {
+                    speedX = 0;
+                }
+                if (Math.abs(speedY) < 1) {
+                    speedY = 0;
+                }
+                if (speedX == 0 && speedY == 0 && newTop == document.documentElement.clientHeight - obj
+                    .clientHeight) {
+
+                    clearInterval(obj.timer);
+                    console.log('over');
+
+
+                }
+
+                obj.style.left = newLeft + 'px';
+                obj.style.top = newTop + 'px';
+            }, 30)
+        }
+    </script>
+</body>
+
+</html>

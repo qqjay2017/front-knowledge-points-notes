@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var obj1 = {}
+        var obj2={
+            name:'huang',
+            age:18,
+            son:[1,2,3],
+            card:{},
+            sayHi:function(){
+                console.log('hi');
+            }
+        }    
+        console.log((obj1,obj2));
+        function deepClone (target,origin){
+            if(origin != null){
+                for(prop in origin){
+                    var src = target[prop];
+                    var copy = origin[prop];
+                    if(copy&&typeof copy =='object'){
+                        //引用值
+                        if(typeof Object.prototype.toString.call(copy)=='[object Array]'){
+                            src = [];
+
+                        }else {
+                            src = {};
+                        }
+                        target[prop] = deepClone(src,copy);
+                    }else {
+                        // 原始值
+                        target[prop]=copy;
+                    }
+                }
+            }
+            return target;
+        }
+        
+
+        //[object Array]
+        //[object Function]
+        //[object Object]
+    </script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //普通克隆
+        var origin = {
+            name: "xiaoli",
+            age: 18,
+            say: function () {
+                console.log(this.name);
+            },
+            card: ["visa", "unionpay"]
+        }
+        var target = {}
+        function clone(origin, target) {
+            var target = target || {};
+            for (var prop in origin) {
+                target[prop] = origin[prop];
+            }
+            return target;
+        }
+        clone(origin, target);
+
+        //浅层克隆：原始值的话改变了一个的值，另一个不会跟着改；引用类型的话，修改一个另一个会跟着修改
+
+        //深度克隆
+        /*
+        遍历对象   for in
+        1.判断是不是原始值  typeof() object
+        2.判断时数组还是对象instanceof   toString  constructor
+        3.建立相应的数组或对象
+        递归....
+        if(typeof(origin[prop]))
+        */
+        var obj = {
+            name: "abc",
+            age: 123,
+            card: ["visa", "unionpay"],
+            wife: {
+                name: "bcd",
+                son: {
+                    name: "erzi"
+                }
+            }
+        }
+        var obj1 = {};
+        function deepClone(origin, target) {
+            var target = target || {},
+                toStr = Object.prototype.toString,
+                arrStr = "[object Array]",
+                objStr = "[object Object]";
+
+
+            for (var prop in origin) {
+                if (origin.hasOwnProperty(prop)) {
+                    if (origin[prop] !== "null" && typeof (origin[prop]) == "object") {
+                        //是的话代表引用值
+                       
+                        target[prop] = (toStr.call(origin[prop] == arrStr ))?  [] : {};
+                        deepClone(origin[prop], target[prop]);
+                    } else {
+                        target[prop] = origin[prop];
+                    }
+                }
+            }
+            return target;
+        }
+        deepClone(obj, obj1);
+        // console.log(deepClone(obj));
+        console.log(obj1);
+
+    </script>
+</body>
+
+</html>

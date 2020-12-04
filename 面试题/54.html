@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var data = [{
+                id: 1,
+                address: '广东',
+                parent_id: 0
+            },
+            {
+                id: 2,
+                address: '广2221',
+                parent_id: 0
+            },
+            {
+                id: 3,
+                address: '广东333',
+                parent_id: 1
+            },
+            {
+                id: 4,
+                address: '广东444',
+                parent_id: 3
+            },
+            {
+                id: 5,
+                address: '广东555',
+                parent_id: 4
+            },
+            {
+                id: 6,
+                address: '广东666',
+                parent_id: 2
+            },
+            {
+                id: 7,
+                address: '广东777',
+                parent_id: 0
+            },
+            {
+                id: 8,
+                address: '广东888',
+                parent_id: 7
+            },
+            {
+                id: 9,
+                address: '广东999',
+                parent_id: 2
+            },
+            {
+                id: 10,
+                address: '广东10',
+                parent_id: 3
+            }
+        ];
+
+        /*
+         * 其中,parent_id为父级id,求输入id后找到它所有的子集*/
+
+
+        
+
+        // function findFamily(arr,id){
+        //     var temp=[];
+        //     // lev=0;
+        //     var forFn = function(arr,id){
+        //         for(var i=0;i<arr.length;i++){
+        //             var item = arr[i];
+        //             if(item.parent_id==id){
+        //                 // item.lev =lev;
+        //                 temp.push(item);
+        //                 forFn(arr,item.id);
+        //             }
+        //         }
+        //     }
+        //     forFn(arr,id);
+        //     return temp;
+        // }
+
+        // function findFamily(arr,id){
+        //     var temp=[],
+        //     lev=0;
+        //     var forFn = function(arr,id,lev){
+        //         for(var i=0;i<arr.length;i++){
+        //             var item = arr[i];
+        //             if(item.parent_id==id){
+        //                 item.lev =lev;
+        //                 temp.push(item);
+        //                 forFn(arr,item.id,lev+1);
+        //             }
+        //         }
+        //     }
+        //     forFn(arr,id,lev);
+        //     return temp;
+        // }
+        
+        // console.log(findFamily(data,3));
+       
+        
+
+        
+
+
+
+
+        // function factor(num) {
+        //     if (num < 1) {
+        //         return 1;
+        //     } else {
+        //         return num * factor(num - 1);
+        //     }
+        // }
+
+
+        var newArr = [];
+        function findSon(id) { 
+            data.forEach(element => {
+                if(element.parent_id==id){
+                    newArr.push(element.address);
+                    findSon(element.id);
+                }
+            });
+         }
+
+         findSon(3);
+         console.log(newArr)
+    </script>
+</body>
+
+</html>

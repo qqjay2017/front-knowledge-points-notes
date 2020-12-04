@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var arr = [22, 2222, 34, 'fdg', 5, 'gt', 'r'];
+        // arr.forEach(function(element,index){
+        //     console.log(index);
+        //     console.log(element);
+        // })   
+        // Array.prototype.forEach = function (callback) {
+        //     for (var i = 0; i < this.length; i++) {
+        //         callback(this[i], i);
+        //     }
+        // }
+        // arr.forEach(function (ele, i) {
+        //     console.log(i);
+        // })
+        // var newArr = arr.filter(function(ele,i){
+        //     //全不要
+        //     return false;
+        // })
+        // Array.prototype.myFilter = function(callback){
+        //     var newArr=[];
+        //     for(var i=0;i<this.length;i++){
+        //         if(callback(this[i],i)){
+        //             newArr.push(this[i]);
+        //         }
+        //     }
+        //     return newArr;
+        // }
+        // var newArr = arr.map(function(){
+        //     return '666';
+        // })
+// Array.prototype.myMap = function(callback){
+//     var newArr=[];
+//     for(var i=0;i<this.length;i++){
+//         newArr.push(callback(this[i],i));
+//     }
+//     return newArr;
+// }
+
+Array.prototype.myReduce = function(callback,int){
+    var k,
+    previous = int;
+    if(int == undefined){
+        int = this[0];
+        k=1;
+    }
+    for(k;k<this.length;k++){
+        previous= callback(previous,this[k],k);
+    }
+    return previous;
+}
+        console.log(newArr);
+    </script>
+</body>
+
+</html>

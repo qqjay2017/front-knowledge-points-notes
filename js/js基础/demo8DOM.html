@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+!!
+<span></span>
+<div>
+    <span>
+
+        <em>
+            <button></button>
+            <input type="
+            ">
+            <i></i>
+            <div></div>
+            <nav></nav>
+            <footer></footer>
+            <div></div>
+            <input type="text">
+            <button></button>
+        </em>
+    </span>
+</div>
+
+<body>
+    <script>
+        
+//作业：封装函数：返回元素e的第n层祖先元素节点
+        // function getParent (e,n){
+        //     for(var i=0;i<n;i++){
+        //         e = e.parentElement;
+        //     }
+        //     return e;
+        // }
+//作业，封装一个函数，返回元素e的第n个兄弟元素节点。n为负，返回前面的。n为0，返回自己，n为正，返回后面的。
+        function getSibling (e,n){
+            if (n==0){
+                return e;
+            }else if(n<0){
+                for(var i = 0;i< -n;i++){
+                    e = e.previousElementSibling;
+                } 
+            }else {
+                for (var j=0;j<n;j++){
+                     e= e.nextElementSibling;
+                }
+                
+            }
+            return e;
+        }
+        var nav = document.getElementsByTagName('nav')[0];
+        // nextElementSibling
+        // previousElementSibling
+        
+    </script>
+
+</body>
+
+</html>
