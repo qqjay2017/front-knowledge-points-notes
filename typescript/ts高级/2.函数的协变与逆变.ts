@@ -27,7 +27,7 @@ function exec(callback: Callback): void {
 
 type ChildToChild = (blackDog: BlackDog) => BlackDog;
 const childToChild: ChildToChild = (blackDog: BlackDog): BlackDog => blackDog;
-exec(childToChild);
+// exec(childToChild);
 
 //不行,理由同上 Callback接收的Dog有name属性, Animal没有name属性
 // type ChildToParent = (blackDog: BlackDog) => Animal;
