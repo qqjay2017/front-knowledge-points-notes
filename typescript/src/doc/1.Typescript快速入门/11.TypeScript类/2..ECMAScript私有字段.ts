@@ -18,3 +18,11 @@
 
 let semlinker =   new Person('Semlinker');
  semlinker.greet()
+
+ /**
+  * #私有字段与 private 的区别
+  * 
+  * private   如果将类转成any类型可以访问private装饰的字段
+  *  # 号定义的 ECMAScript 私有字段，会通过 WeakMap 对象来存储，同时编译 器会生成 __classPrivateFieldSet 和 __classPrivateFieldGet 这两个方法用于设置值和获取 值。
+
+  */
