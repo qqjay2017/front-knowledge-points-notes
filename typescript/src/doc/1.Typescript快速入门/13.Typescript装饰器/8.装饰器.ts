@@ -3,15 +3,15 @@
 // https://www.tslang.cn/docs/handbook/decorators.html
 // 开启装饰器     "experimentalDecorators": true,   
 
-// 类装饰器
-function modifier(clazz:Function){
-    clazz.prototype.say = function(){
+// 类装饰器   target: TFunction - 被装饰的类
+function modifier(target:Function){
+    target.prototype.say = function():void{
         console.log('say')
     }
 }
 
-// 属性装饰器
-function toUpCase(target:any,key:string){
+// 属性装饰器  1.target: Object - 被装饰的类 2.propertyKey: string | symbol - 被装饰类的属性名
+function toUpCase(target:Object,key:string|symbol){
     let value = target[key];
     Object.defineProperty(target,key,{
         get(){
@@ -33,9 +33,9 @@ function staticDec(target:any,key:string){
        }
    })
 }
-// 方法装饰器
+// 方法装饰器  1.target: Object - 被装饰的类 2. propertyKey: string | symbol - ⽅法名 3. descriptor: TypePropertyDescript  - 属性描述符
 function enumerable(value:boolean){
-    return function(target:any,propertyKey:string,descriptor:PropertyDescriptor){
+    return function(target:Object,propertyKey:string,descriptor:PropertyDescriptor){
         descriptor.enumerable = value;
     }
 }

@@ -1,11 +1,25 @@
 (function () {
     'use strict';
 
-    var colors = ['red', 'green', 'blue'];
-    for (var _i = 0, colors_1 = colors; _i < colors_1.length; _i++) { // 这种方式没有索引
-        var i = colors_1[_i];
-        console.log(i); // red
+    class Greeter {
+        // 构造函数
+        constructor(message) {
+            this.greeting = message;
+        }
+        // 静态方法
+        static getClassName() {
+            return "Class name is Greeter";
+        }
+        // 成员方法
+        greet() {
+            return "hello, " + this.greeting;
+        }
     }
+    // 静态属性
+    Greeter.cname = "Greeter";
+
+    const greeter = new Greeter('me');
+    console.log(greeter.greeting);
 
 }());
 //# sourceMappingURL=bundle.js.map

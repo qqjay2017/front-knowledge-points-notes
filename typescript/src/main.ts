@@ -1,8 +1,5 @@
-import {Calculator} from "./doc/7.TypeScript 函数/7.函数的重载";
+import Greeter from "./doc/1.Typescript快速入门/11.TypeScript类/1.类的属性和方法";
 
-let colors:string[] = ['red','green','blue'];
-
-for (let i of colors){ // 这种方式没有索引
-    console.log(i)  // red
-}
+const greeter = new Greeter('me')
+console.log(greeter.greeting)
 
