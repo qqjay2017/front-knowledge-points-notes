@@ -91,9 +91,11 @@ loader 是从后面往前面执行
 
 ## 支持图片
 
-- file-loader 解决CSS等文件中的引入图片路径问题
-- url-loader 当图片小于limit的时候会把图片BASE64编码，大于limit参数的时候还是使用file-loader进行拷贝
--  url-loader 内部依赖file-loader,所以两个都要装,但是file-loader不用显式配置
+- file-loader 解决CSS等文件中的引入图片路径问题,
+ - 1.拷贝图片2.图片模块变成js模块
+ - require文件的话,会把引入的文件拷贝到dist(打包开发目录)下面,然后返回文件的相对路径,配置1.name:[hash:10].[ext] 配置文件名,2.esModule:false ,默认true,返回es6模块
+- url-loader 当图片小于limit的时候会把图片BASE64编码，大于limit参数的时候还是使用file-loader进行引用,是对
+-  url-loader 内部依赖file-loader,是对file-loader的增强
 `$ yarn add file-loader url-loader -D`
 
 ```js
@@ -110,7 +112,7 @@ img.src=time
       {
         loader: "url-loader",
         options: {
-          limit: 1024,
+          limit: 1024,  // 如果文件小于limit,就转成base64,否则就和file-loader一样
         },
       }
     ]

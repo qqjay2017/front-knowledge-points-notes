@@ -10,7 +10,7 @@ module.exports = {
   devServer: {
     contentBase: path.resolve(__dirname, "public"),
     port: 8082,
-    open: true,
+    open: false,
   },
   module: {
     rules: [
