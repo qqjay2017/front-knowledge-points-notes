@@ -25,4 +25,6 @@ ssh root@192.168.79.131 -i ~/.ssh/id_rsa_1024
 
 ## 生成github密钥
 
+
+
 `$ ssh-keygen -t rsa  -C "qqjay2013@gmail.com" `
