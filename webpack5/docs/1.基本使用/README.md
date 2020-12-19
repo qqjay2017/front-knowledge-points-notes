@@ -95,8 +95,8 @@ loader 是从后面往前面执行
  - 1.拷贝图片2.图片模块变成js模块
  - require文件的话,会把引入的文件拷贝到dist(打包开发目录)下面,然后返回文件的相对路径,配置1.name:[hash:10].[ext] 配置文件名,2.esModule:false ,默认true,返回es6模块
 - url-loader 当图片小于limit的时候会把图片BASE64编码，大于limit参数的时候还是使用file-loader进行引用,是对
--  url-loader 内部依赖file-loader,是对file-loader的增强
-`$ yarn add file-loader url-loader -D`
+-  url-loader 内部依赖file-loader,是对file-loader的增强,file-loader可以不手动安装
+`$ yarn add  url-loader -D`
 
 ```js
 import time from './timg.jpg'
@@ -118,3 +118,31 @@ img.src=time
     ]
 }
 ```
+
+## js的兼容性
+
+- babel-loader  :使用Babel和webpack转译JavaScript文件
+- @babel/core    :Babel编译的核心包
+- babel-preset-env
+- @babel/@babel/preset-react  : React插件的Babel预设
+- @babel/plugin-proposal-decorators  : 把类和对象装饰器编译成ES5
+- @babel/plugin-proposal-class-properties  :转换静态类属性以及使用属性初始值化语法声明的属性
+
+
+`$ npm i babel-loader @babel/core @babel/preset-env @babel/preset-react  -D`
+`$ npm i @babel/plugin-proposal-decorators @babel/plugin-proposal-class-properties -D`
+
+#### @babel/preset-env 作用
+
+- babel-loader  是一个函数,调用babel-core转换语法.babel-loader本身提供一个过程管理功能
+- babel-core
+- babel-preset-env  预设,具体管理语法转换语法的实现
+
+
+
+```
+1.es6语法转成es6语法树   babelCore
+2.preset-env将es6语法树转成es5语法树
+3.es5语法树重新生成es5代码    babelCore
+```
+

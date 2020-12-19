@@ -1,0 +1,2 @@
+/etc/sysconfig/network-script
+虚拟机使用nat模式,租用60天

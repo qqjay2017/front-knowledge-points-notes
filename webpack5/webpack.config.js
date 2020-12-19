@@ -2,6 +2,8 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
+  mode: "development",
+  devtool: false,
   entry: "./src/index.js",
   output: {
     path: path.resolve(__dirname, "dist1"),
@@ -26,11 +28,29 @@ module.exports = {
           {
             loader: "url-loader",
             options: {
-              limit: 8 * 1024,
+              limit: 999999 * 1024,
             },
           },
         ],
       },
+      {
+        test: /\.(j|t)sx?$/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                "@babel/preset-env",  // 可以转换js语法,
+                "@babel/preset-react" // 可以庄转换jsx语法
+              ],
+              plugins:[
+                // 插件是预设的集合,很多插件打包一起就是预设了
+                ["@babel/plugin-proposal-decorators",{legacy:true}]
+              ]
+            }
+          }
+        ]
+      }
     ],
   },
   plugins: [

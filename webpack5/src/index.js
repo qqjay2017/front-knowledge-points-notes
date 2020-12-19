@@ -1,16 +1,5 @@
-import   './index.css'
-import './style.less'
-import './style.scss'
-import time from './timg.jpg'
-
-const div = document.createElement('div')
-div.innerText="webpack5"
+import React from 'react';
+import ReactDom from 'react-dom'
 
 
-document.getElementById('root').appendChild(div)
-
-
-
-const img = new Image()
-img.src=time
-document.getElementById('root').appendChild(img)
+ReactDom.render(<div>hello</div>,document.getElementById('root'))
