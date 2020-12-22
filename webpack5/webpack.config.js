@@ -40,8 +40,18 @@ module.exports = {
             loader: 'babel-loader',
             options: {
               presets: [
-                "@babel/preset-env",  // 可以转换js语法,
-                "@babel/preset-react" // 可以庄转换jsx语法
+                ["@babel/preset-env",{
+                  useBuiltIns:'usage',  // 按需加载polyfill,不会全部polyfill都加载进去
+                  corejs:{version:3},   // corejs版本,要安装corejs
+                  targets:{
+                    chrome:'60',
+                    firefox:'60',
+                    ie:'9',
+                    safari:'10',
+                    edge:'17'
+                  }
+                }],  // 可以转换js语法,
+                "@babel/preset-react" // 可以转换jsx语法
               ],
               plugins:[
                 // 插件是预设的集合,很多插件打包一起就是预设了

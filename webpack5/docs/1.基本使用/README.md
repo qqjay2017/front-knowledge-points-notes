@@ -136,13 +136,76 @@ img.src=time
 
 - babel-loader  是一个函数,调用babel-core转换语法.babel-loader本身提供一个过程管理功能
 - babel-core
-- babel-preset-env  预设,具体管理语法转换语法的实现
+- babel-preset-env  预设,具体管理语法转换语法的实现,有的语法不会转,比如Promise
 
+#### polyfill
 
+腻子,提供一系列的方法,代价是文件会变得很大,可以弄按需加载
+
+`require('@babel/polyfill)`
 
 ```
 1.es6语法转成es6语法树   babelCore
 2.preset-env将es6语法树转成es5语法树
 3.es5语法树重新生成es5代码    babelCore
+
 ```
 
+#### 配置polyfill按需加载
+
+还是不完美,可以用polyfill-service,根据浏览器请求头信息中的UserAgent实现自动加载浏览器所需的polyfill
+
+```js
+ {
+        test: /\.(j|t)sx?$/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                ["@babel/preset-env",{
+                  useBuiltIns:'usage',  // 按需加载polyfill,不会全部polyfill都加载进去
+                  corejs:{version:3},   // corejs版本,要安装corejs
+                  targets:{
+                    chrome:'60',
+                    firefox:'60',
+                    ie:'9',
+                    safari:'10',
+                    edge:'17'
+                  }
+                }],  // 可以转换js语法,
+                "@babel/preset-react" // 可以转换jsx语法
+              ],
+              plugins:[
+                // 插件是预设的集合,很多插件打包一起就是预设了
+                ["@babel/plugin-proposal-decorators",{legacy:true}]
+              ]
+            }
+          }
+        ]
+      }
+ ```
+
+useBuiltIns
+- false 引入全部的polyfill
+- entry 根据配置的浏览器兼容,需要在入口文件手动添加 import '@babel/polyfill'
+- usage 根据配置的浏览器和代码中使用的APi来进行polyfill,实现按需加载
+
+## polyfill-service
+
+`https://polyfill.io/v3/polyfill.js`
+
+## 几个path之间的关系
+
+ - output.path
+   - 打包输出的文件夹
+ - output.publicPath
+   - 静态资源的公共前缀,默认'/'
+ - devServer.publicPath(一般不写)
+   - 打包生成的静态文件所在的目录,没有设置的话默认就是output.publicPath(dist目录的虚拟mulu)
+ - devServer.contentBase
+   - 用于配置提供额外静态文件内容的目录
+
+## legacy
+ 
+ babel选项,阶段不同的语法
