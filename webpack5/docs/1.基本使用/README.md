@@ -296,3 +296,8 @@ cheap	不包含列信息（关于列信息的解释下面会有详细介绍)也�
 module	包含loader的sourcemap（比如jsx to js ，babel的sourcemap）,否则无法定义源文件
 inline	将.map作为DataURI嵌入，不单独生成.map文件
 ```
+
+#### sourcemap最佳实践
+
+- 测试环境:eval-source-map  速度快和调试友好的折中方案
+- 生产环境:hidden-source-map  取消内联
