@@ -206,6 +206,68 @@ useBuiltIns
  - devServer.contentBase
    - 用于配置提供额外静态文件内容的目录
 
-## legacy
+###### legacy
  
  babel选项,阶段不同的语法
+
+
+## ESlint代码校验
+
+1. 安装依赖
+`$ yarn  add  eslint eslint-loader babel-eslint -D`
+2. 添加loader
+```js
+ {
+            test: /\.jsx?$/,
+            loader: 'eslint-loader',
+            enforce: 'pre', // 强制指定顺序,pre之前(转换前校验)   pre normal  inline  post
+            options: {
+                fix: true
+            },
+            include: resolve(__dirname, 'src'), // 包含,只检查xx目录下文件,白名单
+            exclude: /node_modules/, // 排除
+        },
+```
+3. airbnb
+`$ yarn add eslint-config-airbnb  eslint-plugin-import eslint-plugin-react eslint-plugin-react-hooks and eslint-plugin-jsx-a11y -D`
+
+4. eslint配置文件
+> .eslintrc.js
+```js
+module.exports = {
+    // root: true, // 根配置文件
+    parser: "babel-eslint", // 解析器,把源代码转成抽象语法树
+    extends: "airbnb", // 继承airbnb
+    // 指定解析器选项
+    parserOptions: {
+        sourceType: "module",
+        ecmaVersion: 2015,
+    },
+    // 指定脚本的运行环境
+    env: {
+        browser: true,
+    },
+    // 启用的规则及其各自的错误级别
+    rules: {
+        indent: ["error", 4], // 缩进风格
+        quotes: "off", // 引号类型
+
+        "no-console": "error", // 禁止使用console
+    },
+};
+```
+5. 配置自动修复
+> .vscode\settings.json
+```json
+{
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact"
+    ],
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    }
+  }
+```
