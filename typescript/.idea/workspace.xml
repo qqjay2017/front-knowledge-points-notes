@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0775be26-6e90-4268-8eeb-41f623222a16" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1lJMb0zma9iFsAc8Yk8LWppEv42" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="ASKED_MARK_IGNORED_FILES_AS_EXCLUDED" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../github/better-scroll" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="yarn" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="ts.external.directory.path" value="D:\front-knowledge-points-notes\typescript\node_modules\typescript\lib" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\front-knowledge-points-notes\typescript\src\doc\7.TypeScript 函数" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\front-knowledge-points-notes\typescript\src\doc\1.Typescript快速入门\7.TypeScript 函数" />
+      <recent name="D:\front-knowledge-points-notes\typescript\src\doc\1.Typescript快速入门\4.类型守卫" />
+      <recent name="D:\front-knowledge-points-notes\typescript\src\doc\1.Typescript快速入门\10.TypeScript接⼝" />
+      <recent name="D:\front-knowledge-points-notes\typescript\src\doc\1.Typescript快速入门\12.Typescript泛型" />
+      <recent name="D:\front-knowledge-points-notes\typescript\src\doc\1.Typescript快速入门\14.Typescript4新特性" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="start" type="js.build_tools.npm" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0775be26-6e90-4268-8eeb-41f623222a16" name="Default Changelist" comment="" />
+      <created>1607310811639</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1607310811639</updated>
+      <workItem from="1607310815388" duration="15564000" />
+      <workItem from="1607392501379" duration="2602000" />
+      <workItem from="1607408613704" duration="11484000" />
+      <workItem from="1607493973275" duration="18598000" />
+    </task>
+    <task id="LOCAL-00001" summary="Typescript快速入门">
+      <created>1607420042899</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1607420042899</updated>
+    </task>
+    <task id="LOCAL-00002" summary="工厂方法模式">
+      <created>1607494959584</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1607494959584</updated>
+    </task>
+    <task id="LOCAL-00003" summary="TypeScript进阶之插件化架构">
+      <created>1607578187262</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1607578187262</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/ts高级/2.函数的协变与逆变.js.map" />
+        <option value="$PROJECT_DIR$/ts高级/1.接口的兼容性.js" />
+        <option value="$PROJECT_DIR$/ts高级/1.接口的兼容性.js.map" />
+        <option value="$PROJECT_DIR$/ts高级/2.函数的协变与逆变.js" />
+        <option value="$PROJECT_DIR$/src/main.js" />
+        <option value="$PROJECT_DIR$/src/main.js.map" />
+        <option value="$PROJECT_DIR$/src/doc/1.Typescript快速入门/14.Typescript4新特性/2.标记的元组元素.js.map" />
+        <option value="$PROJECT_DIR$/src/doc/1.Typescript快速入门/14.Typescript4新特性/1.构造函数的类属性推断.js" />
+        <option value="$PROJECT_DIR$/src/doc/1.Typescript快速入门/14.Typescript4新特性/2.标记的元组元素.js" />
+        <option value="$PROJECT_DIR$/src/doc/1.Typescript快速入门/14.Typescript4新特性/1.构造函数的类属性推断.js.map" />
+        <option value="$PROJECT_DIR$/src/doc/5.发布订阅模式/3.发布订阅模式.js.map" />
+        <option value="$PROJECT_DIR$/src/doc/5.发布订阅模式/2.观察者模式.js" />
+        <option value="$PROJECT_DIR$/src/doc/5.发布订阅模式/3.发布订阅模式.js" />
+        <option value="$PROJECT_DIR$/src/doc/5.发布订阅模式/2.观察者模式.js.map" />
+        <option value="$PROJECT_DIR$/src/doc/5.发布订阅模式/1.消息轮询模式.js" />
+        <option value="$PROJECT_DIR$/src/doc/5.发布订阅模式/1.消息轮询模式.js.map" />
+        <option value="$PROJECT_DIR$/src/doc/3.奇怪的符号/1.符号.js.map" />
+        <option value="$PROJECT_DIR$/src/doc/3.奇怪的符号/1.符号.js" />
+        <option value="$PROJECT_DIR$/src/doc/3.奇怪的符号/2.数字分隔符.js" />
+        <option value="$PROJECT_DIR$/src/doc/3.奇怪的符号/2.数字分隔符.js.map" />
+        <option value="$PROJECT_DIR$/src/doc/2.Typescript泛型/4.泛型约束.js.map" />
+        <option value="$PROJECT_DIR$/src/doc/2.Typescript泛型/8.使用泛型创建对象.js" />
+        <option value="$PROJECT_DIR$/src/doc/2.Typescript泛型/6.条件类型.js" />
+        <option value="$PROJECT_DIR$/src/doc/2.Typescript泛型/4.泛型约束.js" />
+        <option value="$PROJECT_DIR$/src/doc/2.Typescript泛型/8.使用泛型创建对象.js.map" />
+        <option value="$PROJECT_DIR$/src/doc/2.Typescript泛型/6.条件类型.js.map" />
+        <option value="$PROJECT_DIR$/src/doc/4.⼯⼚⽅法模式/1.简单工厂模式.js.map" />
+        <option value="$PROJECT_DIR$/src/doc/4.⼯⼚⽅法模式/2.⼯⼚⽅法模式.js.map" />
+        <option value="$PROJECT_DIR$/src/doc/4.⼯⼚⽅法模式/2.⼯⼚⽅法模式.js" />
+        <option value="$PROJECT_DIR$/src/doc/4.⼯⼚⽅法模式/1.简单工厂模式.js" />
+        <option value="$PROJECT_DIR$/src/doc/1.Typescript快速入门/12.Typescript泛型/7.4Exclude.js" />
+        <option value="$PROJECT_DIR$/src/doc/1.Typescript快速入门/12.Typescript泛型/4.泛型工具类型.js.map" />
+        <option value="$PROJECT_DIR$/src/doc/1.Typescript快速入门/12.Typescript泛型/7.6Required.js.map" />
+        <option value="$PROJECT_DIR$/src/doc/1.Typescript快速入门/12.Typescript泛型/7.5ReturnType.js" />
+        <option value="$PROJECT_DIR$/src/doc/1.Typescript快速入门/12.Typescript泛型/4.泛型工具类型.js" />
+        <option value="$PROJECT_DIR$/src/doc/1.Typescript快速入门/12.Typescript泛型/7.4Exclude.js.map" />
+        <option value="$PROJECT_DIR$/src/doc/1.Typescript快速入门/12.Typescript泛型/7.2.Recoed.js.map" />
+        <option value="$PROJECT_DIR$/src/doc/1.Typescript快速入门/12.Typescript泛型/7.3pick.js" />
+        <option value="$PROJECT_DIR$/src/doc/1.Typescript快速入门/12.Typescript泛型/7.2.Recoed.js" />
+        <option value="$PROJECT_DIR$/src/doc/1.Typescript快速入门/12.Typescript泛型/7.6Required.js" />
+        <option value="$PROJECT_DIR$/src/doc/1.Typescript快速入门/12.Typescript泛型/7.3pick.js.map" />
+        <option value="$PROJECT_DIR$/src/doc/1.Typescript快速入门/12.Typescript泛型/7.5ReturnType.js.map" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Typescript快速入门" />
+    <MESSAGE value="工厂方法模式" />
+    <MESSAGE value="TypeScript进阶之插件化架构" />
+    <option name="LAST_COMMIT_MESSAGE" value="TypeScript进阶之插件化架构" />
+  </component>
+</project>
