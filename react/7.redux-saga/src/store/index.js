@@ -3,7 +3,7 @@ import reducer from './reducer'
 
 import { rootSagas } from './sagas'
 
-import createSagaMiddleware   from "../redux-saga/middleware";
+import createSagaMiddleware   from "../redux-saga";
 let sagaMiddleware = createSagaMiddleware()
 
 let store =applyMiddleware(sagaMiddleware)(createStore)(reducer)
