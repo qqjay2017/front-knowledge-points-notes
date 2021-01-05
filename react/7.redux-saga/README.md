@@ -107,3 +107,12 @@ console.log(v1,v2,v3)  // { value: 1, done: false } { value: 'inner1', done: fal
 #### 安装
 
 `$  npm i redux react-redux redux-saga`
+
+
+#### saga api
+
+
+- `take`  等待一个特定的 action,还没来的时候就会被阻塞
+- `put`   发起一个action
+- `delay` 等待,`call(delay,1000)`
+- `call`

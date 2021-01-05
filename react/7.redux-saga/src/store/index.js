@@ -1,16 +1,14 @@
-import { createStore,applyMiddleware } from 'redux'
-import reduce from './reducers'
-import createSagaMiddleware  from 'redux-saga'
+import { createStore ,applyMiddleware} from "redux";
+import reducer from './reducer'
 
-import {rootSaga} from './sagas'
+import { rootSagas } from './sagas'
 
-const sagaMiddleware = createSagaMiddleware()
+import createSagaMiddleware   from "../redux-saga/middleware";
+let sagaMiddleware = createSagaMiddleware()
 
+let store =applyMiddleware(sagaMiddleware)(createStore)(reducer)
+//  createStore(reducer)
 
-const store =           applyMiddleware(sagaMiddleware)(createStore)(reduce)
+sagaMiddleware.run(rootSagas)
 
-sagaMiddleware.run(rootSaga)
-
-export const action = type => store.dispatch({type})
-
-export default store;
+export default store
