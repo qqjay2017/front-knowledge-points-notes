@@ -1,8 +1,8 @@
 export function stdChannel(){
     let currentTakers  = []
-
+    // take 就是push
     function take(cb, matcher){
-        console.log(cb,'cb')// function next
+        // console.log(cb,'cb')// function next
         cb['MATCH'] = matcher;
         cb.cancel = ()=>{
           currentTakers = currentTakers.filter(item=>item!==cb);
