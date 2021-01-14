@@ -39,7 +39,7 @@ function dispatchEvent(event) {
 
 
     updateQueue.isBatchingUpdate = true; // 进入批量更新模式
-     syntheticEvent = createSyntheticEvent(event)
+    syntheticEvent = createSyntheticEvent(event)
 
     // 实现合成事件的冒泡
     while (target) {
