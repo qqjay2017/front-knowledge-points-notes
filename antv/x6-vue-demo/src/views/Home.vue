@@ -1,18 +1,19 @@
 <template>
   <div class="home full">
       <!-- <X6Start boxId="x6-start-container" :nodes="nodes" :edges="edges"  /> -->
-      <X6Addon container='x6-addon' />
+      <X6TableBox container='x6-addon' />
   </div>
 </template>
 
 <script>
 import X6Start from '@/components/X6Start'
-import X6Addon from '@/components/X6Addon'
+import X6TableBox from '@/components/X6TableBox'
 export default {
   name: "Home",
   components: {
     // X6Start,
-    X6Addon
+    // X6Addon,
+    X6TableBox
   },
   data() {
     return {
