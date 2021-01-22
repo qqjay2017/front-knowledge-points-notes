@@ -5,17 +5,17 @@
       <button @click="onRedo" :disabled="!canRedo">redo</button>
       <button @click="onCenter">center</button>
     </div>
-    <div id="refStencil" class="x-app-stencil" ref="refStencil"></div>
-    <div :id="container" :ref="container" class="x-app-content"></div>
+
+    <div ref="container" class="x-app-content"></div>
   </div>
 </template>
 
 <script>
 import { Graph, Addon, Shape } from "@antv/x6";
-import tableBox from "@/lib/x6/shape/items/table-box";
-import columnItem from "@/lib/x6/shape/items/column-item";
-columnItem(Graph);
-tableBox(Graph);
+import "@antv/x6-vue-shape";
+
+import TableBox from "./TableBox";
+
 const { Stencil } = Addon;
 const { Rect, Circle } = Shape;
 export default {
@@ -32,8 +32,7 @@ export default {
       canRedo: false,
       graph: null,
       history: null,
-      stencil: null,
-      stencilContainer: null,
+      isMove: false,
     };
   },
   methods: {
@@ -49,8 +48,8 @@ export default {
     createTableBoxNode(title) {
       return this.graph.createNode({
         shape: "table-box",
-         width: 220,
-  height: 40,
+        width: 220,
+        height: 40,
         attrs: {
           ".title": {
             fill: "#000",
@@ -62,12 +61,8 @@ export default {
   },
   mounted() {
     this.graph = new Graph({
-      container: this.$refs[this.container],
+      container: this.$refs["container"],
       grid: true,
-      snapline: {
-        enabled: true,
-        sharp: true,
-      },
       scroller: {
         enabled: true,
         pageVisible: false,
@@ -77,119 +72,137 @@ export default {
       history: {
         enabled: true,
       },
-      // resizing: {
-      //   enabled: false,
-      //   minWidth: 220,
-      //   minHeight: 0,
-      //   maxWidth: 420,
-      //   maxHeight: 520,
-    
+      // interacting: {
+      //   nodeMovable: false,
       // },
     });
 
-    // 新建左边的
-    const stencil = new Stencil({
-      title: "Components",
-      target: this.graph,
-      search: true,
-      collapsable: true,
-      stencilGraphWidth: 200,
-      stencilGraphHeight: 180,
-      groups: [
-        {
-          name: "kafka",
-          title: "kafka",
-        },
-        {
-          name: "mysql",
-          title: "mysql",
-          collapsable: true,
-        },
-      ],
-      getDropNode: (draggingNode, options) => {
-        // const graph = this.graph;
-        return draggingNode.clone();
-      },
-    });
-
-    this.$refs["refStencil"].appendChild(stencil.container);
-    // 添加一些模板节点。
-    const r = new Rect({
-      width: 70,
-      height: 40,
-      attrs: {
-        rect: { fill: "#31D0C6", stroke: "#4B4A67", strokeWidth: 6 },
-        text: { text: "rect", fill: "white" },
-      },
-    });
-
-    const c = new Circle({
-      width: 60,
-      height: 60,
-      attrs: {
-        circle: { fill: "#FE854F", strokeWidth: 6, stroke: "#4B4A67" },
-        text: { text: "ellipse", fill: "white" },
-      },
-    });
-
-    const c2 = new Circle({
-      width: 60,
-      height: 60,
-      attrs: {
-        circle: { fill: "#4B4A67", "stroke-width": 6, stroke: "#FE854F" },
-        text: { text: "ellipse", fill: "white" },
-      },
-    });
-
-    const r2 = new Rect({
-      width: 70,
-      height: 40,
-      attrs: {
-        rect: { fill: "#4B4A67", stroke: "#31D0C6", strokeWidth: 6 },
-        text: { text: "rect", fill: "white" },
-      },
-    });
-
-    const r3 = new Rect({
-      width: 70,
-      height: 40,
-      attrs: {
-        rect: { fill: "#31D0C6", stroke: "#4B4A67", strokeWidth: 6 },
-        text: { text: "rect", fill: "white" },
-      },
-    });
-
-    const c3 = new Circle({
-      width: 60,
-      height: 60,
-      attrs: {
-        circle: { fill: "#FE854F", strokeWidth: 6, stroke: "#4B4A67" },
-        text: { text: "ellipse", fill: "white" },
-      },
-    });
-    // 将模板节点添加到指定的群组中。
-    stencil.load([r, c, c2, r2.clone()], "kafka");
-    stencil.load([c2.clone(), r2, r3, c3], "mysql");
     this.history = this.graph.history;
     this.graph.lockScroller();
-    this.graph.addNode(this.createTableBoxNode("表名称啊 啊啊啊aa"));
+
+    this.tableBox1 = this.graph.addNode({
+      shape: "vue-shape",
+      width: 220,
+      height: 306,
+      x: 100,
+      y: 100,
+      data: {
+        index: 1,
+      },
+      attrs: {
+        body: {
+          width: 220,
+          height: 306,
+        },
+      },
+      component: {
+        template: `<table-box :table-data="tableData" @changemovestatus="changemovestatus" ></table-box>`,
+        data() {
+          return {
+            tableData: {
+              name: "表1",
+              columns: [
+                {
+                  id: "1",
+                  name: "表1字段1",
+                },
+                {
+                  id: "2",
+                  name: "表1字段2",
+                },
+              ],
+            },
+          };
+        },
+        methods: {
+          changemovestatus: (flag) => {
+            this.isMove = flag;
+          },
+        },
+        components: {
+          TableBox,
+        },
+      },
+    });
+
+    this.tableBox2 = this.graph.addNode({
+      shape: "vue-shape",
+      width: 220,
+      height: 306,
+      x: 400,
+      y: 400,
+      data: {
+        index: 2,
+      },
+      attrs: {
+        body: {
+          width: 220,
+          height: 306,
+        },
+      },
+      component: {
+        template: `<table-box :table-data="tableData" @changemovestatus="changemovestatus" ></table-box>`,
+        data() {
+          return {
+            tableData: {
+              name: "表2",
+              columns: [
+                {
+                  id: "1",
+                  name: "表2字段1",
+                },
+                {
+                  id: "2",
+                  name: "表2字段2",
+                },
+              ],
+            },
+          };
+        },
+        methods: {
+          changemovestatus: (flag) => {
+            this.isMove = flag;
+          },
+        },
+        components: {
+          TableBox,
+        },
+      },
+    });
 
     this.graph.history.on("change", (args) => {
       this.canUndo = this.graph.history.canUndo();
       this.canRedo = this.graph.history.canRedo();
     });
 
-    this.graph.on("node:add", (args) => {
-      // 监听点击事件
-      console.log(args);
+    this.graph.on("node:mousedown", (args) => {
+      if (args.e.target.hasAttribute("data-rbd-draggable-id")) {
+        // 取消物体移动
+        args.view.setInteracting(false);
+        // 取消画布平移
+        this.graph.disablePanning();
+      }
+    });
+    this.graph.on("cell:mouseup", (args) => {
+      args.view.setInteracting(true);
+      // // 取消画布平移
+      this.graph.enablePanning();
     });
 
-        this.graph.on("node:mousewheel", (args) => {
-      // 监听点击事件
-      console.log(args);
-    });
+    this.graph.on("node:mouseenter", (args) => {
+      if (this.isMove) {
+        if (args.e.target.hasAttribute("data-rbd-draggable-id")) {
+          console.log(args.e.target);
 
-    
+          this.graph.addEdge({
+            shape: "edge",
+            source: this.tableBox1,
+            target: this.tableBox2,
+            targetMarker: "block",
+          });
+        }
+      }
+    });
   },
 };
 </script>
@@ -221,7 +234,6 @@ export default {
   top: 10px;
   left: 200px;
 }
-
 </style>
 
 <style>
