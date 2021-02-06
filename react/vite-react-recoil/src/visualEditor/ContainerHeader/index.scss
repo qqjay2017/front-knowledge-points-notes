@@ -1,0 +1,8 @@
+@import "../variable";
+.visual-editor-header {
+  position: absolute;
+  left: $menuSize;
+  top: 0;
+  right: $operatorSize;
+  height: $headSize;
+}

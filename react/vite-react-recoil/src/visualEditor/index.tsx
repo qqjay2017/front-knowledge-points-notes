@@ -4,6 +4,12 @@ import atoms from "../store/atoms";
 import {addItem, replaceItemAtIndex, replaceItemWithCompare} from "../store/utils";
 import Block from "./Block";
 
+import './index.scss'
+import MenuList from "./MenuList";
+import Operator from "./Operator";
+import ContainerHeader from "./ContainerHeader";
+import Container from "./Container";
+
 function VisualEditor() {
     const [blocks, setBlocks] = useRecoilState(atoms.block);
 
@@ -38,18 +44,16 @@ function VisualEditor() {
     const handleRemoveItem = useMemo(() => {
         return (color: string) => {
             setBlocks(blocks => {
-                return replaceItemWithCompare(blocks, (block)=>block.color == color)
+                return replaceItemWithCompare(blocks, (block) => block.color == color)
             })
         }
     }, [])
     return (
-        <div>
-            <button onClick={handleAddItem}>add</button>
-            {blocks.map((block) => (
-                <Block color={block.color} key={block.color}
-                       handleRemoveItem={handleRemoveItem}
-                       handleClick={handleClick}></Block>
-            ))}
+        <div className="visual-editor">
+            <MenuList />
+            <Operator />
+            <ContainerHeader />
+            <Container />
         </div>
     );
 }

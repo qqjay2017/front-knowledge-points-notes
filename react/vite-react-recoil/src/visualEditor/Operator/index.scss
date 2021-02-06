@@ -1,0 +1,11 @@
+@import "../variable";
+.visual-editor-operator {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: $operatorSize;
+  background-color: #fff;
+  overflow-x: hidden;
+  overflow-y: auto;
+}

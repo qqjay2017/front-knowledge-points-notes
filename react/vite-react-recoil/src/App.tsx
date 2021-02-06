@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-
 import { RecoilRoot } from "recoil";
-
 import VisualEditor from "./visualEditor/index";
-
-
+import './App.scss'
 
 function App() {
   return (

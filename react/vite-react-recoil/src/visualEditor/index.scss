@@ -1,6 +1,18 @@
-.block {
-    width: 300px;
-    height: 300px;
-    font-size: 30px;
-    border: 1px solid #ccc;
+.visual-editor {
+  position: fixed;
+  top: 20px;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  background-color: white;
+  &:before {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(black,0.1);
+    content: "";
+
+  }
 }

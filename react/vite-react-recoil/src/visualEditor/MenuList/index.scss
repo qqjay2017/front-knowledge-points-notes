@@ -1,0 +1,52 @@
+@import "../variable";
+.visual-editor-menu {
+  position: absolute;
+  width: $menuSize;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background-color: white;
+  padding-bottom: 60px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  .visual-editor-menu-item {
+    position: relative;
+    width: 200px;
+    margin-left: 10px;
+    border: solid 2px $ibl;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding:10px 20px;
+    box-sizing: border-box;
+    user-select: none;
+    margin-top: 20px;
+    &:after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      content: "";
+      z-index: 12;
+    }
+    &:hover {
+      border-color: deepskyblue;
+      cursor: move;
+    }
+    .visual-editor-menuItem-label {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: $primary;
+      color: white;
+      padding:4px 8px;
+      z-index: 12;
+
+    }
+    .visual-editor-menu-item-content {
+      text-align: center;
+    }
+  }
+}
