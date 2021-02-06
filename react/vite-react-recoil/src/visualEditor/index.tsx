@@ -1,42 +1,57 @@
-import React, { useMemo, useState } from "react";
-import { useRecoilState } from "recoil";
+import React, {useMemo, useState} from "react";
+import {useRecoilState} from "recoil";
 import atoms from "../store/atoms";
+import {addItem, replaceItemAtIndex, replaceItemWithCompare} from "../store/utils";
+import Block from "./Block";
 
 function VisualEditor() {
-  const [blocks, setBlocks] = useRecoilState(atoms.block);
+    const [blocks, setBlocks] = useRecoilState(atoms.block);
 
-  function replaceItemAtIndex<T>(arr: T[], index: number, newValue: T) {
-    return [...arr.slice(0, index), newValue, ...arr.slice(index + 1)];
-  }
-  const [, forceUpdate] = useState(0);
 
-  const rgb = useMemo(() => {
-    return () => {
-      const r = Math.floor(Math.random() * 256);
-      const g = Math.floor(Math.random() * 256);
-      const b = Math.floor(Math.random() * 256);
-      return "rgb(" + r + "," + g + "," + b + ")";
-    };
-  }, []);
-  const handleClick = useMemo(() => {
-    return (index: number) => {
-      blocks[index] = { color: rgb(), text: "111" };
-      forceUpdate((n) => n + 1);
-    };
-  }, []);
-  return (
-    <div>
-      {blocks.map((block, index) => (
-        <div
-          key={block.color}
-          style={{ color: block.color }}
-          onClick={() => handleClick(index)}
-        >
-          {block.color}
+    const rgb = useMemo(() => {
+        return () => {
+            const r = Math.floor(Math.random() * 256);
+            const g = Math.floor(Math.random() * 256);
+            const b = Math.floor(Math.random() * 256);
+            return "rgb(" + r + "," + g + "," + b + ")";
+        };
+    }, []);
+    const handleClick = useMemo(() => {
+        return (color: string) => {
+            setBlocks(blocks => {
+                console.log(blocks, 'blocks')
+                return replaceItemWithCompare(blocks,
+                    (block) => block.color == color,
+                    {color: rgb(), text: "111"})
+            })
+        };
+    }, []);
+
+    const handleAddItem = useMemo(() => {
+        return () => {
+            setBlocks(block => {
+                return addItem(block, {color: rgb(), text: "111"})
+            })
+        }
+    }, [])
+
+    const handleRemoveItem = useMemo(() => {
+        return (color: string) => {
+            setBlocks(blocks => {
+                return replaceItemWithCompare(blocks, (block)=>block.color == color)
+            })
+        }
+    }, [])
+    return (
+        <div>
+            <button onClick={handleAddItem}>add</button>
+            {blocks.map((block) => (
+                <Block color={block.color} key={block.color}
+                       handleRemoveItem={handleRemoveItem}
+                       handleClick={handleClick}></Block>
+            ))}
         </div>
-      ))}
-    </div>
-  );
+    );
 }
 
 export default VisualEditor;
