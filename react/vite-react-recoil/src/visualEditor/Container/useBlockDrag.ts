@@ -25,13 +25,28 @@ export function useBlockDrag(block: VisualEditorBlockData) {
 
     const mouseupEventListener = useMemo(()=>{
         return (e:MouseEvent)=>{
-
+            const durX = e.clientX - dragData.current.startX;
+            const durY = e.clientY - dragData.current.startY;
+            setBlocks(blocks=> blocks.map(block=>{
+                if(block.focus){
+                    return {
+                        ...block,
+                        transform:`translate( 0, 0)`,
+                        left:block.left + durX,
+                        top:block.top+durY
+                    }
+                }else  {
+                    return  block
+                }
+            }))
+            document.removeEventListener('mousemove',mousemoveEventListener)
+            document.removeEventListener('mouseup',mouseupEventListener)
         }
     },[])
 
     const onMouseDown = useMemo(() => {
         return (e: React.MouseEvent<HTMLDivElement>) => {
-
+            e.stopPropagation()
             if (e.shiftKey && !block.focus) {
                 setBlocks(blocks => replaceItemWithCompare(blocks,
                     (b) => b.no == block.no,
@@ -51,7 +66,7 @@ export function useBlockDrag(block: VisualEditorBlockData) {
                 document.addEventListener('mousemove',mousemoveEventListener)
                 document.addEventListener('mouseup',mouseupEventListener)
             }
-            // 单击未选中
+            // 单击未选中,自己设为focus 其他为false
             if (!e.shiftKey && !block.focus) {
                 // 未选中的
                 // 设定只有这个是focus,其他都取消focus

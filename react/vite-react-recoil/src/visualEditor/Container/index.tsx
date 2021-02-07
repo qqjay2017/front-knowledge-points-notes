@@ -1,21 +1,21 @@
 import React, {memo , FC} from "react";
 import './index.scss'
 import {useRecoilValue} from "recoil";
-import containerAtom from './atoms/containerAtom'
+import containerAtom, {VisualEditorBlockData} from './atoms/containerAtom'
 import {useContainerDrop} from "./useContainerDrop";
 import Block from "./Block";
 import {useMenuRegistry} from "../MenuList/useMenuRegistry";
 import {VisualEditorComponent} from "../../plugins/menu.registry";
 
 interface PageProps {
+    blocks:VisualEditorBlockData[],
     componentMap:Record<string, VisualEditorComponent>
 }
 
 const Container:FC<PageProps> = memo((props) => {
-    const { componentMap } = props
+    const { componentMap , blocks} = props
     const containerStyle = useRecoilValue(containerAtom.containerStyleSelector)
-    const blocks =  useRecoilValue(containerAtom.blocksAtom)
-    const {dragenter, dragleave, dragover , drop} = useContainerDrop()
+    const {dragenter, dragleave, dragover , drop , onContainerMousedown} = useContainerDrop()
     return <div className="visual-editor-container">
         <div className="visual-editor-content">
             <div className="container"
@@ -24,6 +24,7 @@ const Container:FC<PageProps> = memo((props) => {
                  onDragLeave={dragleave}
                  onDragOver={dragover}
                  onDrop={drop}
+                 onMouseDown={onContainerMousedown}
             >
                 {blocks.map(block=><Block key={block.no}
                                           block={block}

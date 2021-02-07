@@ -1,8 +1,10 @@
 import {useMemo} from "react";
-import {useRecoilValue, useSetRecoilState} from "recoil";
+import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
 import visualEditorAtom from '../visualEditor.atom'
 import containerAtom from "./atoms/containerAtom";
 import {VisualEditorComponent} from "../../plugins/menu.registry";
+import historyAtom from '../ContainerHeader/history.atom'
+
 function createNewBlock({ component, top, left, no }:{
     component:VisualEditorComponent;
     top: number;
@@ -22,7 +24,9 @@ function createNewBlock({ component, top, left, no }:{
 
 export function useContainerDrop() {
     const droppingComponent = useRecoilValue(visualEditorAtom.droppingComponent)
-    const setBlocks = useSetRecoilState(containerAtom.blocksAtom)
+    const { focusBlock } =  useRecoilValue(containerAtom.blockSelector)
+    const [blocks,setBlocks] = useRecoilState(containerAtom.blocksAtom)
+    const setHistory = useSetRecoilState(historyAtom.setSelector)
     const dragenter = useMemo(() => {
         return (e: React.DragEvent<HTMLDivElement>) => {
              e.dataTransfer.dropEffect = 'copy'
@@ -43,6 +47,9 @@ export function useContainerDrop() {
 
     const drop = useMemo(() => {
         return (e: React.DragEvent<HTMLDivElement>) => {
+
+            setHistory({newPresent:droppingComponent})
+
             setBlocks(blocks=>{
                 const lastNo = blocks.length > 0 ? blocks[blocks.length - 1].no : 0;
                 return [...blocks,createNewBlock(
@@ -55,12 +62,23 @@ export function useContainerDrop() {
                 )]
             })
         }
-    }, [droppingComponent])
+    }, [droppingComponent,blocks])
+
+    const onContainerMousedown = useMemo(()=>{
+
+        return (e:React.MouseEvent<HTMLDivElement>)=>{
+            if(!focusBlock || focusBlock.length ==0){
+                return false
+            }
+            setBlocks(blocks=>blocks.map(block=>({...block,focus:false})))
+        }
+    },[focusBlock])
 
     return {
         dragenter,
         dragleave,
         dragover,
-        drop
+        drop,
+        onContainerMousedown
     }
 }
