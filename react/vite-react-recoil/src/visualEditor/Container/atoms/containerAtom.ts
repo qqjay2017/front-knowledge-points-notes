@@ -23,6 +23,7 @@ const containerAtom = atom({
 
 
 
+
 const blocksAtom = atom<VisualEditorBlockData[]>({
     key: 'blocksAtom',
     default: []
@@ -42,5 +43,6 @@ const containerStyleSelector = selector(
 
 export default  {
     containerAtom,
-    containerStyleSelector
+    containerStyleSelector,
+    blocksAtom
 }

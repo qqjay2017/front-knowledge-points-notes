@@ -20,7 +20,9 @@ export function replaceItemAtIndex<T>(arr: T[], index: number, newValue?: T | un
  * @param newValue  要替换的值,有则替换,无则移除
  */
 
-export function replaceItemWithCompare<T>(arr: T[], compare: (item: T) => boolean, newValue?: T | undefined) {
+
+export function replaceItemWithCompare<T>(arr: T[], compare: (item: T) => boolean, newValue?: Partial<T> | undefined) {
+
     if (newValue == undefined) {
         // 移除符合compare条件的
         return arr.filter(item => !compare(item))
@@ -28,7 +30,11 @@ export function replaceItemWithCompare<T>(arr: T[], compare: (item: T) => boolea
         // 找到符合compare结果的进行替换
         return arr.map((item) => {
             if (compare(item)) {
-                return newValue
+                return {
+                    // 覆盖模式
+                    ...item,
+                    ...newValue
+                }
             } else {
                 return item
             }

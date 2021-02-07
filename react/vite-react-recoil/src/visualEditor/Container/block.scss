@@ -1,0 +1,27 @@
+@import "../variable";
+.block {
+  position: absolute;
+  &:after {
+    $space:0px;
+    position: absolute;
+    top: -$space;
+    left: -$space;
+    right: -$space;
+    bottom: -$space;
+    content: "";
+    border: 0;
+  }
+  &.block-focus {
+    user-select: none;
+    &:after {
+      $space:3px;
+      position: absolute;
+      top: -$space;
+      left: -$space;
+      right: -$space;
+      bottom: -$space;
+      content: "";
+      border: dashed 1px $primary;
+    }
+  }
+}
