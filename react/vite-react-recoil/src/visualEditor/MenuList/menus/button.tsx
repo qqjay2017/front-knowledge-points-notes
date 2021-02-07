@@ -1,10 +1,12 @@
 import React from "react";
+import  { Button } from 'antd'
+
 const ButtonRender = ()=>{
-    return <button>按钮</button>
+    return <Button>按钮</Button>
 }
 
 const ButtonPreview = ()=>{
-    return <button>按钮</button>
+    return <Button>按钮</Button>
 }
 
 export default {

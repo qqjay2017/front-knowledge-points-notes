@@ -1,5 +1,10 @@
 import {useMemo} from "react";
 
+function createBlock() {
+
+}
+
+
 export function useContainerDrop() {
     const dragenter = useMemo(() => {
         return (e: React.DragEvent<HTMLDivElement>) => {
