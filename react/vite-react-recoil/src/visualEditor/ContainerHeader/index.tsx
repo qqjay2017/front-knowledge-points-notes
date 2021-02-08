@@ -1,4 +1,4 @@
-import React, {FC, memo, useEffect, useMemo} from "react";
+import React, {FC, memo, useCallback, useEffect, useMemo, useRef} from "react";
 import './index.scss'
 import {Button, Tooltip} from "antd";
 import {SetterOrUpdater, useRecoilValue,} from "recoil";
@@ -24,62 +24,65 @@ interface PageProps {
 const ContainerHeader: FC<PageProps> = memo((props) => {
     const {blocks, setBlocks, commandsMap } = props
 
-    const onKeydown = useMemo(() => {
-        return (e: KeyboardEvent) => {
-            e.stopPropagation()
-            e.preventDefault()
-            if (document.activeElement !== document.body) {
-                return
-            }
-            const keys: string[] = []
-            // 'ctrl+shift+alt+e' 按顺序走
-            if (e.ctrlKey || e.metaKey) {
-                keys.push('ctrl')
-            }
-            if (e.shiftKey) {
-                keys.push('shift')
-            }
-            if (e.altKey) {
-                keys.push('alt')
-            }
-            if (e.keyCode) {
-                keys.push(KeyboardCode[e.keyCode])
-            }
-            if (keys.length == 0) {
-                return;
-            }
-            const keyString = keys.join('+')
+   const blockFocus =  useRecoilValue(containerAtom.blockFocusSelector)
 
-            const button = buttons.find(b => {
-                let isSame = false;
-                if (typeof b.keyboard == 'string') {
-                    isSame = !!(b.keyboard === keyString);
-                } else if (Array.isArray(b.keyboard)) {
-                    isSame = b.keyboard.indexOf(keyString) >= 0
-                }
-                if (isSame) {
-                    return true
-                } else {
-                    return false
-                }
-            })
-            if(button){
-                button.handle()
-            }else {
+    const onKeydown = useCallback((e: KeyboardEvent) => {
+        e.stopPropagation()
+        e.preventDefault()
+        if (document.activeElement !== document.body) {
+            return
+        }
+        const keys: string[] = []
+        // 'ctrl+shift+alt+e' 按顺序走
+        if (e.ctrlKey || e.metaKey) {
+            keys.push('ctrl')
+        }
+        if (e.shiftKey) {
+            keys.push('shift')
+        }
+        if (e.altKey) {
+            keys.push('alt')
+        }
+        if (e.keyCode) {
+            keys.push(KeyboardCode[e.keyCode])
+        }
+        if (keys.length == 0) {
+            return;
+        }
+        const keyString = keys.join('+')
+        const button = buttons.find(b => {
+            let isSame = false;
+            if (typeof b.keyboard == 'string') {
+                isSame = !!(b.keyboard === keyString);
+            } else if (Array.isArray(b.keyboard)) {
+                isSame = !!(b.keyboard.indexOf(keyString) >= 0)
+            }
+
+            if (isSame) {
+                return true
+            } else {
                 return false
             }
+        })
+        if(button){
+            button.handle()
+        }else {
+            return false
         }
     }, [blocks])
 
+    /**
+     * TODO 如何才能不重新addEvent?
+     * */
     useEffect(() => {
 
         window.addEventListener('keydown', onKeydown)
         return () => {
             window.removeEventListener('keydown', onKeydown)
         }
-    }, [])
+    }, [blocks])
 
-    const {unFocusBlock , focusBlock} = useRecoilValue(containerAtom.blockSelector)
+
 
     const buttons = useMemo(() => {
         return [
@@ -110,7 +113,7 @@ const ContainerHeader: FC<PageProps> = memo((props) => {
                 key: 'del',
                 keyboard: ['delete', 'backspace'],
                 handle: () => {
-                    if(focusBlock.length==0) return
+                    if(blockFocus.length==0) return
                     commandsMap.current.del({
                         before: blocks,
                         after: produce(blocks, draft => {
@@ -121,7 +124,7 @@ const ContainerHeader: FC<PageProps> = memo((props) => {
                 }
             },
         ]
-    }, [blocks])
+    }, [blocks,setBlocks])
 
     return <div className="visual-editor-header">
         {buttons.map(button => (

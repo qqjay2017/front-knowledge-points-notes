@@ -69,7 +69,6 @@ export function useHistory() {
             setBlocks(before)
         },
         redo:({before,after}:any)=>{
-
             setBlocks(after)
         },
     })

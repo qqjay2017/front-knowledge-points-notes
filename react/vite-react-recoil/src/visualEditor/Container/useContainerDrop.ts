@@ -25,7 +25,7 @@ function createNewBlock({ component, top, left, no }:{
 
 export function useContainerDrop(commandsMap:any) {
     const droppingComponent = useRecoilValue(visualEditorAtom.droppingComponent)
-    const { focusBlock } =  useRecoilValue(containerAtom.blockSelector)
+    const focusBlock  =  useRecoilValue(containerAtom.blockFocusSelector)
     const [blocks,setBlocks] = useRecoilState(containerAtom.blocksAtom)
     const dragenter = useMemo(() => {
         return (e: React.DragEvent<HTMLDivElement>) => {

@@ -42,15 +42,11 @@ const containerStyleSelector = selector(
 )
 
 
-const blockSelector = selector(
+const blockFocusSelector = selector(
     {
-        key: 'blockSelector',
+        key: 'blockFocusSelector',
         get: ({get}) => {
-            const blocks = get(blocksAtom)
-            return {
-                focusBlock : blocks.filter(block=>block.focus),
-                unFocusBlock :  blocks.filter(block=>!block.focus),
-            }
+            return get(blocksAtom).filter(block=>block.focus)
         }
     }
 )
@@ -60,5 +56,5 @@ export default  {
     containerAtom,
     containerStyleSelector,
     blocksAtom,
-    blockSelector
+    blockFocusSelector
 }
