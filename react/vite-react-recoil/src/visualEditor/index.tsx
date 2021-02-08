@@ -15,7 +15,7 @@ import {useHistory} from "./useHistory";
 const VisualEditor = memo(() => {
     const {menuList , componentMap} =  useMenuRegistry(true)
     const [blocks, setBlocks] = useRecoilState(containerAtom.blocksAtom)
-    const {commandsMap} = useHistory()
+    const {commandsMap , curIndex} = useHistory()
     return (
         <div className="visual-editor">
             <MenuList menuList={menuList} />

@@ -52,6 +52,8 @@ export function useHistory() {
         name:'redo',
         followQueue:false,
         redo:()=>{
+            // redo的拒绝条件
+            if( curIndex.current >= queue.current.length-1) return
             curIndex.current += 1
             const queueItem = queue.current[curIndex.current]
             if(curIndex.current == -1 || !queueItem) return
@@ -84,7 +86,8 @@ export function useHistory() {
     })
 
     return {
-        commandsMap
+        commandsMap,
+        curIndex
     }
 
 }
