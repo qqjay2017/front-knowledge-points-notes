@@ -1,7 +1,7 @@
 import {useMemo} from "react";
 import {VisualEditorComponent} from "../../plugins/menu.registry";
 import {useResetRecoilState, useSetRecoilState} from 'recoil'
-import visualEditorAtom from '../visualEditor.atom'
+import visualEditorAtom from '../atoms/visualEditor.atom'
 
 function useMenuDrag() {
 

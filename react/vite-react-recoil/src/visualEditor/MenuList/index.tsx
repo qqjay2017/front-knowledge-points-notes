@@ -1,7 +1,6 @@
 import React, {FC, memo} from "react";
 
 import './index.scss'
-import {useMenuRegistry} from "./useMenuRegistry";
 import useMenuDrag from "./useMenuDrag";
 import {VisualEditorComponent} from "../../plugins/menu.registry";
 

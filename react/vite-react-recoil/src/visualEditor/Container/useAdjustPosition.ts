@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import {useSetRecoilState} from "recoil";
-import containerAtom, {VisualEditorBlockData} from "./atoms/containerAtom";
+import containerAtom, {VisualEditorBlockData} from "../atoms/container.atom";
 import {replaceItemWithCompare} from "../../store/utils";
 export function useAdjustPosition(block:VisualEditorBlockData,ref:React.RefObject<HTMLDivElement>){
    const setBlocks =   useSetRecoilState(containerAtom.blocksAtom)

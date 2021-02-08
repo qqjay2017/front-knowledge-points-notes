@@ -7,7 +7,7 @@ import ContainerHeader from "./ContainerHeader";
 import Container from "./Container";
 import {useMenuRegistry} from "./MenuList/useMenuRegistry";
 import {useRecoilState} from "recoil";
-import containerAtom from "./Container/atoms/containerAtom";
+import containerAtom from "./atoms/container.atom";
 
 const VisualEditor = memo(() => {
     const {menuList , componentMap} =  useMenuRegistry(true)

@@ -1,10 +1,9 @@
 import React, {memo , FC} from "react";
 import './index.scss'
 import {useRecoilValue} from "recoil";
-import containerAtom, {VisualEditorBlockData} from './atoms/containerAtom'
+import containerAtom, {VisualEditorBlockData} from '../atoms/container.atom'
 import {useContainerDrop} from "./useContainerDrop";
 import Block from "./Block";
-import {useMenuRegistry} from "../MenuList/useMenuRegistry";
 import {VisualEditorComponent} from "../../plugins/menu.registry";
 
 interface PageProps {
