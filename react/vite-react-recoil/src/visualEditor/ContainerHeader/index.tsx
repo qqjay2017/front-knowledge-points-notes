@@ -53,9 +53,9 @@ const ContainerHeader: FC<PageProps> = memo((props) => {
         const button = buttons.find(b => {
             let isSame = false;
             if (typeof b.keyboard == 'string') {
-                isSame = !!(b.keyboard === keyString);
+                isSame = !!(b.keyboard && b.keyboard === keyString);
             } else if (Array.isArray(b.keyboard)) {
-                isSame = !!(b.keyboard.indexOf(keyString) >= 0)
+                isSame = !!(b.keyboard && b.keyboard.indexOf(keyString) >= 0)
             }
 
             if (isSame) {
@@ -121,6 +121,37 @@ const ContainerHeader: FC<PageProps> = memo((props) => {
                         })
                     })
 
+                }
+            },
+            {
+                name: '全选',
+                icon: 'icon-entypomenu',
+                tooltip: '全选(ctrl+a)',
+                key: 'selectAll',
+                keyboard: 'ctrl+a',
+                handle: () => {
+                    commandsMap.current.set({
+                        before: blocks,
+                        after:produce(blocks,draft=>{
+                            return draft.map(d=>({
+                                ...d,
+                                focus:true
+                            }))
+                        })
+                    })
+                }
+            },
+            {
+                name: '清空',
+                icon: 'icon-reset',
+                tooltip: '清空',
+                key: 'reset',
+                keyboard: '',
+                handle: () => {
+                    commandsMap.current.set({
+                        before: blocks,
+                        after:[]
+                    })
                 }
             },
         ]

@@ -84,6 +84,17 @@ export function useHistory() {
         },
     })
 
+    registry({
+        name:'set',
+        followQueue:true,
+        undo:({before,after})=>{
+            setBlocks(before)
+        },
+        redo:({before,after}:any)=>{
+            setBlocks(after)
+        },
+    })
+
     return {
         commandsMap,
         curIndex
