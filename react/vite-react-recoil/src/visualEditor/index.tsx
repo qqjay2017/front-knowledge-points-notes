@@ -8,11 +8,14 @@ import Container from "./Container";
 import {useMenuRegistry} from "./MenuList/useMenuRegistry";
 import {useRecoilState} from "recoil";
 import containerAtom from "./atoms/container.atom";
+import {useHistory} from "./useHistory";
+
+
 
 const VisualEditor = memo(() => {
     const {menuList , componentMap} =  useMenuRegistry(true)
     const [blocks, setBlocks] = useRecoilState(containerAtom.blocksAtom)
-
+    const {commandsMap} = useHistory()
     return (
         <div className="visual-editor">
             <MenuList menuList={menuList} />
@@ -22,10 +25,13 @@ const VisualEditor = memo(() => {
             <ContainerHeader
                 blocks={blocks}
                 setBlocks={setBlocks}
+                commandsMap={commandsMap}
             />
             <Container
                 blocks={blocks}
-                componentMap={componentMap} />
+                componentMap={componentMap}
+                commandsMap={commandsMap}
+            />
         </div>
     );
 })

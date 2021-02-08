@@ -1,11 +1,12 @@
 import containerAtom, {VisualEditorBlockData} from "../atoms/container.atom";
 import {useMemo, useRef} from "react";
-import {useSetRecoilState} from "recoil";
+import {useRecoilState, useSetRecoilState} from "recoil";
 import {replaceItemWithCompare} from "../../store/utils";
+import produce from "immer"
 
-export function useBlockDrag(block: VisualEditorBlockData) {
+export function useBlockDrag(block: VisualEditorBlockData,commandsMap:any) {
 
-    const setBlocks = useSetRecoilState(containerAtom.blocksAtom)
+    const [ blocks , setBlocks] = useRecoilState(containerAtom.blocksAtom)
     const dragData = useRef<{ startX: number; startY: number; }>({
         startX: 0,
         startY: 0
@@ -18,7 +19,7 @@ export function useBlockDrag(block: VisualEditorBlockData) {
             setBlocks(blocks=>replaceItemWithCompare(
                 blocks,
                 b=>b.focus,
-                {transform:`translate( ${durX}px, ${durY}px)`}
+                {transform:`translate(${durX}px,${durY}px)`}
             ))
         }
     },[])
@@ -27,22 +28,27 @@ export function useBlockDrag(block: VisualEditorBlockData) {
         return (e:MouseEvent)=>{
             const durX = e.clientX - dragData.current.startX;
             const durY = e.clientY - dragData.current.startY;
-            setBlocks(blocks=> blocks.map(block=>{
-                if(block.focus){
-                    return {
-                        ...block,
-                        transform:`translate( 0, 0)`,
-                        left:block.left + durX,
-                        top:block.top+durY
+
+            const newBlocks = produce(blocks,draft=>{
+                return   draft.map(d=>{
+
+                    if(d.focus){
+                        return {
+                            ...d,
+                            transform:`translate(0,0)`,
+                            left:d.left + durX,
+                            top:d.top+durY
+                        }
+                    }else {
+                        return  d
                     }
-                }else  {
-                    return  block
-                }
-            }))
+                })
+            })
+            commandsMap.current.drag({before:blocks,after:newBlocks})
             document.removeEventListener('mousemove',mousemoveEventListener)
             document.removeEventListener('mouseup',mouseupEventListener)
         }
-    },[])
+    },[blocks,commandsMap])
 
     const onMouseDown = useMemo(() => {
         return (e: React.MouseEvent<HTMLDivElement>) => {

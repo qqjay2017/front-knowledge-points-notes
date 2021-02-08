@@ -11,7 +11,6 @@ interface PageProps {
 const MenuList:FC<PageProps> = memo(( props ) => {
     const {menuList} = props
     const {onDragStart , onDragend} = useMenuDrag()
-    console.log('渲染menuList')
     return <div className="visual-editor-menu">
         {menuList.map(menu => (<div className="visual-editor-menu-item"
                                     draggable={true}

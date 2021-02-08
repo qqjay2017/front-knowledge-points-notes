@@ -7,14 +7,15 @@ import Block from "./Block";
 import {VisualEditorComponent} from "../../plugins/menu.registry";
 
 interface PageProps {
-    blocks:VisualEditorBlockData[],
-    componentMap:Record<string, VisualEditorComponent>
+    blocks:VisualEditorBlockData[]
+    componentMap:Record<string, VisualEditorComponent>;
+    commandsMap:any
 }
 
 const Container:FC<PageProps> = memo((props) => {
-    const { componentMap , blocks} = props
+    const { componentMap , blocks , commandsMap} = props
     const containerStyle = useRecoilValue(containerAtom.containerStyleSelector)
-    const {dragenter, dragleave, dragover , drop , onContainerMousedown} = useContainerDrop()
+    const {dragenter, dragleave, dragover , drop , onContainerMousedown} = useContainerDrop(commandsMap)
     return <div className="visual-editor-container">
         <div className="visual-editor-content">
             <div className="container"
@@ -27,11 +28,16 @@ const Container:FC<PageProps> = memo((props) => {
             >
                 {blocks.map(block=><Block key={block.no}
                                           block={block}
+                                          commandsMap={commandsMap}
                                           render={componentMap[block.componentKey].render}
                 />)}
             </div>
         </div>
     </div>
 })
+
+
+1
+
 
 export default Container

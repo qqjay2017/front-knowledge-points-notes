@@ -4,6 +4,8 @@ import visualEditorAtom from '../atoms/visualEditor.atom'
 import containerAtom from "../atoms/container.atom";
 import {VisualEditorComponent} from "../../plugins/menu.registry";
 
+import produce from "immer"
+
 function createNewBlock({ component, top, left, no }:{
     component:VisualEditorComponent;
     top: number;
@@ -16,12 +18,12 @@ function createNewBlock({ component, top, left, no }:{
         top, left,
         focus: false,
         no,
-        transform:'translate(0, 0)'
+        transform:'translate(0,0)'
     };
 }
 
 
-export function useContainerDrop() {
+export function useContainerDrop(commandsMap:any) {
     const droppingComponent = useRecoilValue(visualEditorAtom.droppingComponent)
     const { focusBlock } =  useRecoilValue(containerAtom.blockSelector)
     const [blocks,setBlocks] = useRecoilState(containerAtom.blocksAtom)
@@ -45,22 +47,21 @@ export function useContainerDrop() {
 
     const drop = useMemo(() => {
         return (e: React.DragEvent<HTMLDivElement>) => {
-
-
-
-            setBlocks(blocks=>{
-                const lastNo = blocks.length > 0 ? blocks[blocks.length - 1].no : 0;
-                return [...blocks,createNewBlock(
-                    {
-                        component:droppingComponent,
-                        top: e.nativeEvent.offsetY,
-                        left: e.nativeEvent.offsetX,
-                        no: lastNo + 1,
-                    }
-                )]
+            const lastNo = blocks.length > 0 ? blocks[blocks.length - 1].no : 0;
+            const newBlock = produce(blocks,draft =>{
+                 draft.push(createNewBlock(
+                  {
+                      component:droppingComponent,
+                      top: e.nativeEvent.offsetY,
+                      left: e.nativeEvent.offsetX,
+                      no: lastNo + 1,
+                  }
+              ))
             })
+            commandsMap.current.drag({before:blocks,after:newBlock})
+
         }
-    }, [droppingComponent,blocks])
+    }, [droppingComponent,blocks,commandsMap])
 
     const onContainerMousedown = useMemo(()=>{
 
