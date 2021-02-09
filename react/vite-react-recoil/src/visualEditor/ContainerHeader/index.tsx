@@ -1,12 +1,12 @@
-import  {FC, memo, useCallback, useEffect, useMemo, useRef} from "react";
+import {FC, memo, useCallback, useEffect, useMemo, useRef} from "react";
 import './index.scss'
-import {Button, Tooltip} from "antd";
-import {SetterOrUpdater, useRecoilValue,} from "recoil";
+import {Button, notification, Tooltip, Input, message} from "antd";
+import {SetterOrUpdater, useRecoilState, useRecoilValue,} from "recoil";
 import containerAtom, {VisualEditorBlockData} from "../atoms/container.atom";
 import {createFromIconfontCN} from '@ant-design/icons';
 
 import {KeyboardCode} from "./keyboard-code";
-
+import dialogBaseService from "../service/dialogBaseService";
 
 const IconFont = createFromIconfontCN({
     scriptUrl: 'src/iconfont/iconfont.js',
@@ -35,6 +35,8 @@ const ContainerHeader: FC<PageProps> = memo((props) => {
     const {blocks, setBlocks, commandsMap} = props
 
     const blockFocus = useRecoilValue(containerAtom.blockFocusSelector)
+
+    const [containerModel,setContainerModel] = useRecoilState(containerAtom.containerAtom)
 
     const onKeydown = useCallback((e: KeyboardEvent) => {
 
@@ -76,11 +78,14 @@ const ContainerHeader: FC<PageProps> = memo((props) => {
         if (button) {
             e.stopPropagation()
             e.preventDefault()
+
             button.handle()
         } else {
             return false
         }
     }, [blocks])
+
+    const importDialogText = useRef<string>('')
 
     /**
      * TODO 如何才能不重新addEvent?
@@ -103,6 +108,11 @@ const ContainerHeader: FC<PageProps> = memo((props) => {
                 key: 'undo',
                 keyboard: 'ctrl+z',
                 handle: () => {
+                    const args = {
+                        message: '执行撤销操作',
+                        duration: 0.8,
+                    };
+                    notification.open(args);
                     commandsMap.current.undo()
                 }
             },
@@ -113,6 +123,11 @@ const ContainerHeader: FC<PageProps> = memo((props) => {
                 key: 'redo',
                 keyboard: 'ctrl+y',
                 handle: () => {
+                    const args = {
+                        message: '执行恢复操作',
+                        duration: 0.8,
+                    };
+                    notification.open(args);
                     commandsMap.current.redo()
                 }
             },
@@ -124,6 +139,11 @@ const ContainerHeader: FC<PageProps> = memo((props) => {
                 keyboard: ['delete', 'backspace'],
                 handle: () => {
                     if (blockFocus.length == 0) return
+                    const args = {
+                        message: '执行删除操作',
+                        duration: 0.8,
+                    };
+                    notification.open(args);
                     commandsMap.current.del({
                         before: blocks,
                         after: produce(blocks, draft => {
@@ -140,6 +160,11 @@ const ContainerHeader: FC<PageProps> = memo((props) => {
                 key: 'selectAll',
                 keyboard: 'ctrl+a',
                 handle: () => {
+                    const args = {
+                        message: '执行全选操作',
+                        duration: 0.8,
+                    };
+                    notification.open(args);
                     commandsMap.current.set({
                         before: blocks,
                         after: produce(blocks, draft => {
@@ -158,6 +183,11 @@ const ContainerHeader: FC<PageProps> = memo((props) => {
                 key: 'reset',
                 keyboard: '',
                 handle: () => {
+                    const args = {
+                        message: '执行清空操作',
+                        duration: 0.8,
+                    };
+                    notification.open(args);
                     commandsMap.current.set({
                         before: blocks,
                         after: []
@@ -166,6 +196,13 @@ const ContainerHeader: FC<PageProps> = memo((props) => {
             },
         ]
     }, [blocks])
+
+    const onTextAreaChange = useMemo(() => {
+        return (e: React.ChangeEvent<HTMLTextAreaElement>
+        ) => {
+            importDialogText.current = e.target.value
+        }
+    }, [])
 
     const importButtons: HeaderButtons[] = useMemo(() => {
         return [
@@ -176,7 +213,24 @@ const ContainerHeader: FC<PageProps> = memo((props) => {
                 key: 'import',
                 keyboard: '',
                 handle: () => {
+                    const {destroy} = dialogBaseService({
+                        title: '导入数据',
+                        onOk() {
+                            try {
+                                const text = importDialogText.current;
+                                if (!text) {
+                                    return message.warn('输入为空')
+                                }
+                                const textJson = JSON.parse(text)
+                                textJson.container && setContainerModel(textJson.container)
+                                textJson.blocks && setBlocks(textJson.blocks)
+                                destroy()
+                            } catch (e) {
+                                message.warn('输入的json格式不对')
+                            }
 
+                        }
+                    }, () => <Input.TextArea defaultValue={``} onChange={v => onTextAreaChange(v)}/>)
                 }
             },
             {
@@ -186,11 +240,26 @@ const ContainerHeader: FC<PageProps> = memo((props) => {
                 key: 'export',
                 keyboard: '',
                 handle: () => {
-
+                    const {destroy} = dialogBaseService({
+                        title: '导出数据',
+                        onOk() {
+                            // 执行确认操作
+                            console.log('ok')
+                            destroy()
+                        }
+                    },() =>{
+                        const defaultValueJSON = {
+                            container:containerModel,
+                            blocks:blocks
+                        }
+                        return  <Input.TextArea
+                            rows={8}
+                            defaultValue={JSON.stringify(defaultValueJSON)} />
+                    })
                 }
             },
         ]
-    }, [blocks])
+    }, [blocks,containerModel ,setContainerModel , setBlocks])
 
     const buttonRender = useMemo(() => {
         return (button: HeaderButtons) => {
@@ -220,7 +289,7 @@ const ContainerHeader: FC<PageProps> = memo((props) => {
         </div>
         <div className="command-buttons buttons-wrap">
             {importButtons.map(button => {
-                return   buttonWithTooltip(button)
+                return buttonWithTooltip(button)
             })}
         </div>
 
