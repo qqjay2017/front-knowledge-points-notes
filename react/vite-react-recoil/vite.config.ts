@@ -3,5 +3,8 @@ import {defineConfig} from 'vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [reactRefresh()]
+    plugins: [reactRefresh()],
+    esbuild: {
+        jsxInject: `import React from 'react'`
+    }
 })

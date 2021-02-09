@@ -1,4 +1,3 @@
-import React from "react";
 const TextRender = ()=>{
     return <span>文本</span>
 }

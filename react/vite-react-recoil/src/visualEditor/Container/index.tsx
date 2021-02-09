@@ -1,4 +1,4 @@
-import React, {memo , FC} from "react";
+import {memo , FC} from "react";
 import './index.scss'
 import {useRecoilValue} from "recoil";
 import containerAtom, {VisualEditorBlockData} from '../atoms/container.atom'
