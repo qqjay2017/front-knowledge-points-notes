@@ -195,6 +195,7 @@ const ContainerHeader: FC<PageProps> = memo((props) => {
     const buttonRender = useMemo(() => {
         return (button: HeaderButtons) => {
             return <div
+                key={button.key}
                 onClick={() => button.handle()}
                 className="header-button">
                 <IconFont type={button.icon}/>
