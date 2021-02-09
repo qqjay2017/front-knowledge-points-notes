@@ -2,7 +2,7 @@ import React, {FC, memo, useCallback, useEffect, useMemo, useRef} from "react";
 import './index.scss'
 import {Button, Tooltip} from "antd";
 import {SetterOrUpdater, useRecoilValue,} from "recoil";
-import containerAtom ,{VisualEditorBlockData } from "../atoms/container.atom";
+import containerAtom, {VisualEditorBlockData} from "../atoms/container.atom";
 import {createFromIconfontCN} from '@ant-design/icons';
 
 import {KeyboardCode} from "./keyboard-code";
@@ -13,6 +13,7 @@ const IconFont = createFromIconfontCN({
 });
 
 import produce from 'immer'
+import button from "../MenuList/menus/button";
 
 interface PageProps {
     blocks: VisualEditorBlockData[];
@@ -20,15 +21,23 @@ interface PageProps {
     commandsMap: any;
 }
 
+interface HeaderButtons {
+    name: string;
+    icon: string;
+    tooltip?: string;
+    key: string;
+    keyboard: string | string[];
+    handle: () => void
+}
+
 
 const ContainerHeader: FC<PageProps> = memo((props) => {
-    const {blocks, setBlocks, commandsMap } = props
+    const {blocks, setBlocks, commandsMap} = props
 
-   const blockFocus =  useRecoilValue(containerAtom.blockFocusSelector)
+    const blockFocus = useRecoilValue(containerAtom.blockFocusSelector)
 
     const onKeydown = useCallback((e: KeyboardEvent) => {
-        e.stopPropagation()
-        e.preventDefault()
+
         if (document.activeElement !== document.body) {
             return
         }
@@ -50,7 +59,7 @@ const ContainerHeader: FC<PageProps> = memo((props) => {
             return;
         }
         const keyString = keys.join('+')
-        const button = buttons.find(b => {
+        const button = commandButtons.find(b => {
             let isSame = false;
             if (typeof b.keyboard == 'string') {
                 isSame = !!(b.keyboard && b.keyboard === keyString);
@@ -64,9 +73,11 @@ const ContainerHeader: FC<PageProps> = memo((props) => {
                 return false
             }
         })
-        if(button){
+        if (button) {
+            e.stopPropagation()
+            e.preventDefault()
             button.handle()
-        }else {
+        } else {
             return false
         }
     }, [blocks])
@@ -83,8 +94,7 @@ const ContainerHeader: FC<PageProps> = memo((props) => {
     }, [blocks])
 
 
-
-    const buttons = useMemo(() => {
+    const commandButtons: HeaderButtons[] = useMemo(() => {
         return [
             {
                 name: '撤销',
@@ -113,7 +123,7 @@ const ContainerHeader: FC<PageProps> = memo((props) => {
                 key: 'del',
                 keyboard: ['delete', 'backspace'],
                 handle: () => {
-                    if(blockFocus.length==0) return
+                    if (blockFocus.length == 0) return
                     commandsMap.current.del({
                         before: blocks,
                         after: produce(blocks, draft => {
@@ -132,10 +142,10 @@ const ContainerHeader: FC<PageProps> = memo((props) => {
                 handle: () => {
                     commandsMap.current.set({
                         before: blocks,
-                        after:produce(blocks,draft=>{
-                            return draft.map(d=>({
+                        after: produce(blocks, draft => {
+                            return draft.map(d => ({
                                 ...d,
-                                focus:true
+                                focus: true
                             }))
                         })
                     })
@@ -150,24 +160,70 @@ const ContainerHeader: FC<PageProps> = memo((props) => {
                 handle: () => {
                     commandsMap.current.set({
                         before: blocks,
-                        after:[]
+                        after: []
                     })
                 }
             },
         ]
-    }, [blocks,setBlocks])
+    }, [blocks])
+
+    const importButtons: HeaderButtons[] = useMemo(() => {
+        return [
+            {
+                name: '导入',
+                icon: 'icon-import',
+                tooltip: '',
+                key: 'import',
+                keyboard: '',
+                handle: () => {
+
+                }
+            },
+            {
+                name: '导出',
+                icon: 'icon-export',
+                tooltip: '',
+                key: 'export',
+                keyboard: '',
+                handle: () => {
+
+                }
+            },
+        ]
+    }, [blocks])
+
+    const buttonRender = useMemo(() => {
+        return (button: HeaderButtons) => {
+            return <div
+                onClick={() => button.handle()}
+                className="header-button">
+                <IconFont type={button.icon}/>
+            </div>
+        }
+    }, [])
+
+    const buttonWithTooltip = useMemo(() => {
+        return (button: HeaderButtons) => (
+            button.tooltip ?
+                <Tooltip title={button.tooltip}
+                         key={button.key}>
+                    {buttonRender(button)}
+                </Tooltip> : buttonRender(button))
+    }, [])
+
 
     return <div className="visual-editor-header">
-        {buttons.map(button => (
-            <Tooltip title={button.tooltip}
-                     key={button.key}>
-                {/*<Button  icon={<SearchOutlined/>}/>*/}
-                <div
-                    onClick={() => button.handle()}
-                    className="header-button">
-                    <IconFont type={button.icon}/>
-                </div>
-            </Tooltip>))}
+        <div className="command-buttons buttons-wrap">
+            {commandButtons.map(button => (
+                buttonWithTooltip(button)))}
+        </div>
+        <div className="command-buttons buttons-wrap">
+            {importButtons.map(button => {
+                return   buttonWithTooltip(button)
+            })}
+        </div>
+
+
     </div>
 })
 
