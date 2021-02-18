@@ -1,13 +1,20 @@
 ### 第 1 题.写 React / Vue 项目时为什么要在列表组件中写 key，其作用是什么？
 
+```
+key是React用于追踪哪些列表中元素被修改、被添加或者被移除的辅助标识
+在开发过程中，我们需要保证某个元素的key在其同级元素中具有唯一性
+在React Diff算法中React会借助元素的key值来判断该元素是新创建的还是被移动而来的元素，从而减少不必要的元素重新渲染
+此外，React还需要借助Key值来判断元素与状态的关联关系
+key尽量不要使用数组下标和动态值或者不稳定的值作为key
+```
 
 <br/>
 
 ### 第 2 题：React 中 setState 什么时候是同步的，什么时候是异步的？原理是什么？
 
-公司：微医
+- 如果是在事件系统和钩子函数内,是异步的,因为react会合成事件,事件将委托给document进行统一处理,这时候的setState将会push进执行栈,然后合并批量更新
 
-
+- 原生事件和setTimeout中是同步的,在原生事件和setTimeout中不会批量更新
 
 <br/>
 
@@ -25,17 +32,16 @@ class Example extends React.Component {
   
   componentDidMount() {
     this.setState({val: this.state.val + 1});
-    console.log(this.state.val);    // 第 1 次 log
+    console.log(this.state.val);    // 第 1 次 log 0 
 
     this.setState({val: this.state.val + 1});
-    console.log(this.state.val);    // 第 2 次 log
+    console.log(this.state.val);    // 第 2 次 log 0
 
     setTimeout(() => {
-      this.setState({val: this.state.val + 1});
-      console.log(this.state.val);  // 第 3 次 log
+      console.log(this.state.val);  // 第 3 次 log 2
 
       this.setState({val: this.state.val + 1});
-      console.log(this.state.val);  // 第 4 次 log
+      console.log(this.state.val);  // 第 4 次 log 3
     }, 0);
   }
 

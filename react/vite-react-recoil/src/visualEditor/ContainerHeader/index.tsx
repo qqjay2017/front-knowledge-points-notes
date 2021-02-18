@@ -230,7 +230,9 @@ const ContainerHeader: FC<PageProps> = memo((props) => {
                             }
 
                         }
-                    }, () => <Input.TextArea defaultValue={``} onChange={v => onTextAreaChange(v)}/>)
+                    }, () => <Input.TextArea
+                        rows={10}
+                        defaultValue={``} onChange={v => onTextAreaChange(v)}/>)
                 }
             },
             {
@@ -253,7 +255,7 @@ const ContainerHeader: FC<PageProps> = memo((props) => {
                             blocks:blocks
                         }
                         return  <Input.TextArea
-                            rows={8}
+                            rows={10}
                             defaultValue={JSON.stringify(defaultValueJSON)} />
                     })
                 }
