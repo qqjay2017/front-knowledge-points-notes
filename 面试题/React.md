@@ -61,12 +61,49 @@ class Example extends React.Component {
 
 ### 第 4 题：聊聊 Redux 和 Vuex 的设计思想
 
+* 共同思想
+ - 单一的数据源
+ - 变化可以预测
+ - 本质上:Redux和Vuex都是对MVVM思想的服务，将数据从视图中抽离的一种方案
+ - 形式上:Vuex借鉴了Redux，将store作为全局的数据中心，进行数据管理
+
+
+* Redux和Vuex区别 
+
+ - Vuex改进了Redux中的Action和Reducer函数，以mutations变化函数取代Reducer，无需switch，只需在对应的mutation函数里改变state值就可以
+
+
+ ```
+ 通俗理解就是:Vuex弱化dispatch，通过commit进行store状态的一次变更；取消了action概念，不必传入特定的action形式进行指定变更；弱化reducer，基于commit参数直接对数据进行转变，使得框架更加建议
+ ```
+
+
+
 
 <br/>
 
 ### 第 5 题：react-router 里的 `<Link>` 标签和 `<a>` 标签有什么区别
 
+
+从最终渲染的DOM来看，这两者都是链接，都是a标签，
+
+ Link标签是react-router里实现路由跳转的链接，一般配合Route使用，
+ react-router禁止了其默认的链接跳转行为，区别于传统的页面跳转，
+ Link标签的"跳转"行为只会触发相匹配的Route对应的页面内容更新，而不会刷新整个页面
+
+
+ - Link标签做的三件事情：
+
+1.有onclick那就执行onclick
+2.click的时候阻止a标签默认事件
+3.根据跳转href(即使是to)，用history(web前端路由两种方式之一，history&hash)跳转，
+此时只是链接变了，并没有刷新页面
+
+ - 而标签就是普通的超链接了，用于从当前页面跳转到href指向的里一个页面(非锚点情况)
+
 > 如何禁掉 `<a>` 标签默认事件，禁掉之后如何实现跳转。
+
+`location.href=this.href`
 
 
 <br/>
@@ -81,6 +118,8 @@ class Example extends React.Component {
 
 ### 第 6 题：redux 为什么要把 reducer 设计成纯函数
 
+因为state是只读的,唯一改变 state 的方法就是触发action
+action是一个普通对象,所以使用纯函数来执行修改
 
 
 <br/>
