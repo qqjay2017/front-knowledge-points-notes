@@ -119,8 +119,11 @@ class Example extends React.Component {
 ### 第 6 题：redux 为什么要把 reducer 设计成纯函数
 
 因为state是只读的,唯一改变 state 的方法就是触发action
-action是一个普通对象,所以使用纯函数来执行修改
+action是一个普通对象,
 
+reducer的职责不允许有副作用，副作用简单来说就是不确定性，如果reducer有副作用，那么返回的state就不确定，
+
+所以使用纯函数来执行修改
 
 <br/>
 
