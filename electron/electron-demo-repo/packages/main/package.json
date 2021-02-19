@@ -1,0 +1,30 @@
+{
+  "name": "main",
+  "version": "1.0.0",
+  "description": "> TODO: description",
+  "author": "huangSir <96051929@ccb.com>",
+  "homepage": "https://github.com/qqjay2017/front-knowledge-points-notes#readme",
+  "license": "ISC",
+  "main": "lib/main.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qqjay2017/front-knowledge-points-notes.git"
+  },
+  "scripts": {
+    "start-electron": "electron .",
+    "watch-ts": "tsc -w"
+  },
+  "bugs": {
+    "url": "https://github.com/qqjay2017/front-knowledge-points-notes/issues"
+  },
+  "dependencies": {
+    "electron": "^11.2.3"
+  }
+}
