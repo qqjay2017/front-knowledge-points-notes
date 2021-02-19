@@ -1,5 +1,6 @@
-const { app, BrowserWindow } = require('electron')
-const isDev = require('electron-is-dev');
+import { app, BrowserWindow } from 'electron'
+
+import isDev from 'electron-is-dev'
 
 let win;
 app.on('ready', () => {
