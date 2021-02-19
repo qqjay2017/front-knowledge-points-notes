@@ -1,45 +1,41 @@
-import React, { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import React, { useEffect, useState } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+
+// import { ipcRenderer, IpcRendererEvent } from "electron";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
+  const [remoteCode, setRemoteCode] = useState(""); //控制的控制码
+  const [localCode, setLocalCode] = useState(""); //本身的控制码
+  const [controlText, setControlText] = useState(""); //控制码的文案
+
+
+  useEffect(() => {
+    // login();
+    // ipcRenderer.on("control-state-change", handleControlState);
+    // return () => {
+    //   ipcRenderer.removeListener("control-state-change", handleControlState);
+    // };
+  });
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button onClick={() => setCount((count) => count + 1)}>
-            count 222: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+      {controlText === "" ? (
+        <>
+          <div>你的控制码{localCode}</div>
+          {/* <input
+            type="text"
+            value={remoteCode}
+            onChange={(e) => setRemoteCode(e.target.value)}
+          />
+          <button onClick={() => startControl(remoteCode)}>确认</button> */}
+        </>
+      ) : (
+        <div>{controlText}</div>
+      )}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

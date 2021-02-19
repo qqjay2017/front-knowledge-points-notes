@@ -1,14 +1,6 @@
-// const { app } = require('electron')
-// const {create:createMainWindow}=require('./windows/main')//创建一个主窗口
-// const handleIPC=require('./ipc')//处理主进程的事务放在同一个文件
-// app.on('ready',()=>{
-//     handleIPC()
-//     createMainWindow() //主窗口出现APP.js的页面
-// })
-
-
 const { app, BrowserWindow } = require('electron')
 const isDev = require('electron-is-dev')
+const path = require('path')
 let win;
 
 function create(){
@@ -28,6 +20,10 @@ function create(){
     }
 }
 
-app.on('ready',()=>{
-    create()
-})
+
+function send(channel,...args){
+    win.webContents.send(channel,...args)
+}
+module.exports = {
+    create,send
+}
