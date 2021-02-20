@@ -1,4 +1,4 @@
-import React, {FC, memo, useMemo, useRef} from "react";
+import  {FC, memo, useMemo, useRef} from "react";
 import {VisualEditorBlockData} from "../atoms/container.atom";
 import './block.scss'
 import {useAdjustPosition} from "./useAdjustPosition";

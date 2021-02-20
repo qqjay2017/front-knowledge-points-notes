@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import {useEffect} from "react";
 import {useSetRecoilState} from "recoil";
 import containerAtom, {VisualEditorBlockData} from "../atoms/container.atom";
 import {replaceItemWithCompare} from "../../store/utils";

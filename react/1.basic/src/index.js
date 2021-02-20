@@ -5,32 +5,36 @@ import ReactDom from "react-dom";
  * 使用shouldComponentUpdate进行state判断
  */
 
-class Count extends React.PureComponent {
-  state = {
-    name: "zf",
-    number: 0,
-  };
-  handleClick = (event, amount) => {
-    this.setState({
-      number: this.state.number + amount,
-    });
-  };
+class Count extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      val: 0
+    };
+  }
+  
+  componentDidMount() {
+    this.setState({val: this.state.val + 1});
+    console.log(this.state.val);    // 第 1 次 log 0 
+
+    this.setState({val: this.state.val + 1});
+    console.log(this.state.val);    // 第 2 次 log 0
+
+    setTimeout(() => {
+      console.log(this.state.val,'state.val');
+      this.setState({val: this.state.val + 1});
+      console.log(this.state.val);  // 第 3 次 log 1
+
+      this.setState({val: this.state.val + 1});
+      console.log(this.state.val);  // 第 4 次 log 2
+    }, 0);
+  }
   
   render() {
-    console.log("render");
+  
     return (
       <div>
-        <h1>{this.state.name}</h1>
-        <p>{this.state.number}</p>
-        <div>
-          <button
-            onClick={(event) => {
-              this.handleClick(event, 0);
-            }}
-          >
-            +
-          </button>
-        </div>
+        111
       </div>
     );
   }
