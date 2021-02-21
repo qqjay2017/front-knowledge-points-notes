@@ -1,23 +1,24 @@
-import { BrowserWindow } from 'electron'
+import {BrowserWindow} from 'electron'
 import isDev from 'electron-is-dev'
-import { resolve } from 'path'
-let win:BrowserWindow;
+import {resolve} from 'path'
 
-export function create(){
+let win: BrowserWindow;
+
+export function create() {
     win = new BrowserWindow({
-        width:600,
-        height:600,
+        width: 600,
+        height: 600,
         webPreferences: {               // 网页功能设置
             nodeIntegration: true,      // 是否在node工作器中启用工作集成默认false
             enableRemoteModule: true,   // 是否启用remote模块默认false
         }
     })
-    if(isDev){
+    if (isDev) {
         win.webContents.openDevTools() //打开控制台
         win.loadURL('http://localhost:8080')
-    }else {
+    } else {
         // 线上模式, 用react打包的
-       win.loadFile(resolve(__dirname,'../render/dist-main/index.html'))
+        win.loadFile(resolve(__dirname, '../render/dist-main/index.html'))
     }
     return win
 }
@@ -27,6 +28,6 @@ export function create(){
  * @param channel
  * @param args
  */
-export function send(channel:string,...args:any[]) {
-    win.webContents.send(channel,...args)
+export function send(channel: string, ...args: any[]) {
+    win.webContents.send(channel, ...args)
 }

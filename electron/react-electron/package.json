@@ -1,7 +1,7 @@
 {
   "name": "react-electron",
   "version": "1.0.0",
-  "author": "",
+  "author": "huang",
   "description": "My Electron app",
   "main": "dist/index.js",
   "scripts": {
