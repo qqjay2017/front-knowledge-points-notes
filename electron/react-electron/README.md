@@ -13,3 +13,10 @@
 `$ npm i typescript ts-loader source-map-loader -D`
 
 ``
+
+
+
+```shell script
+sudo npx @electron-forge/cli import --unsafe-perm=true  --allow-root
+
+```
