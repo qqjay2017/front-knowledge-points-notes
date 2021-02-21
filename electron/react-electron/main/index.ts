@@ -1,18 +1,15 @@
-import { app,BrowserWindow } from 'electron'
+import {app, BrowserWindow} from 'electron'
 import isDev from 'electron-is-dev'
-let win;
-app.on('ready',()=>{
-    win = new BrowserWindow({
-        width:600,
-        height:600,
+import {ipcHandle} from './ipc'
+import {create} from './mainWindow'
 
-    })
-    console.log(isDev)
-    if(isDev){
-        win.loadURL('http://localhost:8080')
-    }else {
-        // 线上模式, 用react打包的
-        // win.loadFile('...')
-    }
+app.on('ready', () => {
+
+
+    process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'; // 关闭web安全警告
+    ipcHandle()
+    create()
+
+
 
 })

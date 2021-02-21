@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "start:react": "webpack serve --config render/config/webpack.dev.js",
+    "build:react": "webpack  --config render/config/webpack.prod.js",
     "build:main": "tsc --p tsconfig-main.json",
     "dev:main": "tsc -w --p tsconfig-main.json",
     "start:electron": "electron ."
@@ -22,6 +23,7 @@
     "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
+    "clean-webpack-plugin": "^3.0.0",
     "electron-is-dev": "^1.2.0",
     "hoist-non-react-statics": "^3.3.2",
     "html-webpack-plugin": "^5.2.0",
@@ -30,6 +32,7 @@
     "typescript": "^4.1.5",
     "webpack": "^5.23.0",
     "webpack-cli": "^4.5.0",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-dev-server": "^3.11.2",
+    "webpack-merge": "^5.7.3"
   }
 }
