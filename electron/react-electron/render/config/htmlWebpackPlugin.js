@@ -10,7 +10,6 @@ function htmlWebpackPlugin(mode){
     // CDN_LIST:getHtmlTags(mode)
   })
 }
-
 module.exports ={
   htmlWebpackPlugin
 }
