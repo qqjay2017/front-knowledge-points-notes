@@ -31,6 +31,8 @@ export function addEvent(dom, eventType, listener) {
 let syntheticEvent;
 
 function dispatchEvent(event) {
+
+    
     let {
         target,
         type
