@@ -18,5 +18,8 @@ module.exports = {
 
         "no-console": "off", // 禁止使用console
         "react/jsx-filename-extension": "off",
+        "class-methods-use-this": "off",
+        "no-param-reassign": "off",
+        "no-restricted-syntax": "off",
     },
 };

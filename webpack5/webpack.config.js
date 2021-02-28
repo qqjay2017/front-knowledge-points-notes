@@ -4,6 +4,10 @@ const {
     resolve,
 } = require("path");
 
+const DonePlugin = require('./plugins/DonePlugin');
+const AssrtsPlugin = require('./plugins/AssetsPlugin');
+const ZipPlugin = require('./plugins/ZipPlugin');
+
 module.exports = {
     mode: "development",
     devtool: false,
@@ -85,5 +89,10 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, "public/index.html"),
         }),
+        // new DonePlugin({
+        //     name: 'nameaa',
+        // }),
+        // new AssrtsPlugin(),
+        new ZipPlugin(),
     ],
 };
