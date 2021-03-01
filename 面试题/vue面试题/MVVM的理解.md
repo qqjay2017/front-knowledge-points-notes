@@ -1,0 +1,6 @@
+# MVVM的理解
+
+MVC
+MVVM
+
+VUE完全遵循MVVM吗
