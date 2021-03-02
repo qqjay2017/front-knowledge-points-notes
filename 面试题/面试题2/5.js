@@ -1,0 +1,1 @@
+console.log(['bc','aa','bb','ab'].sort((a,b)=>a<b))
