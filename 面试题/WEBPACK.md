@@ -13,6 +13,14 @@
 
 ### 第 3 题：webpack 打包 vue 速度太慢怎么办？
 
+> https://webpack.docschina.org/guides/build-performance/
+
+- 确保下webpack，npm, node 及主要库版本要新
+- loader范围缩小到src项目文件！一些不必要的loader能关就关了吧
+- 可以把eslint的范围缩小到src,且只检查*.js 和 *.vue
+- Webpack-Happypack,从单进程变成多进程，加速代码构建速度
+- 删除不需要的一些代码，利用SplitChunksPlugin 进行分块
+
 
 <br/>
 
