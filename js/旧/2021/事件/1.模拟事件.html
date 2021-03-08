@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <button id="myBtn">button</button>
+    </div>
+    <script>
+      var btn = document.getElementById("myBtn");
+      // 创建对象事件
+      var event = document.createEvent("MouseEvents");
+
+      // 初始化事件对象
+      event.initMouseEvent(
+        "click",
+        true,
+        true,
+        document.defaultView,
+        0,
+        0,
+        0,
+        0,
+        0,
+        false,
+        false,
+        false,
+        false,
+        0,
+        null
+      );
+
+     
+      btn.dispatchEvent(event)
+
+      btn.addEventListener('dbClick',(e)=>{
+          console.log(e)
+      })
+    </script>
+  </body>
+</html>

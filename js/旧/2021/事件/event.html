@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <ul id="list">
+      <li>第一个</li>
+      <li>第2个</li>
+      <li>第3个</li>
+      <li>第4个</li>
+      <li>第5个</li>
+      <li>第6个</li>
+    </ul>
+  </body>
+  <script>
+    var list = document.getElementById("list");
+    // DOM0级事件处理程序,被认为是元素的方法,冒泡阶段调用
+    // list.onclick = function(){
+    //     console.log(this)
+    // }
+    // DOM2级事件处理  true表示在事件捕获阶段调用,false表示在冒泡阶段阶段调用
+    // 大多数情况,都是false
+    list.addEventListener(
+      "click",
+      function (e) {
+         console.log(this)
+        /**
+         * 如果是箭头函数,this是windows
+         * 如果是function匿名函数,是当前dom
+         * */
+
+        console.log(e.currentTarget, e.target);
+        
+      
+        /**
+         * currentTarget: 正在处理事件的元素
+         * target:  事件的目标
+         * */
+
+         // stopPropagation 取消进一步的的捕获或者冒泡
+         e.stopPropagation()
+      },
+      false
+    );
+
+    document.addEventListener(
+      "click",
+      function (e) {
+        console.log("document被点击");
+      },
+      false
+    );
+
+    window.addEventListener('beforeunload',(e)=>{
+        e.returnValue = '1111'
+        return '111'
+    },true)
+  </script>
+</html>
