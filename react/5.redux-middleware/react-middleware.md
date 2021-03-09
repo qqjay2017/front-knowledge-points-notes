@@ -152,6 +152,16 @@ function applyMiddleware(...middlewareArr){
 
 > https://github.com/pburtchaell/redux-promise-middleware/blob/HEAD/docs/introduction.md
 
+action.payload是一个promise
+
+```js
+const getDog = () => ({
+  type: 'GET_DOG',
+  payload: fetch('https://dog.ceo/api/breeds/image/random')
+    .then(response => response.json()),
+});
+```
+
 
 #### thunk
 
