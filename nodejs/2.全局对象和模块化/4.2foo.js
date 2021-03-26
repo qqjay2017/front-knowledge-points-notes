@@ -1,6 +1,7 @@
-const obj = {
-    name:'why',
-    age:18
-}
+const  {getName} = require('./4.module.js')
 
-module.exports = obj
+const name = getName('foo')
+
+module.exports = {
+    name
+}

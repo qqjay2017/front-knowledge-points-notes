@@ -5,13 +5,13 @@
  * Node中实现commonJs的本质就是对象的引用赋值
  */
 
-const obj = require('./4.2foo')
+// const obj = require('./4.2foo')
 
-const info = obj
+// const info = obj
 
-info.age = 19
+// info.age = 19
 
-console.log(obj)
+// console.log(obj)
 
 /**
  * nodule.exports 和exports 有什么关系和区别
@@ -22,3 +22,11 @@ console.log(obj)
  * 3.所以在Node中真正用于导出的其实根本不是exports,而是module.exports
  * 4.所以module才是导出的真正实现者
  */
+
+const { getName } = require('./4.module.js')
+
+const name = getName('common')
+
+module.exports = {
+    name
+}
