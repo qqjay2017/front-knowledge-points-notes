@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="MyDb" id="Project_b4f" database="MySql" >
+	<schema name="employees" >
+		<table name="departments" row_count="9" >
+			<column name="dept_no" type="char" length="4" decimal="0" jt="1" mandatory="y" />
+			<column name="dept_name" type="varchar" length="40" decimal="0" jt="12" mandatory="y" />
+			<index name="pk_departments" unique="PRIMARY_KEY" >
+				<column name="dept_no" />
+			</index>
+			<index name="dept_name" unique="UNIQUE_KEY" >
+				<column name="dept_name" />
+			</index>
+		</table>
+		<table name="dept_emp" row_count="331143" >
+			<column name="emp_no" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="dept_no" type="char" length="4" decimal="0" jt="1" mandatory="y" />
+			<column name="from_date" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<column name="to_date" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<index name="pk_dept_emp" unique="PRIMARY_KEY" >
+				<column name="emp_no" />
+				<column name="dept_no" />
+			</index>
+			<index name="dept_no" unique="NORMAL" >
+				<column name="dept_no" />
+			</index>
+			<fk name="dept_emp_ibfk_2" to_schema="employees" to_table="departments" delete_action="cascade" update_action="restrict" >
+				<fk_column name="dept_no" pk="dept_no" />
+			</fk>
+			<fk name="dept_emp_ibfk_1" to_schema="employees" to_table="employees" delete_action="cascade" update_action="restrict" >
+				<fk_column name="emp_no" pk="emp_no" />
+			</fk>
+		</table>
+		<table name="dept_manager" row_count="24" >
+			<column name="emp_no" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="dept_no" type="char" length="4" decimal="0" jt="1" mandatory="y" />
+			<column name="from_date" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<column name="to_date" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<index name="pk_dept_manager" unique="PRIMARY_KEY" >
+				<column name="emp_no" />
+				<column name="dept_no" />
+			</index>
+			<index name="dept_no" unique="NORMAL" >
+				<column name="dept_no" />
+			</index>
+			<fk name="dept_manager_ibfk_2" to_schema="employees" to_table="departments" delete_action="cascade" update_action="restrict" >
+				<fk_column name="dept_no" pk="dept_no" />
+			</fk>
+			<fk name="dept_manager_ibfk_1" to_schema="employees" to_table="employees" delete_action="cascade" update_action="restrict" >
+				<fk_column name="emp_no" pk="emp_no" />
+			</fk>
+		</table>
+		<table name="employees" row_count="298980" >
+			<column name="emp_no" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="birth_date" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<column name="first_name" type="varchar" length="14" decimal="0" jt="12" mandatory="y" />
+			<column name="last_name" type="varchar" length="16" decimal="0" jt="12" mandatory="y" />
+			<column name="gender" type="enum" length="1" decimal="0" jt="12" mandatory="y" >
+				<enumeration><![CDATA['M','F']]></enumeration>
+			</column>
+			<column name="hire_date" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<index name="pk_employees" unique="PRIMARY_KEY" >
+				<column name="emp_no" />
+			</index>
+		</table>
+		<table name="roles" row_count="0" >
+			<column name="id" type="int" length="10" decimal="0" jt="4" mandatory="y" >
+				<identity><![CDATA[AUTO_INCREMENT]]></identity>
+			</column>
+			<column name="role_name" type="varchar" length="20" decimal="0" jt="12" mandatory="y" />
+			<column name="description" type="varchar" length="100" decimal="0" jt="12" />
+			<index name="pk_roles" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="salaries" row_count="229748" >
+			<column name="emp_no" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="from_date" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<column name="salary" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="to_date" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<index name="pk_salaries" unique="PRIMARY_KEY" >
+				<column name="emp_no" />
+				<column name="from_date" />
+			</index>
+			<fk name="salaries_ibfk_1" to_schema="employees" to_table="employees" delete_action="cascade" update_action="restrict" >
+				<fk_column name="emp_no" pk="emp_no" />
+			</fk>
+		</table>
+		<table name="titles" row_count="442545" >
+			<column name="emp_no" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="title" type="varchar" length="50" decimal="0" jt="12" mandatory="y" />
+			<column name="from_date" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<column name="to_date" type="date" length="10" decimal="0" jt="91" />
+			<index name="pk_titles" unique="PRIMARY_KEY" >
+				<column name="emp_no" />
+				<column name="title" />
+				<column name="from_date" />
+			</index>
+			<fk name="titles_ibfk_1" to_schema="employees" to_table="employees" delete_action="cascade" update_action="restrict" >
+				<fk_column name="emp_no" pk="emp_no" />
+			</fk>
+		</table>
+		<view name="current_dept_emp" >
+			<comment><![CDATA[VIEW]]></comment>
+			<column name="emp_no" type="int" />
+			<column name="dept_no" type="char" />
+			<column name="from_date" type="date" />
+			<column name="to_date" type="date" />
+		</view>
+		<view name="dept_emp_latest_date" >
+			<comment><![CDATA[VIEW]]></comment>
+			<column name="emp_no" type="int" />
+			<column name="from_date" type="date" />
+			<column name="to_date" type="date" />
+		</view>
+	</schema>
+	<connector name="MyDb" database="MySql" driver_class="com.mysql.jdbc.Driver" driver_jar="mysql-connector-java-8.0.23.jar" driver_desc="Standard" host="localhost" port="3306" instance="employees" user="root" passwd="eW91cnBhc3N3b3Jk" />
+	<layout name="Layout with Tools" id="Layout_b5c" show_column_type="y" show_relation="columns" >
+		<entity schema="employees" name="current_dept_emp" color="BED3F4" x="1024" y="48" />
+		<entity schema="employees" name="departments" color="C7F4BE" x="528" y="48" />
+		<entity schema="employees" name="dept_emp" color="C7F4BE" x="528" y="288" />
+		<entity schema="employees" name="dept_emp_latest_date" color="C7F4BE" x="752" y="288" />
+		<entity schema="employees" name="dept_manager" color="C7F4BE" x="272" y="288" />
+		<entity schema="employees" name="employees" color="C7F4BE" x="272" y="48" />
+		<entity schema="employees" name="roles" color="BED3F4" x="1248" y="48" />
+		<entity schema="employees" name="salaries" color="C7F4BE" x="48" y="288" />
+		<entity schema="employees" name="titles" color="C7F4BE" x="48" y="80" />
+		<script name="Sample SQL Editor" id="Editor_2303" language="SQL" >
+			<string><![CDATA[SELECT emp_no, birth_date, first_name, last_name, gender, hire_date
+FROM
+	employees.employees s;]]></string>
+		</script>
+		<browser id="Browse_1200" name="Sample Relational Data Explorer" confirm_updates="y" >
+			<browse_table schema="employees" entity="employees" x="20" y="20" width="400" height="300" >
+				<browse_table schema="employees" entity="dept_emp" fk="dept_emp_ibfk_1" x="440" y="20" width="500" height="350" >
+					<browse_table schema="employees" entity="departments" fk="dept_emp_ibfk_2" x="960" y="20" width="500" height="350" record_view="y" />
+				</browse_table>
+			</browse_table>
+		</browser>
+		<query id="Query_227d" name="Sample Query Builder" >
+			<query_table schema="employees" name="employees" alias="e" x="48" y="48" >
+				<column name="emp_no" />
+				<column name="birth_date" />
+				<column name="first_name" />
+				<column name="last_name" />
+				<column name="gender" />
+				<column name="hire_date" />
+				<query_table schema="employees" name="dept_emp" alias="de" x="208" y="48" fk="dept_emp_ibfk_1" type="Inner Join" >
+					<column name="emp_no" />
+					<column name="dept_no" />
+					<column name="from_date" />
+					<column name="to_date" />
+					<query_table schema="employees" name="departments" alias="d" x="384" y="48" fk="dept_emp_ibfk_2" type="Inner Join" >
+						<column name="dept_no" />
+						<column name="dept_name" />
+					</query_table>
+				</query_table>
+			</query_table>
+		</query>
+		<form name="Sample Report" id="Report_1109" template="Centered Page" view="frame" >
+			<var name="samplePageNumber" type="4" value="0" mandatory="n" />
+			<var name="sampleRecordsPerPage" type="4" value="100" mandatory="n" />
+			<body name="Body" template="Grid" pos="0,0,0,0,f,f" layout="{{-2,-2,-2,-2,-1},{-2,-2,-2}}" scroll="n" html="n" >
+				<cell type="label" name="sample" template="H3" pos="0,0,1,0,l,c" />
+				<tableview name="sample" template="Table" css="table table-striped table-bordered table-sm table-hover" pos="0,1,4,1,f,f" layout="{{-2,-2,-2,-2,-2,-2},{-2,-2}}" scroll="n" html="n" header_rows="1" >
+					<form_script type="DataSource" language="SQL" >
+						<var name="emp_no" type="4" />
+						<var name="birth_date" type="91" />
+						<var name="first_name" />
+						<var name="last_name" />
+						<var name="gender" />
+						<var name="hire_date" type="91" />
+						<script ><![CDATA[SELECT * FROM employees.employees]]></script>
+					</form_script>
+					<cell type="label" name="emp_no" pos="0,0,0,0,c,c" />
+					<cell type="label" name="birth_date" pos="1,0,1,0,c,c" />
+					<cell type="label" name="first_name" pos="2,0,2,0,c,c" />
+					<cell type="label" name="last_name" pos="3,0,3,0,c,c" />
+					<cell type="label" name="gender" pos="4,0,4,0,c,c" />
+					<cell type="label" name="hire_date" pos="5,0,5,0,c,c" />
+					<cell type="label" name="${emp_no}" template="Plain" pos="0,1,0,1,l,c" />
+					<cell type="label" name="${birth_date}" template="Plain" pos="1,1,1,1,l,c" />
+					<cell type="label" name="${first_name}" template="Plain" pos="2,1,2,1,l,c" />
+					<cell type="label" name="${last_name}" template="Plain" pos="3,1,3,1,l,c" />
+					<cell type="label" name="${gender}" template="Plain" pos="4,1,4,1,l,c" />
+					<cell type="label" name="${hire_date}" template="Plain" pos="5,1,5,1,l,c" />
+				</tableview>
+				<cell type="href" name="" disabled="${samplePageNumber&lt;1}" pos="0,2,0,2,l,c" glyph="FA-ANGLE_DOUBLE_LEFT" ref_id="Report_1109" >
+					<var name="samplePageNumber" value="0" />
+				</cell>
+				<cell type="href" name="" disabled="${samplePageNumber&lt;1}" pos="1,2,1,2,l,c" glyph="FA-ANGLE_LEFT" ref_id="Report_1109" >
+					<var name="samplePageNumber" value="${Math.max(0,samplePageNumber-1)}" />
+				</cell>
+				<cell type="label" name="Page ${samplePageNumber+1}" pos="2,2,2,2,l,c" />
+				<cell type="href" name="" disabled="${!sampleHasNextPage}" pos="3,2,3,2,l,c" glyph="FA-ANGLE_RIGHT" ref_id="Report_1109" >
+					<var name="samplePageNumber" value="${( samplePageNumber+1 )}" />
+				</cell>
+			</body>
+		</form>
+	</layout>
+	<layout name="Main Layout" id="Layout_f1f" show_relation="columns" >
+		<entity schema="employees" name="current_dept_emp" color="BED3F4" x="896" y="176" />
+		<entity schema="employees" name="departments" color="C7F4BE" x="432" y="176" />
+		<entity schema="employees" name="dept_emp" color="C7F4BE" x="432" y="416" />
+		<entity schema="employees" name="dept_emp_latest_date" color="C7F4BE" x="624" y="416" />
+		<entity schema="employees" name="dept_manager" color="C7F4BE" x="240" y="416" />
+		<entity schema="employees" name="employees" color="C7F4BE" x="240" y="176" />
+		<entity schema="employees" name="roles" color="BED3F4" x="1104" y="176" />
+		<entity schema="employees" name="salaries" color="C7F4BE" x="48" y="416" />
+		<entity schema="employees" name="titles" color="C7F4BE" x="48" y="208" />
+		<callout x="240" y="80" pointer="Round" >
+			<comment><![CDATA[Double-click table headers, columns, or foreign keys to edit. 
+Create multiple layouts (diagrams) with the same or different tables. 
+Saving the model to file will also save the layouts.]]></comment>
+		</callout>
+		<group name="current_dept_emp" color="ECF0F7" >
+			<entity schema="employees" name="current_dept_emp" />
+			<entity schema="employees" name="roles" />
+		</group>
+		<group name="employees" color="EEF7EC" >
+			<entity schema="employees" name="employees" />
+			<entity schema="employees" name="departments" />
+			<entity schema="employees" name="dept_emp" />
+			<entity schema="employees" name="dept_manager" />
+			<entity schema="employees" name="salaries" />
+			<entity schema="employees" name="titles" />
+			<entity schema="employees" name="dept_emp_latest_date" />
+		</group>
+	</layout>
+</project>
