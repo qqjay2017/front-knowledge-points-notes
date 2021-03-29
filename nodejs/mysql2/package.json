@@ -11,6 +11,11 @@
   "license": "ISC",
   "dependencies": {
     "mysql2": "^2.2.5",
-    "sequelize": "^6.6.2"
+    "sequelize": "^6.6.2",
+    "sequelize-auto": "^0.8.1"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.2.0",
+    "typescript": "^4.2.3"
   }
 }
