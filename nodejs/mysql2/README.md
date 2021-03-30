@@ -47,10 +47,11 @@ sequelize-auto -o "/Users/huangbo/front-knowledge-points-notes/nodejs/mysql2/src
 
 
 ```js
+    // 实际上要这两个就可以了, 
   departments.belongsToMany(employees, { as: 'emp_no_employees', through: dept_emp, foreignKey: "dept_no", otherKey: "emp_no" });
   employees.belongsToMany(departments, { as: 'dept_no_departments', through: dept_emp, foreignKey: "emp_no", otherKey: "dept_no" });
 
-  // 中间表
+  // 中间表  下面的4个可以注释了
   dept_emp.belongsTo(departments, { as: "dept_no_department", foreignKey: "dept_no"});
   dept_emp.belongsTo(employees, { as: "emp_no_employee", foreignKey: "emp_no"});
 

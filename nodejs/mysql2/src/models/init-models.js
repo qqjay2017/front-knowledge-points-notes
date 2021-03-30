@@ -18,10 +18,11 @@ function initModels(sequelize) {
 
   departments.belongsToMany(employees, { as: 'emp_no_employees', through: dept_emp, foreignKey: "dept_no", otherKey: "emp_no" });
   employees.belongsToMany(departments, { as: 'dept_no_departments', through: dept_emp, foreignKey: "emp_no", otherKey: "dept_no" });
-  dept_emp.belongsTo(departments, { as: "dept_no_department", foreignKey: "dept_no" });
-  departments.hasMany(dept_emp, { as: "dept_emps", foreignKey: "dept_no" });
-  dept_emp.belongsTo(employees, { as: "emp_no_employee", foreignKey: "emp_no" });
-  employees.hasMany(dept_emp, { as: "dept_emps", foreignKey: "emp_no" });
+ 
+  // departments.hasMany(dept_emp, { as: "dept_emps", foreignKey: "dept_no" });
+  // dept_emp.belongsTo(departments, { as: "dept_no_department", foreignKey: "dept_no" });
+  // dept_emp.belongsTo(employees, { as: "emp_no_employee", foreignKey: "emp_no" });
+  // employees.hasMany(dept_emp, { as: "dept_emps", foreignKey: "emp_no" });
   salaries.belongsTo(employees, { as: "emp_no_employee", foreignKey: "emp_no" });
   employees.hasMany(salaries, { as: "salaries", foreignKey: "emp_no" });
   titles.belongsTo(employees, { as: "emp_no_employee", foreignKey: "emp_no" });

@@ -10,10 +10,11 @@ async function main() {
         const models = initModels(sequelize)
 
         const employees = await models.employees.findAll({
+            attributes:[
+                [sequelize.fn('COUNT', sequelize.col('dept_no_departments')), 'count'],
+            ],
             where: {
-                emp_no: {
-                    [Op.gte]:499999
-                }
+                emp_no: 10010
             },
             include:[
                 {
@@ -26,14 +27,15 @@ async function main() {
                 },
                 {
                     model: models.departments,
-                    as:'dept_no_departments'
+                    as:'dept_no_departments',
+                 
                 }
             ]
     
 
         })
        
-        console.log(employees)
+        console.log(employees[0].dataValues)
 
 
 
