@@ -1,5 +1,7 @@
-const Koa = require('koa')
 require('./config')
+require('./database')
+
+const Koa = require('koa')
 const bodyParser = require('koa-bodyparser');
  
 
