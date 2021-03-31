@@ -99,3 +99,6 @@ CREATE TABLE IF NOT EXISTS `users` (
 510	NotExtended
 511	NetworkAuthenticationRequired
 ```
+
+## 用户密码
+

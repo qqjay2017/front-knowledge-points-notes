@@ -10,7 +10,7 @@ class UserService {
 
     }
 
-    async show({ name, id },limit) {
+    async show({ name, id ,password},limit) {
         let baseSql = `select id , name  FROM users WHERE 1=1 `
         let values = []
 
@@ -21,6 +21,10 @@ class UserService {
         if (id && id != null) {
             baseSql += `AND id = ? `
             values.push(id)
+        }
+        if (password && password != null) {
+            baseSql += `AND password = ? `
+            values.push(password)
         }
 
         if(limit){
