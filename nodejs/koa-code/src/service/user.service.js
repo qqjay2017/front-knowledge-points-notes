@@ -9,6 +9,28 @@ class UserService {
         return results
 
     }
+
+    async show({ name, id },limit) {
+        let baseSql = `select id , name  FROM users WHERE 1=1 `
+        let values = []
+
+        if (name && name != null) {
+            baseSql += `AND name = ? `;
+            values.push(name)
+        }
+        if (id && id != null) {
+            baseSql += `AND id = ? `
+            values.push(id)
+        }
+
+        if(limit){
+            baseSql += `LIMIT ? `;
+            values.push(limit+'')
+        }
+        const results = await connection.execute(baseSql+';', values)
+        return results
+
+    }
 }
 
 module.exports = new UserService()

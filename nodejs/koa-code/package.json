@@ -11,7 +11,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@nestjs/common": "^7.6.15",
     "dotenv": "^8.2.0",
+    "http-errors": "^1.8.0",
     "koa": "^2.13.1",
     "koa-bodyparser": "^4.3.0",
     "koa-router": "^10.0.0",
