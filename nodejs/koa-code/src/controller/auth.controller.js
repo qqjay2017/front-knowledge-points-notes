@@ -3,6 +3,8 @@ const ErrorType = require("../constants/error-type");
 const userService = require("../service/user.service");
 const jwt = require('jsonwebtoken');
 
+const { PRIVATE_KEY} = require('../app/config')
+
 class AuthController {
     async login(ctx, next) {
         const { name, password } = ctx.request.body;
@@ -18,10 +20,11 @@ class AuthController {
 
         }
 
-        const token  = jwt.sign({ name , password }, 'hhhhh',{
-            expiresIn: 60 // s
+        const token  = jwt.sign({ name , password }, PRIVATE_KEY,{
+            expiresIn: 60 * 60 ,// s
+            algorithm:'RS256' // 非对称算法
         });
-        
+
 
         ctx.body = {
             code:200,
