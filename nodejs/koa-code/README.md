@@ -102,3 +102,25 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 ## 用户密码
 
+https://www.npmjs.com/package/jsonwebtoken
+
+```
+npm i jsonwebtoken
+```
+
+## 秘钥
+
+
+- 私钥,用来生成token
+
+```
+ cd keys 
+ openssl
+ genrsa -out private.key 1024 
+```
+
+- 通过私钥生成公钥
+
+```
+rsa -in private.key -pubout -out public.key
+```

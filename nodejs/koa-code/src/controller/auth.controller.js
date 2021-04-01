@@ -1,7 +1,7 @@
 const { HttpStatus } = require("@nestjs/common");
 const ErrorType = require("../constants/error-type");
 const userService = require("../service/user.service");
-
+const jwt = require('jsonwebtoken');
 
 class AuthController {
     async login(ctx, next) {
@@ -18,8 +18,15 @@ class AuthController {
 
         }
 
+        const token  = jwt.sign({ name , password }, 'hhhhh',{
+            expiresIn: 60 // s
+        });
+        
 
-        ctx.body = '登录成功'
+        ctx.body = {
+            code:200,
+            token:'Bearer '+token
+        }
 
         await next()
     }
