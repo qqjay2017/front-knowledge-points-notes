@@ -172,6 +172,7 @@ class UserService {
 ```
 
 > https://json-schema.org/
+> https://kenve.github.io/understanding-json-schema
 
 ## 
 1. 自定义异常处理
