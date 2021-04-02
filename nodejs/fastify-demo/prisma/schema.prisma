@@ -1,0 +1,77 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model departments {
+  dept_no      String         @id @db.Char(4)
+  dept_name    String         @unique @db.VarChar(40)
+  dept_emp     dept_emp[]
+  dept_manager dept_manager[]
+}
+
+model dept_emp {
+  emp_no      Int
+  dept_no     String      @db.Char(4)
+  from_date   DateTime    @db.Date
+  to_date     DateTime    @db.Date
+  departments departments @relation(fields: [dept_no], references: [dept_no])
+  employees   employees   @relation(fields: [emp_no], references: [emp_no])
+
+  @@id([emp_no, dept_no])
+  @@index([dept_no], name: "dept_no")
+}
+
+model dept_manager {
+  emp_no      Int
+  dept_no     String      @db.Char(4)
+  from_date   DateTime    @db.Date
+  to_date     DateTime    @db.Date
+  departments departments @relation(fields: [dept_no], references: [dept_no])
+  employees   employees   @relation(fields: [emp_no], references: [emp_no])
+
+  @@id([emp_no, dept_no])
+  @@index([dept_no], name: "dept_no")
+}
+
+model employees {
+  emp_no       Int              @id
+  birth_date   DateTime         @db.Date
+  first_name   String           @db.VarChar(14)
+  last_name    String           @db.VarChar(16)
+  gender       employees_gender
+  hire_date    DateTime         @db.Date
+  dept_emp     dept_emp[]
+  dept_manager dept_manager[]
+  salaries     salaries[]
+  titles       titles[]
+}
+
+model salaries {
+  emp_no    Int
+  salary    Int
+  from_date DateTime  @db.Date
+  to_date   DateTime  @db.Date
+  employees employees @relation(fields: [emp_no], references: [emp_no])
+
+  @@id([emp_no, from_date])
+}
+
+model titles {
+  emp_no    Int
+  title     String    @db.VarChar(50)
+  from_date DateTime  @db.Date
+  to_date   DateTime? @db.Date
+  employees employees @relation(fields: [emp_no], references: [emp_no])
+
+  @@id([emp_no, title, from_date])
+}
+
+enum employees_gender {
+  M
+  F
+}

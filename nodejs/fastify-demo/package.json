@@ -1,0 +1,29 @@
+{
+  "name": "fastify-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch-ts": "tsc -w",
+    "watch-node": "nodemon dist/server.js",
+    "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\"  \"npm run watch-ts\" \"npm run watch-node\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^2.20.1",
+    "@sinclair/typebox": "^0.16.1",
+    "dotenv": "^8.2.0",
+    "fastify": "^3.14.1"
+  },
+  "devDependencies": {
+    "@types/concurrently": "^6.0.1",
+    "@types/node": "^14.14.37",
+    "concurrently": "^6.0.0",
+    "json-schema-to-typescript": "^10.1.4",
+    "prisma": "^2.20.1",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.3"
+  }
+}

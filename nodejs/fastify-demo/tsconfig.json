@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "target": "ES2018",
+        "noImplicitAny": true,
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "outDir": "dist",
+        "baseUrl": ".",
+        "lib": ["ESNext"],
+        "paths": {
+            "*": [
+                "node_modules/*",
+                "src/types/*"
+            ]
+
+        },
+        "experimentalDecorators": true, /* Enables experimental support for ES7 decorators. */
+        "emitDecoratorMetadata": true, /* Enables experimental support for emitting type metadata for decorators. */
+        "skipLibCheck": true,
+        /* Advanced Options */
+        "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
+    },
+    "include": [
+        "src/**/*"
+    ]
+}
