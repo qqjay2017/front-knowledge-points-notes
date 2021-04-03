@@ -103,6 +103,15 @@ yarn add sass -D
 yarn add less -D
 ```
 
+- 支持windicss
+
+> https://windicss.org/guide/vite.html
+
+```
+yarn add  vite-plugin-windicss --save-dev
+```
+
+
 - postcss
 
 ```

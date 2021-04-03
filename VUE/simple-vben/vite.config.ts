@@ -3,6 +3,7 @@ import vue from "@vitejs/plugin-vue";
 import { viteMockServe } from "vite-plugin-mock";
 
 import { resolve } from "path";
+import WindiCSS from "vite-plugin-windicss";
 
 const NODE_ENV = process.env.NODE_ENV;
 const isProd = NODE_ENV === "production";
@@ -30,5 +31,6 @@ export default defineConfig({
     viteMockServe({
       mockPath: "mock",
     }),
+    // WindiCSS(),
   ],
 });
