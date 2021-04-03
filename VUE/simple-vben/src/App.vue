@@ -1,23 +1,9 @@
 <template>
-  <input type="text" placeholder="placeholder" class="input" />
+  <div id="app">
+    <RouterView />
+  </div>
 </template>
 
 <script setup lang="ts">
-import { reactive } from "vue";
-
-const a = reactive({
-  a: "111",
-});
-fetch("/api/get")
-  .then((res) => res.json())
-  .then((users) => console.log(users));
+import { RouterView } from "vue-router";
 </script>
-
-<style lang="scss" scoped>
-.input {
-  font-size: 29px;
-  &::placeholder {
-    color: deeppink;
-  }
-}
-</style>
