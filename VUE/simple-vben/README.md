@@ -96,10 +96,11 @@ export default defineComponent({
 </script>
 ```
 
-- 支持sass
+- 支持sass/less,vben是用less
 
 ```
 yarn add sass -D
+yarn add less -D
 ```
 
 - postcss

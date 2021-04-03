@@ -1,10 +1,8 @@
 <template>
-  <Layout>
-    <LayoutHeader />
-  </Layout>
+  <Header>111</Header>
 </template>
 
 <script setup lang="ts">
 import { Layout } from "ant-design-vue";
-import LayoutHeader from "./header/index.vue";
+const Header = Layout.Header;
 </script>
