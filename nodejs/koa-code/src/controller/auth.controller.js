@@ -24,7 +24,9 @@ class AuthController {
             expiresIn: 60 * 60 ,// s
             algorithm:'RS256' // 非对称算法
         });
-
+        ctx.user = {
+            name
+        }
 
         ctx.body = {
             code:200,

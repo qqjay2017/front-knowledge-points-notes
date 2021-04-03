@@ -22,7 +22,7 @@ class UserController {
             },ctx)
         }
      
-
+        console.log(ctx.user)
         const result = await UserService.create(ctx.request.body)
         ctx.body = result
     }
