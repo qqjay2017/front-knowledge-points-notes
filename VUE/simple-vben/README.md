@@ -208,3 +208,12 @@ yarn add lint-staged yorkie -D
 ```
 yarn add jest @types/jest vue-jest@next babel-jest @babel/preset-env @vue/test-utils@next ts-jest @babel/preset-typescript -D
 ```
+
+## vite 插件
+
+load
+transform
+
+## svg 
+
+> https://github.com/JetBrains/svg-sprite-loader/issues/434

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SvgIcon v-if="props.icon" :icon-class="props.icon" />
+    <SvgIcon :icon-class="props.icon" />
     <span v-if="props.title"> {{ props.title }} </span>
   </div>
 </template>
