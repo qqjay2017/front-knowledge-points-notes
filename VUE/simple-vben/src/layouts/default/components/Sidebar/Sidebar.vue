@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'has-logo': showLogo }">
+  <Sider :collapsed="isCollapse" :trigger="null" collapsible>
     <Logo v-if="showLogo" :collapse="isCollapse" />
     {{ isCollapse }}
     <Menu
@@ -12,7 +12,7 @@
         <SidebarItem :item="r" :base-path="r.path" />
       </template>
     </Menu>
-  </div>
+  </Sider>
 </template>
 
 <script setup lang="ts">
@@ -20,7 +20,9 @@ import { computed, reactive } from "vue";
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 
-import { Menu } from "ant-design-vue";
+import { Menu, Layout } from "ant-design-vue";
+const Sider = Layout.Sider;
+
 import SidebarItem from "./SidebarItem.vue";
 import Logo from "./Logo.vue";
 

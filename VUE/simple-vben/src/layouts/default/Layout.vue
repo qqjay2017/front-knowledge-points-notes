@@ -1,13 +1,13 @@
 <template>
-  <div :class="classObj" class="app-wrapper">
+  <Layout>
     <Sidebar class="sidebar-container" />
-    <div class="main-container">
-      <div :class="{ 'fixed-header': fixedHeader }">
-        <NavBar />
-      </div>
-      <AppMain />
-    </div>
-  </div>
+    <Layout>
+      <NavBar />
+      <LayoutContent>
+        <AppMain />
+      </LayoutContent>
+    </Layout>
+  </Layout>
 </template>
 
 <script setup lang="ts">
@@ -16,6 +16,7 @@ import AppMain from "./components/AppMain.vue";
 import NavBar from "./components/NavBar.vue";
 import Sidebar from "./components/Sidebar/Sidebar.vue";
 import { Layout } from "ant-design-vue";
+const LayoutContent = Layout.Content;
 // import LayoutHeader from "./header/index.vue";
 
 import { useStore } from "vuex";

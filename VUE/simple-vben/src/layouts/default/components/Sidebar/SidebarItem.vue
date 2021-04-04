@@ -7,12 +7,14 @@
     "
   >
     <MenuItem :key="resolvePath(onlyOneChild.path)">
-      <AppLink v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
-        <Item
-          :icon="onlyOneChild.meta.icon"
-          :title="onlyOneChild.meta.title"
-        ></Item>
-      </AppLink>
+      <!-- <AppLink v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
+       
+      </AppLink> -->
+      <Item
+        v-if="onlyOneChild.meta"
+        :icon="onlyOneChild.meta.icon"
+        :title="onlyOneChild.meta.title"
+      ></Item>
     </MenuItem>
   </template>
 
