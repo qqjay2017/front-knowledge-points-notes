@@ -1,8 +1,8 @@
 <template>
   <div :class="{ 'has-logo': showLogo }">
-    {{ showLogo }}
+    <Logo v-if="showLogo" :collapse="isCollapse" />
     <div>
-      <Menu mode="inline">
+      <Menu mode="inline" theme="dark" :sub-menu-open-delay="0.2">
         <SidebarItem
           v-for="r in routes"
           :key="r.path"
@@ -15,12 +15,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, reactive } from "vue";
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 
 import { Menu } from "ant-design-vue";
 import SidebarItem from "./SidebarItem.vue";
+import Logo from "./Logo.vue";
 
 const store = useStore();
 
@@ -41,5 +42,9 @@ const openKeys = computed(() => {
 
 const routes = computed(() => {
   return router.options.routes;
+});
+
+const isCollapse = computed(() => {
+  return !store.state.app.sidebar;
 });
 </script>

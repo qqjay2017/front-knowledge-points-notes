@@ -1,13 +1,18 @@
 <template>
   <div>
-    <span> {{ props.title }} </span>
+    <SvgIcon v-if="props.icon" :icon-class="props.icon" />
+    <span v-if="props.title"> {{ props.title }} </span>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent } from "vue";
+import SvgIcon from "/@/components/SvgIcon/SvgIcon.vue";
 export default defineComponent({
   name: "MenuItem",
+  components: {
+    SvgIcon,
+  },
   props: {
     icon: {
       type: String,
@@ -19,8 +24,16 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const iconClass = computed(() => {
+      if (props.icon) {
+        return `/@/icons/svg/${props.icon}.svg`;
+      } else {
+        return "";
+      }
+    });
     return {
       props,
+      iconClass,
     };
   },
 });

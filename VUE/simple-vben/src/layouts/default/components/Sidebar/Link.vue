@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { isExternal as _isExternal } from "/@/utils/validate";
+import { isExternal as utilsIsExternal } from "/@/utils/validate";
 import { computed, defineComponent } from "vue";
 
 export default defineComponent({
@@ -18,7 +18,7 @@ export default defineComponent({
   },
   setup(props) {
     const isExternal = computed(() => {
-      return _isExternal(props.to);
+      return utilsIsExternal(props.to);
     });
     const type = computed(() => {
       if (isExternal.value) {
