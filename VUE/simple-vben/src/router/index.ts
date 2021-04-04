@@ -10,7 +10,7 @@ const router = createRouter({
       children: [
         {
           path: "dashboard",
-          component: () => import("/@/views/dashboard/index.vue"),
+          component: () => import("/@/views/dashboard/Dashboard.vue"),
           name: "Dashboard",
           meta: { title: "Dashboard", icon: "dashboard", affix: true },
         },
@@ -23,13 +23,13 @@ const router = createRouter({
       children: [
         {
           path: "index",
-          component: () => import("/@/views/about/index.vue"),
+          component: () => import("/@/views/about/About.vue"),
           name: "Documentation",
           meta: { title: "Documentation", icon: "documentation", affix: true },
         },
         {
           path: "index2",
-          component: () => import("/@/views/about/index.vue"),
+          component: () => import("/@/views/about/About.vue"),
           name: "Documentation2",
           meta: { title: "Documentation2", icon: "documentation", affix: true },
         },
