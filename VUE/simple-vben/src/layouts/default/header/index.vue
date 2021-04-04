@@ -7,8 +7,6 @@
 
 <script setup lang="ts">
 import { Layout } from "ant-design-vue";
-import { useStore } from "vuex";
-const store = useStore();
-console.log(store);
+
 const Header = Layout.Header;
 </script>

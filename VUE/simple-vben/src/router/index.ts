@@ -1,6 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import component from "/@/layouts/default/index.vue";
-import Layout from "/@/layouts/default/index.vue";
+import Layout from "/@/layouts/default/Layout.vue";
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
