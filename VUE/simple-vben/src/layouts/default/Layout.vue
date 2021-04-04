@@ -15,6 +15,7 @@ import { computed } from "vue";
 import AppMain from "./components/AppMain.vue";
 import NavBar from "./components/NavBar.vue";
 import Sidebar from "./components/Sidebar/Sidebar.vue";
+import { Layout } from "ant-design-vue";
 // import LayoutHeader from "./header/index.vue";
 
 import { useStore } from "vuex";

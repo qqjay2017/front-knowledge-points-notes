@@ -1,4 +1,4 @@
-import { createStore } from "vuex";
+import { createStore, Store } from "vuex";
 
 import appModule, { AppState } from "./modules/app";
 import settingModule, { SettingState } from "./modules/settings";
@@ -13,7 +13,7 @@ export type IRootState = {
   [Modules.Settings]: SettingState;
 };
 
-const store = createStore({
+const store: Store<IRootState> = createStore({
   modules: {
     [Modules.App]: appModule,
     [Modules.Settings]: settingModule,

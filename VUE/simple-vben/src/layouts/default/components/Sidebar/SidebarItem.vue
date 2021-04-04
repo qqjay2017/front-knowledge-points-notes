@@ -1,41 +1,39 @@
 <template>
-  <div v-if="!props.item.hidden">
-    <template
-      v-if="
-        hasOneShowingChild(props.item.children, props.item) &&
-        (!onlyOneChild.children || onlyOneChild.noShowingChildren) &&
-        !props.item.alwaysShow
-      "
-    >
+  <template
+    v-if="
+      hasOneShowingChild(props.item.children, props.item) &&
+      (!onlyOneChild.children || onlyOneChild.noShowingChildren) &&
+      !props.item.alwaysShow
+    "
+  >
+    <MenuItem :key="resolvePath(onlyOneChild.path)">
       <AppLink v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
-        <MenuItem :key="resolvePath(onlyOneChild.path)">
-          <Item
-            :icon="onlyOneChild.meta.icon"
-            :title="onlyOneChild.meta.title"
-          ></Item>
-        </MenuItem>
-      </AppLink>
-    </template>
-
-    <SubMenu v-else :key="resolvePath(props.item.path)">
-      <template #title>
         <Item
-          v-if="item.meta"
-          :icon="item.meta && item.meta.icon"
-          :title="item.meta.title"
+          :icon="onlyOneChild.meta.icon"
+          :title="onlyOneChild.meta.title"
         ></Item>
-      </template>
-      <SidebarItem
-        v-for="child in props.item.children"
-        :key="child.path"
-        :is-nest="true"
-        :item="child"
-        :base-path="resolvePath(child.path)"
-        class="nest-menu"
-      >
-      </SidebarItem>
-    </SubMenu>
-  </div>
+      </AppLink>
+    </MenuItem>
+  </template>
+
+  <SubMenu v-else :key="resolvePath(props.item.path)">
+    <template #title>
+      <Item
+        v-if="item.meta"
+        :icon="item.meta && item.meta.icon"
+        :title="item.meta.title"
+      ></Item>
+    </template>
+    <SidebarItem
+      v-for="child in props.item.children"
+      :key="child.path"
+      :is-nest="true"
+      :item="child"
+      :base-path="resolvePath(child.path)"
+      class="nest-menu"
+    >
+    </SidebarItem>
+  </SubMenu>
 </template>
 
 <script setup name="SidebarItem" lang="ts">

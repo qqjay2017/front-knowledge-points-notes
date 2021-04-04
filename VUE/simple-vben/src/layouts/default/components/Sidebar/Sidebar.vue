@@ -1,16 +1,17 @@
 <template>
   <div :class="{ 'has-logo': showLogo }">
     <Logo v-if="showLogo" :collapse="isCollapse" />
-    <div>
-      <Menu mode="inline" theme="dark" :sub-menu-open-delay="0.2">
-        <SidebarItem
-          v-for="r in routes"
-          :key="r.path"
-          :item="r"
-          :base-path="r.path"
-        />
-      </Menu>
-    </div>
+    {{ isCollapse }}
+    <Menu
+      :inline-collapsed="isCollapse"
+      mode="inline"
+      theme="dark"
+      :sub-menu-open-delay="0.2"
+    >
+      <template v-for="r in routes" :key="r.path">
+        <SidebarItem :item="r" :base-path="r.path" />
+      </template>
+    </Menu>
   </div>
 </template>
 
@@ -45,6 +46,6 @@ const routes = computed(() => {
 });
 
 const isCollapse = computed(() => {
-  return !store.state.app.sidebar;
+  return !store.state.app.sidebar.opened;
 });
 </script>

@@ -1,6 +1,29 @@
 <template>
-  <div class="navbar">111111</div>
+  <div class="navbar">
+    <Hamburger
+      :is-active="sidebar.opened"
+      class="hamburger-container"
+      @toggleClick="toggleSideBar"
+    />
+  </div>
 </template>
+
+<script setup lang="ts">
+import { computed } from "vue";
+import { useStore } from "vuex";
+import { getStoreNamespace, Modules } from "/@/store/index";
+import { AppModuleActions } from "../../../store/modules/app";
+import Hamburger from "./Hamburger.vue";
+const store = useStore();
+const sidebar = computed(() => {
+  return store.state.app.sidebar;
+});
+const toggleSideBar = () => {
+  store.dispatch(
+    getStoreNamespace(Modules.App, AppModuleActions.toggleSideBar)
+  );
+};
+</script>
 
 <style lang="less" scoped>
 .navbar {

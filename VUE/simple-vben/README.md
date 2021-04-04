@@ -217,3 +217,7 @@ transform
 ## svg 
 
 > https://github.com/JetBrains/svg-sprite-loader/issues/434
+
+## vscode 的setup插件
+
+Volar
