@@ -8,6 +8,9 @@ import router from "./router/index";
 import store from "./store";
 
 const app = createApp(App);
+
+import "ant-design-vue/dist/antd.css";
+
 app.use(router);
 app.use(store);
 

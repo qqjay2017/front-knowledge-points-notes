@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn add windcss
+  /usr/local/bin/node /usr/local/bin/yarn add @types/path-browserify -D
 
 PATH: 
   /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin
@@ -14,7 +14,7 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: https://registry.npm.taobao.org/windcss: Not found
+  Error: https://registry.npm.taobao.org/@types%2fpath-browserify: Not found
       at Request.params.callback [as _callback] (/usr/local/lib/node_modules/yarn/lib/cli.js:66988:18)
       at Request.self.callback (/usr/local/lib/node_modules/yarn/lib/cli.js:140662:22)
       at Request.emit (events.js:315:20)
@@ -40,12 +40,16 @@ npm manifest:
     },
     "dependencies": {
       "ant-design-vue": "^2.1.2",
+      "js-cookie": "^2.2.1",
       "mockjs": "^1.1.0",
+      "path-browserify": "^1.0.1",
       "vite-plugin-windicss": "^0.12.2",
       "vue": "^3.0.5",
-      "vue-router": "^4.0.5"
+      "vue-router": "^4.0.5",
+      "vuex": "^4.0.0"
     },
     "devDependencies": {
+      "@types/js-cookie": "^2.2.6",
       "@types/node": "^14.14.37",
       "@typescript-eslint/eslint-plugin": "^4.20.0",
       "@typescript-eslint/parser": "^4.20.0",
@@ -426,6 +430,11 @@ Lockfile:
     version "0.0.39"
     resolved "https://registry.npm.taobao.org/@types/estree/download/@types/estree-0.0.39.tgz#e177e699ee1b8c22d23174caaa7422644389509f"
     integrity sha1-4Xfmme4bjCLSMXTKqnQiZEOJUJ8=
+  
+  "@types/js-cookie@^2.2.6":
+    version "2.2.6"
+    resolved "https://registry.npm.taobao.org/@types/js-cookie/download/@types/js-cookie-2.2.6.tgz?cache=0&sync_timestamp=1613379268332&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fjs-cookie%2Fdownload%2F%40types%2Fjs-cookie-2.2.6.tgz#f1a1cb35aff47bc5cfb05cb0c441ca91e914c26f"
+    integrity sha1-8aHLNa/0e8XPsFywxEHKkekUwm8=
   
   "@types/json-schema@^7.0.3":
     version "7.0.7"
@@ -1997,6 +2006,11 @@ Lockfile:
     resolved "https://registry.npm.taobao.org/isexe/download/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
     integrity sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=
   
+  js-cookie@^2.2.1:
+    version "2.2.1"
+    resolved "https://registry.npm.taobao.org/js-cookie/download/js-cookie-2.2.1.tgz#69e106dc5d5806894562902aa5baec3744e9b2b8"
+    integrity sha1-aeEG3F1YBolFYpAqpbrsN0Tpsrg=
+  
   "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
     version "4.0.0"
     resolved "https://registry.npm.taobao.org/js-tokens/download/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
@@ -2484,6 +2498,11 @@ Lockfile:
     version "1.3.3"
     resolved "https://registry.npm.taobao.org/parseurl/download/parseurl-1.3.3.tgz#9da19e7bee8d12dff0513ed5b76957793bc2e8d4"
     integrity sha1-naGee+6NEt/wUT7Vt2lXeTvC6NQ=
+  
+  path-browserify@^1.0.1:
+    version "1.0.1"
+    resolved "https://registry.npm.taobao.org/path-browserify/download/path-browserify-1.0.1.tgz#d98454a9c3753d5790860f16f68867b9e46be1fd"
+    integrity sha1-2YRUqcN1PVeQhg8W9ohnueRr4f0=
   
   path-is-absolute@^1.0.0:
     version "1.0.1"
@@ -3234,6 +3253,11 @@ Lockfile:
       "@vue/compiler-dom" "3.0.11"
       "@vue/runtime-dom" "3.0.11"
       "@vue/shared" "3.0.11"
+  
+  vuex@^4.0.0:
+    version "4.0.0"
+    resolved "https://registry.npm.taobao.org/vuex/download/vuex-4.0.0.tgz?cache=0&sync_timestamp=1612277384353&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvuex%2Fdownload%2Fvuex-4.0.0.tgz#ac877aa76a9c45368c979471e461b520d38e6cf5"
+    integrity sha1-rId6p2qcRTaMl5Rx5GG1INOObPU=
   
   warning@^4.0.0:
     version "4.0.3"

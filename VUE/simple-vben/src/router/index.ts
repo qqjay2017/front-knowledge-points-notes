@@ -19,12 +19,19 @@ const router = createRouter({
     {
       path: "/about",
       component: Layout,
+      meta: { title: "About", icon: "el-icon-s-help" },
       children: [
         {
           path: "index",
           component: () => import("/@/views/about/index.vue"),
           name: "Documentation",
           meta: { title: "Documentation", icon: "documentation", affix: true },
+        },
+        {
+          path: "index2",
+          component: () => import("/@/views/about/index.vue"),
+          name: "Documentation2",
+          meta: { title: "Documentation2", icon: "documentation", affix: true },
         },
       ],
     },
