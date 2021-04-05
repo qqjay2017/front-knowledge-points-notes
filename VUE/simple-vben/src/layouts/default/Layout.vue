@@ -1,85 +1,48 @@
 <template>
   <Layout>
-    <Sidebar class="sidebar-container" />
+    <Sidebar />
     <Layout>
-      <NavBar />
-      <LayoutContent>
+      <LayoutHeader />
+      <Layout-content
+        :style="{
+          margin: '24px 16px',
+          padding: '24px',
+          background: '#fff',
+          minHeight: '280px',
+        }"
+      >
         <AppMain />
-      </LayoutContent>
+      </Layout-content>
     </Layout>
   </Layout>
 </template>
-
-<script setup lang="ts">
-import { computed } from "vue";
-import AppMain from "./components/AppMain.vue";
-import NavBar from "./components/NavBar.vue";
-import Sidebar from "./components/Sidebar/Sidebar.vue";
+<script lang="ts" setup>
 import { Layout } from "ant-design-vue";
-const LayoutContent = Layout.Content;
-// import LayoutHeader from "./header/index.vue";
-
-import { useStore } from "vuex";
-const store = useStore();
-
-const sidebar = computed(() => {
-  return store.state.app.sidebar;
-});
-
-const device = computed(() => {
-  return store.state.app.device;
-});
-
-const fixedHeader = computed(() => {
-  return store.state.settings.fixedHeader;
-});
-
-const classObj = computed(() => {
-  return {
-    hideSidebar: !sidebar.value.opened,
-    openSidebar: sidebar.value.opened,
-    withoutAnimation: sidebar.value.withoutAnimation,
-    mobile: device.value === "mobile",
-  };
-});
+import { ref } from "vue";
+import LayoutHeader from "./components/NavBar.vue";
+import AppMain from "./components/AppMain.vue";
+import Sidebar from "./components/Sidebar/Sidebar.vue";
 </script>
-
-<style lang="less" scoped>
-@import "/@/design/variables.less";
-
-.app-wrapper {
-  position: relative;
-  height: 100%;
-  width: 100%;
-  &.mobile.openSidebar {
-    position: fixed;
-    top: 0;
-  }
-}
-.drawer-bg {
-  background: #000;
-  opacity: 0.3;
-  width: 100%;
-  top: 0;
-  height: 100%;
-  position: absolute;
-  z-index: 999;
+<style>
+#components-layout-demo-custom-trigger .trigger {
+  font-size: 18px;
+  line-height: 64px;
+  padding: 0 24px;
+  cursor: pointer;
+  transition: color 0.3s;
 }
 
-.fixed-header {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 9;
-  width: calc(100% - @sideBarWidth);
-  transition: width 0.28s;
+#components-layout-demo-custom-trigger .trigger:hover {
+  color: #1890ff;
 }
 
-.hideSidebar .fixed-header {
-  width: calc(100% - 54px);
+#components-layout-demo-custom-trigger .logo {
+  height: 32px;
+  background: rgba(255, 255, 255, 0.3);
+  margin: 16px;
 }
 
-.mobile .fixed-header {
-  width: 100%;
+.site-layout .site-layout-background {
+  background: #fff;
 }
 </style>

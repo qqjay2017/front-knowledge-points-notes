@@ -1,4 +1,4 @@
-const { HttpStatus } = require("@nestjs/common");
+
 const ErrorType = require("../constants/error-type");
 const userService = require("../service/user.service");
 const jwt = require('jsonwebtoken');
@@ -14,7 +14,7 @@ class AuthController {
 
         if (!hasUser || !hasUser.length) {
             return ctx.app.emit(ErrorType.HTTP_ERROR, {
-                status: HttpStatus.UNAUTHORIZED,
+                status: 401,
                 message: `用户名称或者密码错误~`
             }, ctx)
 

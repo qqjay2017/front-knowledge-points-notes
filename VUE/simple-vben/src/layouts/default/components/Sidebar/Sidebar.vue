@@ -1,8 +1,9 @@
 <template>
-  <Sider :collapsed="isCollapse" :trigger="null" collapsible>
+  <Sider v-model:collapsed="isCollapse" :trigger="null" collapsible>
     <Logo v-if="showLogo" :collapse="isCollapse" />
     {{ isCollapse }}
     <Menu
+      v-model:selectedKeys="selectedKeys"
       :inline-collapsed="isCollapse"
       mode="inline"
       theme="dark"
@@ -16,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive } from "vue";
+import { computed, reactive, ref } from "vue";
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 
@@ -34,6 +35,8 @@ const showLogo = computed(() => {
 
 const route = useRoute();
 const router = useRouter();
+
+const selectedKeys = ref<string[]>([route.path]);
 
 const openKeys = computed(() => {
   const { meta, path } = route;

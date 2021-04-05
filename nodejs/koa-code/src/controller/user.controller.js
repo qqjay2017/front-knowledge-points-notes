@@ -1,4 +1,4 @@
-const { HttpStatus } = require('@nestjs/common');
+
 const jwt = require('jsonwebtoken');
 const ErrorType = require('../constants/error-type');
 const UserService = require('../service/user.service')
@@ -17,7 +17,7 @@ class UserController {
             console.log(decoded)
         }catch(error){
             ctx.app.emit(ErrorType.HTTP_ERROR,{
-                status:HttpStatus.FORBIDDEN,
+                status:403,
                 message:'用户token过期'
             },ctx)
         }

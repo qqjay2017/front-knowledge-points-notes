@@ -1,4 +1,4 @@
-const { HttpStatus } = require('@nestjs/common');
+
 const ErrorType = require('../constants/error-type')
 const UserService = require('../service/user.service');
 const { md5PasswordSign } = require('../utils/password-handle');
@@ -15,7 +15,7 @@ const verifyUser = async (ctx, next) => {
     if (hasUser && hasUser.length) {
         return ctx.app.emit(ErrorType.HTTP_ERROR,
             {
-                status: HttpStatus.CONFLICT,
+                status:409,
                 message: '用户已存在~'
             },
             ctx)

@@ -8,13 +8,13 @@
   >
     <MenuItem :key="resolvePath(onlyOneChild.path)">
       <!-- <AppLink v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
-       
+        <Item
+          :icon="onlyOneChild.meta.icon"
+          :title="onlyOneChild.meta.title"
+        ></Item>
       </AppLink> -->
-      <Item
-        v-if="onlyOneChild.meta"
-        :icon="onlyOneChild.meta.icon"
-        :title="onlyOneChild.meta.title"
-      ></Item>
+      <span>111</span>
+      <span>222</span>
     </MenuItem>
   </template>
 

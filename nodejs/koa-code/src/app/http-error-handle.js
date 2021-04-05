@@ -1,4 +1,4 @@
-const { HttpException } = require('@nestjs/common')
+
 // const createError = require('http-errors')
 
 /**
@@ -11,7 +11,7 @@ function httpErrorHandle(error, ctx) {
         const message = error.message || error.error || '未知异常'
         const status = error.status || 500
         // ctx.throw(createError(status,message))
-        throw new HttpException(message,status)
+        throw new Error(message,status)
 
 }
 

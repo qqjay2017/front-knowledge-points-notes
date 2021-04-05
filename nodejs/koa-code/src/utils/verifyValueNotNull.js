@@ -1,4 +1,4 @@
-const { HttpStatus } = require('@nestjs/common');
+
 const ErrorType = require('../constants/error-type')
 
 const verifyValueNotNull = (ctx, obj) => {
@@ -14,7 +14,7 @@ const verifyValueNotNull = (ctx, obj) => {
         if (nullKey) {
             return ctx.app.emit(ErrorType.HTTP_ERROR,
                 {
-                    status: HttpStatus.PAYMENT_REQUIRED,
+                    status: 402,
                     message: ` ${nullKey} 不能为空~`
                 },
                 ctx)
