@@ -22,5 +22,5 @@ pool.getConnection((err, connection) => {
         }
     })
 })
-
-module.exports = pool.promise()
+const connection = pool.promise()
+module.exports = connection

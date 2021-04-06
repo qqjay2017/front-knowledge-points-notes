@@ -12,6 +12,18 @@ const verifyUserBody =async (ctx,next)=>{
 
 }
 
+const verifyUserHeader = async (ctx, next)=>{
+  const userId =   ctx.headers['user-id'];
+  if(!userId){
+      return  ctx.app.emit(ErrorType.HTTP_ERROR,{
+          status:403,
+          message:'未登录'
+      },ctx)
+  }
+  await  next()
+}
+
 module.exports = {
-    verifyUserBody
+    verifyUserBody,
+    verifyUserHeader
 }
