@@ -17,7 +17,7 @@ export enum AppModuleActions {
 const state = () => ({
   device: "desktop",
   sidebar: {
-    opened: Cookies.get("sidebarStatus") === "1" ? false : true,
+    opened: Cookies.get("sidebarStatus") === "1" ? true : false,
     withoutAnimation: false,
   },
 });
@@ -26,7 +26,7 @@ const mutations: MutationTree<AppState> = {
   [AppModuleMutations.TOGGLE_SIDEBAR]: (state) => {
     state.sidebar.opened = !state.sidebar.opened;
     state.sidebar.withoutAnimation = false;
-    // 1 = 关 ,0 = 开
+    // 0 = 关 ,1 = 开
     if (state.sidebar.opened) {
       Cookies.set("sidebarStatus", "1");
     } else {

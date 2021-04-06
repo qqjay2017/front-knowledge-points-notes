@@ -1,18 +1,16 @@
 <template>
-  <section class="app-main">
+  <LayoutContent>
     <router-view v-slot="{ Component }">
       <transition name="fade-transform" mode="out-in">
         <component :is="Component" />
       </transition>
     </router-view>
-  </section>
+  </LayoutContent>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import { useRoute } from "vue-router";
-const route = useRoute();
-const key = computed(() => {
-  return route.path;
-});
+import {Layout} from 'ant-design-vue'
+const LayoutContent = Layout.Content
+
+
 </script>

@@ -1,9 +1,14 @@
 <template>
-  <div id="app" class="px-99">
-    <RouterView />
-  </div>
+  <RouterView />
 </template>
 
 <script setup lang="ts">
 import { RouterView } from "vue-router";
 </script>
+
+<style lang="less">
+#app {
+  width: 100%;
+  height: 100%;
+}
+</style>

@@ -113,6 +113,11 @@ app.get<{
 > https://github.com/prisma/prisma-examples/blob/latest/typescript/rest-express/src/index.ts#L10
 > https://www.prisma.io/docs/getting-started/setup-prisma/add-to-existing-project-typescript-postgres
 
+
+  departments   departments[]  @relation("dept_emp")
+
+    employees  employees[] @relation("dept_emp")
+
 1. 安装
 ```
 npm install prisma -D
@@ -144,9 +149,14 @@ npx  prisma generate
 npx prisma introspect
 ```
 
+文档集合
+1.关联
+> https://www.prisma.io/docs/concepts/components/prisma-schema/relations
+
 1. prisma安装.初始化,同步模型,client生成,数模检查
 2. fastify整合prisma
 3. prisma一对一 /一对多 / 多对多查询
+4. prisma模型与数据库同步,pull与push
 
 sql模式
 
