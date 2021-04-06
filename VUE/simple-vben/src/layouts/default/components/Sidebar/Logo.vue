@@ -1,32 +1,33 @@
 <template>
   <div class="sidebar-logo-container" :class="{ collapse: props.collapse }">
-    <transition name="sidebarLogoFade">
-      <router-link
+     <router-link
         v-if="collapse"
         key="collapse"
         class="sidebar-logo-link"
         to="/"
       >
-        <img v-if="logo" :src="logo" class="sidebar-logo" />
-        <h1 v-else class="sidebar-title">{{ title }}</h1>
+        <img  :src="logo" class="sidebar-logo" />
       </router-link>
       <router-link v-else key="expand" class="sidebar-logo-link" to="/">
-        <img v-if="logo" :src="logo" class="sidebar-logo" />
+        <img  :src="logo" class="sidebar-logo" />
         <h1 class="sidebar-title">{{ title }}</h1>
       </router-link>
-    </transition>
   </div>
 </template>
 
 <script setup lang="ts">
 import { defineProps } from "vue";
 import logo from "/@/assets/logo.png";
+
+
 const title = "Vue Admin Template";
 const props = defineProps({
   collapse: {
     type: Boolean,
     required: true,
   },
+
+  
 });
 </script>
 

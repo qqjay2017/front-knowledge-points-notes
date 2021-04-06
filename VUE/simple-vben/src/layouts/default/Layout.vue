@@ -1,11 +1,13 @@
 <template>
-  <layout :style="{width:'100%',height:'100%'}">
+  <Layout :style="{width:'100%',height:'100%'}">
     <Siderbar />
-    <layout>
-     <Navbar />
+   
+     <div :style="{width:'100%',height:'100%'}">
+       <Navbar />
       <AppMain />
-    </layout>
-  </layout>
+     </div>
+   
+  </Layout>
 </template>
 
 <script lang="ts" setup>
@@ -20,13 +22,10 @@ import {
 import { Layout } from 'ant-design-vue'
 
 
-import Siderbar from './components/Sidebar/Siderbar.vue'
+import Siderbar from './components/Sidebar/index.vue'
 import Navbar from './components/NavBar.vue'
 import AppMain from './components/AppMain.vue'
 
-import {  ref } from "vue";
-
-const selectedKeys = ref<string[]>(["1"]);
 
 
 

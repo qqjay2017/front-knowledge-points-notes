@@ -29,9 +29,9 @@ export default defineConfig({
   },
   plugins: [
     vue(),
-    viteMockServe({
-      mockPath: "mock",
-    }),
+    // viteMockServe({
+    //   mockPath: "mock",
+    // }),
     svgBuilder("./src/icons/svg/"),
     // WindiCSS(),
   ],

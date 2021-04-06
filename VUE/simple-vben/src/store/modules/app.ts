@@ -17,7 +17,7 @@ export enum AppModuleActions {
 const state = () => ({
   device: "desktop",
   sidebar: {
-    opened: Cookies.get("sidebarStatus") === "1" ? true : false,
+    opened:(Cookies.get("sidebarStatus") && Cookies.get("sidebarStatus") === "0") ? false : true,
     withoutAnimation: false,
   },
 });
