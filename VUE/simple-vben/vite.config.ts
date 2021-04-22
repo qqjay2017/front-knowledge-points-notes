@@ -32,7 +32,7 @@ export default defineConfig({
     // viteMockServe({
     //   mockPath: "mock",
     // }),
-    svgBuilder("./src/icons/svg/"),
-    // WindiCSS(),
+
+    WindiCSS(),
   ],
 });

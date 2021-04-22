@@ -12,6 +12,8 @@ class AuthController {
             name, password
         }, 1)
 
+        
+
         if (!hasUser || !hasUser.length) {
             return ctx.app.emit(ErrorType.HTTP_ERROR, {
                 status: 401,
@@ -25,12 +27,15 @@ class AuthController {
             algorithm:'RS256' // 非对称算法
         });
         ctx.user = {
-            name
+            name,
+            id:hasUser[0].id
         }
 
         ctx.body = {
             code:200,
-            token:'Bearer '+token
+            token:'Bearer '+token,
+            name,
+            id:hasUser[0].id
         }
 
         await next()

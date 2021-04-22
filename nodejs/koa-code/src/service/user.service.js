@@ -11,7 +11,7 @@ class UserService {
     }
 
     async show({ name, id ,password},limit) {
-        let baseSql = `select id , name  FROM users WHERE 1=1 `
+        let baseSql = `select id , name  FROM Users WHERE 1=1 `
         let values = []
 
         if (name && name != null) {

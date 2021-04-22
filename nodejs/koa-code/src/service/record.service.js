@@ -4,7 +4,7 @@ class RecordService {
 
     async index(userId){
         const statement = `
-        select  id,title,record,userId,address,createTime from Records where userId = ? order by createTime asc
+        select  id,title,record,userId,address,createTime from Records where userId = ? order by createTime desc
         `
 
         const result = await connection.execute(statement,[

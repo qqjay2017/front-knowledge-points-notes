@@ -3,7 +3,7 @@ const recordService = require("../service/record.service");
 class RecordController {
 
     async index(ctx){
-        const userId = ctx.headers['user-id']
+        const userId = ctx.request.query.userId
      const result =    await recordService.index(  userId)
         ctx.body =  result
     }

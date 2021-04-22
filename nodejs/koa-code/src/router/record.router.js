@@ -8,10 +8,10 @@ const router = new Router({prefix: '/record'})
 
 
 //
-router.post('/', verifyUserHeader, recordMiddleware.formatData, create)
-router.delete('/:recordId', verifyUserHeader, destroy)
-router.put('/:recordId', verifyUserHeader, recordMiddleware.formatData, update)
-router.get('/', verifyUserHeader, index)
+router.post('/',  recordMiddleware.formatData, create)
+router.delete('/:recordId',  destroy)
+router.put('/:recordId',  recordMiddleware.formatData, update)
+router.get('/',  index)
 
 
 module.exports = router;
