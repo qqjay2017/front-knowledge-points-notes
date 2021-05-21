@@ -15,3 +15,9 @@
 
 `https://www.yuque.com/brolly/hgg6ly/cxt9fq`
 
+## commitlint
+
+```sh
+yarn add @commitlint/cli @commitlint/config-conventional -D
+echo "module.exports = { extends: ['@commitlint/config-conventional'] };" > commitlint.config.js
+```
