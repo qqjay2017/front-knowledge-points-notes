@@ -7,9 +7,9 @@
     "module": "esnext",
     "moduleResolution": "node",
     "allowJs": false,
-    "strict": true,
+    "strict": false,
  
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "experimentalDecorators": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
@@ -22,7 +22,7 @@
     "paths": {
       // "@vue/compat": ["packages/vue-compat/src"],
       // 识别引入第三方模块
-      "@vue/*": ["packages/*/src"],
+      "@vue3/*": ["packages/*/src"],
       // "vue": ["packages/vue/src"]
     }
   },

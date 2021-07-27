@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>111</div>
+    <script src="./packages/reactivity/dist/reactivity.global.js"></script>
+    <script>
+        const {reactive , effect} = VueReactivity
+      
+        const state =reactive({name:'zf',age:12,address:'回龙观'})
+  
+        effect(()=>{
+            console.log(state.name,'state')
+        })
+        state.name = 'zff'
+        
+    
+      
+ 
+        
+    </script>
+</body>
+</html>

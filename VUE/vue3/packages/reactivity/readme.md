@@ -1,0 +1,6 @@
+Vue3中采用proxy实现数据代理, 核心就是拦截get方法和set方法，当获取值时收集effect函数，
+当修改值时触发对应的effect重新执行
+
+
+track依赖收集
+trigger触发更新

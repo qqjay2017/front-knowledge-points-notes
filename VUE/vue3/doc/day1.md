@@ -50,3 +50,6 @@ npm i rollup -g
 npm install typescript rollup rollup-plugin-typescript2 @rollup/plugin-node-resolve @rollup/plugin-json execa -D
 ```
 
+## 文档地址
+
+> http://www.zhufengpeixun.com/advance/vue3/2.vue3-reactivity.html#%E5%9B%9B-effect%E5%AE%9E%E7%8E%B0
