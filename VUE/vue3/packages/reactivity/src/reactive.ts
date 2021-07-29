@@ -1,6 +1,13 @@
 import { isObject } from '@vue3/shared'
 import { mutableHandlers, readonlyHandlers } from './baseHandlers';
 
+export const enum ReactiveFlags {
+    SKIP = '__v_skip',
+    IS_REACTIVE = '__v_isReactive',
+    IS_READONLY = '__v_isReadonly',
+    RAW = '__v_raw'
+}
+
 export const reactiveMap = new WeakMap()
 export const readonlyMap = new WeakMap()
 
@@ -29,4 +36,10 @@ export function readonly(target) {
 
 export function reactive(target) {
     return createReactiveObject(target, false, mutableHandlers)
+}
+
+export function toRaw<T>(observed: T) {
+    return (
+        (observed && toRaw(observed[ReactiveFlags.RAW])) || observed
+    )
 }

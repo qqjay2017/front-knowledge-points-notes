@@ -18,11 +18,12 @@ const shallowSet = createSetter(true)
  */
 function createGetter(isReadonly = false, shallow = false) {
     return function get(target, key, receiver) {
+        // 总是可以通过Reflect对应的方法获取默认行为。
         const res = Reflect.get(target, key, receiver)
-       
+
         // 如果是仅读的无需收集依赖
         if (!isReadonly) {
-          
+
             track(target, TrackOpTypes.GET, key)
         }
         // 浅响应无需返回代理对象
@@ -31,7 +32,7 @@ function createGetter(isReadonly = false, shallow = false) {
         }
         // 取值时候,将返回值转为代理
         if (isObject(res)) {
-           
+
             return isReadonly ? readonly(res) : reactive(res)
         }
         return res
@@ -41,7 +42,12 @@ function createGetter(isReadonly = false, shallow = false) {
 function createSetter(shallow = false) {
     return function set(target, key, value, receiver) {
         const oldValue = target[key]
-        const hadKey = isArray(target) && isIntegerKey(key) ? Number(key) < target.length : hasOwn(target, key)
+        // hadKey 判断是否是已有的
+        const hadKey = isArray(target) && isIntegerKey(key)
+            ?
+            Number(key) < target.length
+            :
+            hasOwn(target, key)
         const result = Reflect.set(target, key, value, receiver)
         if (!hadKey) {
             trigger(target, TriggerOpTypes.ADD, key, value)

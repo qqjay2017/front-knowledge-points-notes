@@ -1,4 +1,7 @@
+const objectToString = Object.prototype.toString;
+const toTypeString = (value) => objectToString.call(value);
 const isObject = (val) => val !== null && typeof val === 'object';
+const isMap = (val) => toTypeString(val) === '[object Map]';
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 const hasOwn = (val, key) => hasOwnProperty.call(val, key);
 const isArray = Array.isArray;
@@ -13,6 +16,7 @@ let uid = 0;
 const effectStack = [];
 let activeEffect;
 const targetMap = new WeakMap();
+const ITERATE_KEY = Symbol('');
 function effect(fn, options = {}) {
     // 创建响应式effect
     const effect = createReactiveEffect(fn, options);
@@ -52,7 +56,7 @@ function createReactiveEffect(fn, options) {
  * @returns
  */
 function track(target, type, key) {
-    // 如果不在effect中取值，则无需记录
+    // 如果没有activeEffect,就不收集
     if (activeEffect === undefined) {
         return;
     }
@@ -102,16 +106,23 @@ function trigger(target, type, key, newValue, oldValue) {
         });
     }
     else {
+        // SET | ADD | DELETE
         if (key !== void 0) {
             add(depsMap.get(key));
         }
         switch (type) {
             case "add" /* ADD */:
                 //  给数组新增属性，直接触发length即可
-                if (isArray(target)) {
-                    if (isIntegerKey(key)) {
-                        add(depsMap.get('length'));
-                    }
+                if (!isArray(target)) {
+                    add(depsMap.get(ITERATE_KEY));
+                }
+                else if (isIntegerKey(key)) {
+                    add(depsMap.get('length'));
+                }
+                break;
+            case "set" /* SET */:
+                if (isMap(target)) {
+                    add(depsMap.get(ITERATE_KEY));
                 }
                 break;
         }
@@ -131,6 +142,7 @@ const set = createSetter();
  */
 function createGetter(isReadonly = false, shallow = false) {
     return function get(target, key, receiver) {
+        // 总是可以通过Reflect对应的方法获取默认行为。
         const res = Reflect.get(target, key, receiver);
         // 如果是仅读的无需收集依赖
         if (!isReadonly) {
@@ -150,7 +162,12 @@ function createGetter(isReadonly = false, shallow = false) {
 function createSetter(shallow = false) {
     return function set(target, key, value, receiver) {
         const oldValue = target[key];
-        const hadKey = isArray(target) && isIntegerKey(key) ? Number(key) < target.length : hasOwn(target, key);
+        // hadKey 判断是否是已有的
+        const hadKey = isArray(target) && isIntegerKey(key)
+            ?
+                Number(key) < target.length
+            :
+                hasOwn(target, key);
         const result = Reflect.set(target, key, value, receiver);
         if (!hadKey) {
             trigger(target, "add" /* ADD */, key, value);

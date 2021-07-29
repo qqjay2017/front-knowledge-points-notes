@@ -12,12 +12,13 @@
     <script>
         const {reactive , effect} = VueReactivity
       
-        const state =reactive({name:'zf',age:12,address:'回龙观'})
+        const state =reactive([1,2,3])
   
         effect(()=>{
-            console.log(state.name,'state')
+            console.log(state.length,'state')
         })
-        state.name = 'zff'
+        state.length = 5
+     
         
     
       

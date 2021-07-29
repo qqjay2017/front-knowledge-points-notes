@@ -6,15 +6,15 @@ const target = fs.readdirSync("packages").filter((f) => {
   return fs.statSync(`packages/${f}`).isDirectory();
 });
 
-runParallel(target, build).then(()=>{
-  console.log('成功')
-})
+runParallel(target, build).then(() => {
+  console.log("成功");
+});
 
 /**
  * 并发去打包，每次打包都调用build方法
- * @param {*} source 
- * @param {*} iteratorFn 
- * @returns 
+ * @param {*} source
+ * @param {*} iteratorFn
+ * @returns
  */
 
 async function runParallel(source, iteratorFn) {
@@ -28,10 +28,13 @@ async function runParallel(source, iteratorFn) {
 }
 
 async function build(target) {
-  await execa("rollup",
-   ["-c", 
-   "--environment",
-    `TARGET:${target}`], {
-    stdio: "inherit",
-  });
+  await execa(
+    "rollup",
+    // 向rollup.config.js传递环境变量
+    ["-c", "--environment", `TARGET:${target}`],
+    // 子进程的输出在父进程提现
+    {
+      stdio: "inherit",
+    }
+  );
 }

@@ -1,4 +1,4 @@
-import { isArray, isIntegerKey } from "@vue3/shared";
+import { isArray, isIntegerKey, isMap } from "@vue3/shared";
 import { TrackOpTypes, TriggerOpTypes } from "./operations";
 
 let uid = 0;
@@ -7,6 +7,7 @@ let activeEffect: ReactiveEffect | undefined;
 type Dep = Set<ReactiveEffect>
 type KeyToDepMap = Map<any, Dep>
 const targetMap = new WeakMap<any, KeyToDepMap>()
+export const ITERATE_KEY = Symbol('')
 
 export interface ReactiveEffect<T = any> {
     (): T;
@@ -20,12 +21,12 @@ export interface ReactiveEffect<T = any> {
 }
 
 export function effect(fn, options: any = {}) {
-    
+
     // 创建响应式effect
     const effect = createReactiveEffect(fn, options)
     // console.log(effect.id,'effect')
     if (!options.lazy) {
-    
+
         effect()
     }
     return effect
@@ -38,7 +39,7 @@ function createReactiveEffect(fn, options) {
         if (!effectStack.includes(effect)) {
             try {
                 effectStack.push(effect)
-               
+
                 activeEffect = effect  // 记录当前的effect
                 return fn() // 执行用户传递的fn -> 取值操作
             } finally {
@@ -63,8 +64,8 @@ function createReactiveEffect(fn, options) {
  * @returns 
  */
 export function track(target, type: TrackOpTypes, key: unknown) {
-    
-    // 如果不在effect中取值，则无需记录
+
+    // 如果没有activeEffect,就不收集
     if (activeEffect === undefined) {
         return
     }
@@ -96,7 +97,7 @@ export function track(target, type: TrackOpTypes, key: unknown) {
 
 export function trigger(target, type: TriggerOpTypes, key?, newValue?, oldValue?) {
     const depsMap = targetMap.get(target)
-   
+
     if (!depsMap) { // 属性没有对应的effect
         return
     }
@@ -111,31 +112,39 @@ export function trigger(target, type: TriggerOpTypes, key?, newValue?, oldValue?
         }
     }
     // 如果修改的是长度
-    if (key === 'length' && isArray(target)){
-        depsMap.forEach((dep,key)=>{
-            if (key == 'length' || key >= newValue) {
+    if (key === 'length' && isArray(target)) {
+        depsMap.forEach((dep, key) => {
+            if (key == 'length' || key >= (newValue as number)) {
                 add(dep)
             }
         })
-    }else {
-        if(key !== void 0){
+    } else {
+        // SET | ADD | DELETE
+        if (key !== void 0) {
             add(depsMap.get(key))
         }
         switch (type) {
             case TriggerOpTypes.ADD:
                 //  给数组新增属性，直接触发length即可
-                if(isArray(target)){
-                    if(isIntegerKey(key)){
-                        add(depsMap.get('length'))
-                    }
+                if (!isArray(target)) {
+                    add(depsMap.get(ITERATE_KEY))
+
+                } else if (isIntegerKey(key)) {
+                    add(depsMap.get('length'))
                 }
                 break;
-        
+
+            case TriggerOpTypes.SET:
+                if (isMap(target)) {
+                    add(depsMap.get(ITERATE_KEY))
+                }
+                break;
+
             default:
                 break;
         }
     }
-    effects.forEach(effect=>{
+    effects.forEach(effect => {
         effect()
     })
 }
