@@ -15,10 +15,28 @@
 - 增加了 `Fragment` , `Teleport` , `Suspense` 组件
 
 
+
+## monirepo架构
+
+根项目不会被发布,所以要标记 `private":true`
+同时要告诉yarn你的包在哪个目录下面: `packages` 字段
+
+```
+ "private":true,
+  "workspaces":[
+    "packages/*"
+  ],
+
+```
+
+- 安装到根目录
+
+```
+yarn install xxx -W 
+```
+
+
 ## vue3中的包
-
-
-
 
 
 
@@ -47,6 +65,13 @@
 ```
 npm i rollup -g
 ```
+
+
+```
+npx tsc --init
+```
+
+@rollup/plugin-node-resolve: 解析第三方模块
 
 ```
 npm install typescript rollup rollup-plugin-typescript2 @rollup/plugin-node-resolve @rollup/plugin-json execa -D
