@@ -35,7 +35,10 @@ export function effect(fn, options: any = {}) {
 
 function createReactiveEffect(fn, options) {
     const effect = function reactiveEffect(): unknown {
-        // 防止不停的更改属性导致死循环
+        if(!effect.active){
+            return options.scheduler ? undefined : fn()
+        }
+        // 防止嵌套effect导致死循环
         if (!effectStack.includes(effect)) {
             try {
                 effectStack.push(effect)
@@ -51,6 +54,7 @@ function createReactiveEffect(fn, options) {
     effect.id = uid++; // 用于做标识的
     effect._isEffect = true; // 标识是响应式effect
     effect.raw = fn;
+    effect.active = true
     effect.deps = []; // 用于收集effect对应的相关属性
     effect.options = options;
     return effect;
@@ -144,7 +148,13 @@ export function trigger(target, type: TriggerOpTypes, key?, newValue?, oldValue?
                 break;
         }
     }
-    effects.forEach(effect => {
-        effect()
-    })
+
+    const run = (effect:ReactiveEffect)=>{
+        if(effect.options.scheduler){
+            effect.options.scheduler(effect)
+        }else {
+            effect()
+        }
+    }
+    effects.forEach(run)
 }

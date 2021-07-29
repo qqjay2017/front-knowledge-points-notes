@@ -1,6 +1,7 @@
 const objectToString = Object.prototype.toString;
 const toTypeString = (value) => objectToString.call(value);
 const isObject = (val) => val !== null && typeof val === 'object';
+const isFunction = (val) => typeof val === 'function';
 const isMap = (val) => toTypeString(val) === '[object Map]';
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 const hasOwn = (val, key) => hasOwnProperty.call(val, key);
@@ -28,7 +29,10 @@ function effect(fn, options = {}) {
 }
 function createReactiveEffect(fn, options) {
     const effect = function reactiveEffect() {
-        // 防止不停的更改属性导致死循环
+        if (!effect.active) {
+            return options.scheduler ? undefined : fn();
+        }
+        // 防止嵌套effect导致死循环
         if (!effectStack.includes(effect)) {
             try {
                 effectStack.push(effect);
@@ -44,6 +48,7 @@ function createReactiveEffect(fn, options) {
     effect.id = uid++; // 用于做标识的
     effect._isEffect = true; // 标识是响应式effect
     effect.raw = fn;
+    effect.active = true;
     effect.deps = []; // 用于收集effect对应的相关属性
     effect.options = options;
     return effect;
@@ -127,9 +132,15 @@ function trigger(target, type, key, newValue, oldValue) {
                 break;
         }
     }
-    effects.forEach(effect => {
-        effect();
-    });
+    const run = (effect) => {
+        if (effect.options.scheduler) {
+            effect.options.scheduler(effect);
+        }
+        else {
+            effect();
+        }
+    };
+    effects.forEach(run);
 }
 
 const get = createGetter();
@@ -216,5 +227,52 @@ function reactive(target) {
     return createReactiveObject(target, false, mutableHandlers);
 }
 
-export { effect, reactive, readonly, trigger };
+class ComputedRefImpl {
+    _setter;
+    _value;
+    _dirty = true; // 默认是脏值
+    effect;
+    __v_isRef = true;
+    constructor(getter, _setter) {
+        this._setter = _setter;
+        this.effect = effect(getter, {
+            lazy: true,
+            scheduler: () => {
+                if (!this._dirty) { // 依赖属性变化时
+                    this._dirty = true; // 标记为脏值，触发视图更新
+                    trigger(this, "set" /* SET */, 'value');
+                }
+            }
+        });
+    }
+    get value() {
+        if (this._dirty) {
+            this._value = this.effect();
+            this._dirty = false;
+        }
+        // 进行属性依赖收集
+        track(this, "get" /* GET */, 'value');
+        return this._value;
+    }
+    set value(newVal) {
+        this._setter(newVal);
+    }
+}
+function computed(getterOrOptions) {
+    let getter;
+    let setter;
+    if (isFunction(getterOrOptions)) {
+        getter = getterOrOptions;
+        setter = () => {
+            console.warn('computed value is readonly');
+        };
+    }
+    else {
+        getter = getterOrOptions.get;
+        setter = getterOrOptions.set;
+    }
+    return new ComputedRefImpl(getter, setter);
+}
+
+export { computed, effect, reactive, readonly, trigger };
 //# sourceMappingURL=reactivity.esm-bundler.js.map

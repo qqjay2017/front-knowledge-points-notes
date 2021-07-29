@@ -5,6 +5,9 @@ export const toTypeString = (value: unknown): string =>
 export const isObject = (val: unknown): val is Record<any, any> =>
   val !== null && typeof val === 'object'
 
+export const isFunction = (val: unknown): val is Function =>
+  typeof val === 'function'
+
 export const isMap = (val: unknown): val is Map<any, any> =>
   toTypeString(val) === '[object Map]'
 

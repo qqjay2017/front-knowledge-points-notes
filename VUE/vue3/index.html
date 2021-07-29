@@ -10,14 +10,18 @@
     <div>111</div>
     <script src="./packages/reactivity/dist/reactivity.global.js"></script>
     <script>
-        const {reactive , effect} = VueReactivity
+        const {reactive , effect , computed} = VueReactivity
       
-        const state =reactive([1,2,3])
-  
-        effect(()=>{
-            console.log(state.length,'state')
+        const state =reactive({
+            name:'zf'
         })
-        state.length = 5
+
+       
+  
+        const comName =  computed(()=>state.name)
+      
+        state.name = 'zff'
+        console.log(comName.value)
      
         
     

@@ -8,3 +8,5 @@ export {
     effect,
     trigger,
 } from './effect'
+
+export { computed } from './computed'
