@@ -2,6 +2,24 @@
 # yarn lockfile v1
 
 
+"@babel/helper-validator-identifier@^7.14.8":
+  version "7.14.8"
+  resolved "https://registry.yarnpkg.com/@babel/helper-validator-identifier/-/helper-validator-identifier-7.14.8.tgz#32be33a756f29e278a0d644fa08a2c9e0f88a34c"
+  integrity sha512-ZGy6/XQjllhYQrNw/3zfWRwZCTVSiBLZ9DHVZxn9n2gip/7ab8mv2TWlKPIBk26RwedCBoWdjLmn+t9na2Gcow==
+
+"@babel/parser@^7.12.0":
+  version "7.14.8"
+  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.14.8.tgz#66fd41666b2d7b840bd5ace7f7416d5ac60208d4"
+  integrity sha512-syoCQFOoo/fzkWDeM0dLEZi5xqurb5vuyzwIMNZRNun+N/9A4cUZeQaE7dTrB8jGaKuJRBtEOajtnmw0I5hvvA==
+
+"@babel/types@^7.12.0":
+  version "7.14.8"
+  resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.14.8.tgz#38109de8fcadc06415fbd9b74df0065d4d41c728"
+  integrity sha512-iob4soQa7dZw8nodR/KlOQkPh9S4I8RwCxwRIFuiMRYjOzH/KJzdUfDgz6cGi5dDaclXF4P2PAhCdrBJNIg68Q==
+  dependencies:
+    "@babel/helper-validator-identifier" "^7.14.8"
+    to-fast-properties "^2.0.0"
+
 "@rollup/plugin-json@^4.1.0":
   version "4.1.0"
   resolved "https://registry.npm.taobao.org/@rollup/plugin-json/download/@rollup/plugin-json-4.1.0.tgz#54e09867ae6963c593844d8bd7a9c718294496f3"
@@ -55,6 +73,54 @@
   dependencies:
     "@types/node" "*"
 
+"@vue/compiler-core@3.1.5":
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/@vue/compiler-core/-/compiler-core-3.1.5.tgz#298f905b6065d6d81ff63756f98c60876b393c87"
+  integrity sha512-TXBhFinoBaXKDykJzY26UEuQU1K07FOp/0Ie+OXySqqk0bS0ZO7Xvl7UmiTUPYcLrWbxWBR7Bs/y55AI0MNc2Q==
+  dependencies:
+    "@babel/parser" "^7.12.0"
+    "@babel/types" "^7.12.0"
+    "@vue/shared" "3.1.5"
+    estree-walker "^2.0.1"
+    source-map "^0.6.1"
+
+"@vue/compiler-dom@3.1.5":
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/@vue/compiler-dom/-/compiler-dom-3.1.5.tgz#cbb97020c62a5faa3fbc2a97916bd98041ac9856"
+  integrity sha512-ZsL3jqJ52OjGU/YiT/9XiuZAmWClKInZM2aFJh9gnsAPqOrj2JIELMbkIFpVKR/CrVO/f2VxfPiiQdQTr65jcQ==
+  dependencies:
+    "@vue/compiler-core" "3.1.5"
+    "@vue/shared" "3.1.5"
+
+"@vue/reactivity@3.1.5":
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/@vue/reactivity/-/reactivity-3.1.5.tgz#dbec4d9557f7c8f25c2635db1e23a78a729eb991"
+  integrity sha512-1tdfLmNjWG6t/CsPldh+foumYFo3cpyCHgBYQ34ylaMsJ+SNHQ1kApMIa8jN+i593zQuaw3AdWH0nJTARzCFhg==
+  dependencies:
+    "@vue/shared" "3.1.5"
+
+"@vue/runtime-core@3.1.5":
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/@vue/runtime-core/-/runtime-core-3.1.5.tgz#a545b7f146092929cb5e833e85439150f17ac87b"
+  integrity sha512-YQbG5cBktN1RowQDKA22itmvQ+b40f0WgQ6CXK4VYoYICAiAfu6Cc14777ve8zp1rJRGtk5oIeS149TOculrTg==
+  dependencies:
+    "@vue/reactivity" "3.1.5"
+    "@vue/shared" "3.1.5"
+
+"@vue/runtime-dom@3.1.5":
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/@vue/runtime-dom/-/runtime-dom-3.1.5.tgz#4fa28947d408aa368fa17ea0edc1beb9af1472a1"
+  integrity sha512-tNcf3JhVR0RfW0kw1p8xZgv30nvX8Y9rsz7eiQ0dHe273sfoCngAG0y4GvMaY4Xd8FsjUwFedd4suQ8Lu8meXg==
+  dependencies:
+    "@vue/runtime-core" "3.1.5"
+    "@vue/shared" "3.1.5"
+    csstype "^2.6.8"
+
+"@vue/shared@3.1.5":
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.1.5.tgz#74ee3aad995d0a3996a6bb9533d4d280514ede03"
+  integrity sha512-oJ4F3TnvpXaQwZJNF3ZK+kLPHKarDmJjJ6jyzVNDKH9md1dptjC7lWR//jrGuLdek/U6iltWxqAnYOu8gCiOvA==
+
 builtin-modules@^3.1.0:
   version "3.2.0"
   resolved "https://registry.npm.taobao.org/builtin-modules/download/builtin-modules-3.2.0.tgz#45d5db99e7ee5e6bc4f362e008bf917ab5049887"
@@ -73,6 +139,11 @@ cross-spawn@^7.0.3:
     path-key "^3.1.0"
     shebang-command "^2.0.0"
     which "^2.0.1"
+
+csstype@^2.6.8:
+  version "2.6.17"
+  resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.17.tgz#4cf30eb87e1d1a005d8b6510f95292413f6a1c0e"
+  integrity sha512-u1wmTI1jJGzCJzWndZo8mk4wnPTZd1eOIYTYvuEyOQGfmDl3TrabCCfKnOC86FZwW/9djqTl933UF/cS425i9A==
 
 deepmerge@^4.2.2:
   version "4.2.2"
@@ -323,10 +394,20 @@ signal-exit@^3.0.3:
   resolved "https://registry.npm.taobao.org/signal-exit/download/signal-exit-3.0.3.tgz?cache=0&sync_timestamp=1592843131591&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fsignal-exit%2Fdownload%2Fsignal-exit-3.0.3.tgz#a1410c2edd8f077b08b4e253c8eacfcaf057461c"
   integrity sha1-oUEMLt2PB3sItOJTyOrPyvBXRhw=
 
+source-map@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
+  integrity sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==
+
 strip-final-newline@^2.0.0:
   version "2.0.0"
   resolved "https://registry.nlark.com/strip-final-newline/download/strip-final-newline-2.0.0.tgz#89b852fb2fcbe936f6f4b3187afb0a12c1ab58ad"
   integrity sha1-ibhS+y/L6Tb29LMYevsKEsGrWK0=
+
+to-fast-properties@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/to-fast-properties/-/to-fast-properties-2.0.0.tgz#dc5e698cbd079265bc73e0377681a4e4e83f616e"
+  integrity sha1-3F5pjL0HkmW8c+A3doGk5Og/YW4=
 
 tslib@2.1.0:
   version "2.1.0"
@@ -342,6 +423,15 @@ universalify@^0.1.0:
   version "0.1.2"
   resolved "https://registry.npm.taobao.org/universalify/download/universalify-0.1.2.tgz?cache=0&sync_timestamp=1603180004159&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Funiversalify%2Fdownload%2Funiversalify-0.1.2.tgz#b646f69be3942dabcecc9d6639c80dc105efaa66"
   integrity sha1-tkb2m+OULavOzJ1mOcgNwQXvqmY=
+
+vue@^3.1.5:
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-3.1.5.tgz#12879b11d0685ee4478c8869551799630a52f9fe"
+  integrity sha512-Ho7HNb1nfDoO+HVb6qYZgeaobt1XbY6KXFe4HGs1b9X6RhkWG/113n4/SrtM1LUclM6OrP/Se5aPHHvAPG1iVQ==
+  dependencies:
+    "@vue/compiler-dom" "3.1.5"
+    "@vue/runtime-dom" "3.1.5"
+    "@vue/shared" "3.1.5"
 
 which@^2.0.1:
   version "2.0.2"

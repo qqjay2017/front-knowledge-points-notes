@@ -1,6 +1,13 @@
 import { isArray, isIntegerKey, isMap } from "@vue3/shared";
 import { TrackOpTypes, TriggerOpTypes } from "./operations";
 
+
+/**
+ * effect  副作用
+ * effect默认会执行
+ * 执行的时候收集属性的依赖  effct = [name ,age]
+ * name变化,对应的effct就会执行
+ */
 let uid = 0;
 const effectStack = []
 let activeEffect: ReactiveEffect | undefined;

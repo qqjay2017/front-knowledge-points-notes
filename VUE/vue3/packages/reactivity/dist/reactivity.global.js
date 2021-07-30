@@ -16,6 +16,12 @@ var VueReactivity = (function (exports) {
       '' + parseInt(key, 10) === key;
   const hasChanged = (value, oldValue) => value !== oldValue && (value === value || oldValue === oldValue);
 
+  /**
+   * effect  副作用
+   * effect默认会执行
+   * 执行的时候收集属性的依赖  effct = [name ,age]
+   * name变化,对应的effct就会执行
+   */
   let uid = 0;
   const effectStack = [];
   let activeEffect;
@@ -147,8 +153,11 @@ var VueReactivity = (function (exports) {
   }
 
   const get = createGetter();
+  const shallowGet = createGetter(false, true);
   const readonlyGet = createGetter(true);
+  const shallowReadonlyGet = createGetter(true, true);
   const set = createSetter();
+  const shallowSet = createSetter(true);
   /**
    *
    * @param isReadonly 只读
@@ -203,7 +212,22 @@ var VueReactivity = (function (exports) {
           return true;
       }
   };
+  const shallowReactiveHandlers = {
+      get: shallowGet,
+      set: shallowSet
+  };
+  const shallowReadonlyHandlers = {
+      get: shallowReadonlyGet,
+      set(target, key) {
+          console.warn(`Set operation on key "${String(key)}" failed: target is readonly.`);
+          return true;
+      }
+  };
 
+  /**
+   * WeakMap 是一个弱引用,如果这个对象被销毁了,map会自动销毁掉
+   * reactiveMap 目的是添加缓存
+   */
   const reactiveMap = new WeakMap();
   const readonlyMap = new WeakMap();
   function createReactiveObject(target, isReadonly, baseHandlers) {
@@ -211,7 +235,7 @@ var VueReactivity = (function (exports) {
       if (!isObject(target)) {
           return target;
       }
-      //  获取缓存对象
+      //  获取缓存对象,如果同一个对象被代理过,就不需要再代理
       const proxyMap = isReadonly ? readonlyMap : reactiveMap;
       const existingProxy = proxyMap.get(target);
       // 2. 代理过了,直接返回
@@ -228,6 +252,12 @@ var VueReactivity = (function (exports) {
   }
   function reactive(target) {
       return createReactiveObject(target, false, mutableHandlers);
+  }
+  function shallowReactive(target) {
+      return createReactiveObject(target, false, shallowReactiveHandlers);
+  }
+  function shallowReadonly(target) {
+      return createReactiveObject(target, true, shallowReadonlyHandlers);
   }
 
   class ComputedRefImpl {
@@ -281,6 +311,8 @@ var VueReactivity = (function (exports) {
   exports.effect = effect;
   exports.reactive = reactive;
   exports.readonly = readonly;
+  exports.shallowReactive = shallowReactive;
+  exports.shallowReadonly = shallowReadonly;
   exports.trigger = trigger;
 
   Object.defineProperty(exports, '__esModule', { value: true });
