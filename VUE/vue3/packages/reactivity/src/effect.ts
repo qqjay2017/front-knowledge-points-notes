@@ -4,9 +4,10 @@ import { TrackOpTypes, TriggerOpTypes } from "./operations";
 
 /**
  * effect  副作用
- * effect默认会执行
+ * effect默认会执行一次
  * 执行的时候收集属性的依赖  effct = [name ,age]
- * name变化,对应的effct就会执行
+ * 执行的时候会把用到的属性和这个effct关联起来,下次更新属性的时候,会再次执行这个effect
+ * 
  */
 let uid = 0;
 const effectStack = []
@@ -40,12 +41,24 @@ export function effect(fn, options: any = {}) {
 
 }
 
+/**
+ * 当用户取值的时候,需要将activeEffct 和属性做关连
+ * 当用户更改的时候   要通过属性 找到effct 重新执行
+ * @param fn 
+ * @param options 
+ * @returns 
+ */
+
 function createReactiveEffect(fn, options) {
     const effect = function reactiveEffect(): unknown {
+
+        /**
+         * 执行的时候就要做一次关联--> 让属性记住这个effect
+         */
         if(!effect.active){
             return options.scheduler ? undefined : fn()
         }
-        // 防止嵌套effect导致死循环
+        // 防止嵌套effect,做一个effectStack:[],可以拿到当前的effct,利用栈模拟函数的执行过程
         if (!effectStack.includes(effect)) {
             try {
                 effectStack.push(effect)
@@ -122,10 +135,17 @@ export function trigger(target, type: TriggerOpTypes, key?, newValue?, oldValue?
             })
         }
     }
-    // 如果修改的是长度
+    console.log(key,newValue,depsMap)
+    // 如果修改的是长度(解决修改length时候的出发问题)
     if (key === 'length' && isArray(target)) {
         depsMap.forEach((dep, key) => {
+            /**
+             * 1. 修改数组length,effect里面依赖数组的一个下标
+             *  这时候key是数组下标  ,是需要收集的依赖
+             * newValue 是数组的长度
+             */
             if (key == 'length' || key >= (newValue as number)) {
+                // ||  把数组的长度改小了的清理
                 add(dep)
             }
         })
@@ -141,6 +161,7 @@ export function trigger(target, type: TriggerOpTypes, key?, newValue?, oldValue?
                     add(depsMap.get(ITERATE_KEY))
 
                 } else if (isIntegerKey(key)) {
+                    // push的时候,length会被屏蔽,手动给length收集依赖
                     add(depsMap.get('length'))
                 }
                 break;

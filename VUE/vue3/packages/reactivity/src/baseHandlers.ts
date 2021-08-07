@@ -12,7 +12,7 @@ const set = createSetter()
 const shallowSet = createSetter(true)
 
 /**
- * 
+ * target 原对象  key 取什么属性  receiver代理对象
  * @param isReadonly 只读
  * @param shallow 浅响应
  */
@@ -20,19 +20,17 @@ function createGetter(isReadonly = false, shallow = false) {
     return function get(target, key, receiver) {
         // 总是可以通过Reflect对应的方法获取默认行为。
         const res = Reflect.get(target, key, receiver)
-
+       
         // 如果是仅读的无需收集依赖
         if (!isReadonly) {
-
             track(target, TrackOpTypes.GET, key)
         }
         // 浅响应无需返回代理对象
         if (shallow) {
             return res
         }
-        // 取值时候,将返回值转为代理
+        // 懒递归,取值时候,将返回值转为代理,Proxy不会深度代理,
         if (isObject(res)) {
-
             return isReadonly ? readonly(res) : reactive(res)
         }
         return res
@@ -41,6 +39,7 @@ function createGetter(isReadonly = false, shallow = false) {
 
 function createSetter(shallow = false) {
     return function set(target, key, value, receiver) {
+       
         const oldValue = target[key]
         // hadKey 判断是否是已有的
         const hadKey = isArray(target) && isIntegerKey(key)
@@ -48,8 +47,16 @@ function createSetter(shallow = false) {
             Number(key) < target.length
             :
             hasOwn(target, key)
+         // Reflect.set 设置失败了  有返回值
+       
         const result = Reflect.set(target, key, value, receiver)
+        /**
+         * 如果数组push,会走两次set  一次是    "3" "100" (push的下标和值)  一次是"length" 4 (新的长度)
+         * 所以需要对数组特殊处理
+         */
+        // console.log(target, key, value, receiver,result,'target, key, value, receiver')
         if (!hadKey) {
+            // 新增属性
             trigger(target, TriggerOpTypes.ADD, key, value)
         } else if (hasChanged(value, oldValue)) {
             // 修改属性
