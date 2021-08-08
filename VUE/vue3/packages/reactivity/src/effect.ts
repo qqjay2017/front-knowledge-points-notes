@@ -136,7 +136,7 @@ export function trigger(target, type: TriggerOpTypes, key?, newValue?, oldValue?
         }
     }
     console.log(key,newValue,depsMap)
-    // 如果修改的是长度(解决修改length时候的出发问题)
+    // 如果修改的是长度(解决修改length时候的依赖收集问题)
     if (key === 'length' && isArray(target)) {
         depsMap.forEach((dep, key) => {
             /**
