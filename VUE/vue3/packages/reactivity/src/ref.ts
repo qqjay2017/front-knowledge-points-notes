@@ -40,6 +40,10 @@ const convert = <T extends unknown>(val: T): T =>
     isObject(val) ? reactive(val) : val
 
 
+    /**
+     * 借助类的属性访问器
+     * ts中定义类,私有属性必须先声明才能使用
+     */
 class RefImpl<T> {
     private _value: T;
     // 静态标识是ref

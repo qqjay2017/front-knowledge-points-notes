@@ -18,9 +18,10 @@ var VueReactivity = (function (exports) {
 
   /**
    * effect  副作用
-   * effect默认会执行
+   * effect默认会执行一次
    * 执行的时候收集属性的依赖  effct = [name ,age]
-   * name变化,对应的effct就会执行
+   * 执行的时候会把用到的属性和这个effct关联起来,下次更新属性的时候,会再次执行这个effect
+   *
    */
   let uid = 0;
   const effectStack = [];
@@ -36,12 +37,22 @@ var VueReactivity = (function (exports) {
       }
       return effect;
   }
+  /**
+   * 当用户取值的时候,需要将activeEffct 和属性做关连
+   * 当用户更改的时候   要通过属性 找到effct 重新执行
+   * @param fn
+   * @param options
+   * @returns
+   */
   function createReactiveEffect(fn, options) {
       const effect = function reactiveEffect() {
+          /**
+           * 执行的时候就要做一次关联--> 让属性记住这个effect
+           */
           if (!effect.active) {
               return options.scheduler ? undefined : fn();
           }
-          // 防止嵌套effect导致死循环
+          // 防止嵌套effect,做一个effectStack:[],可以拿到当前的effct,利用栈模拟函数的执行过程
           if (!effectStack.includes(effect)) {
               try {
                   effectStack.push(effect);
@@ -111,10 +122,17 @@ var VueReactivity = (function (exports) {
               });
           }
       };
-      // 如果修改的是长度
+      console.log(key, newValue, depsMap);
+      // 如果修改的是长度(解决修改length时候的出发问题)
       if (key === 'length' && isArray(target)) {
           depsMap.forEach((dep, key) => {
+              /**
+               * 1. 修改数组length,effect里面依赖数组的一个下标
+               *  这时候key是数组下标  ,是需要收集的依赖
+               * newValue 是数组的长度
+               */
               if (key == 'length' || key >= newValue) {
+                  // ||  把数组的长度改小了的清理
                   add(dep);
               }
           });
@@ -131,6 +149,7 @@ var VueReactivity = (function (exports) {
                       add(depsMap.get(ITERATE_KEY));
                   }
                   else if (isIntegerKey(key)) {
+                      // push的时候,length会被屏蔽,手动给length收集依赖
                       add(depsMap.get('length'));
                   }
                   break;
@@ -159,7 +178,7 @@ var VueReactivity = (function (exports) {
   const set = createSetter();
   const shallowSet = createSetter(true);
   /**
-   *
+   * target 原对象  key 取什么属性  receiver代理对象
    * @param isReadonly 只读
    * @param shallow 浅响应
    */
@@ -175,7 +194,7 @@ var VueReactivity = (function (exports) {
           if (shallow) {
               return res;
           }
-          // 取值时候,将返回值转为代理
+          // 懒递归,取值时候,将返回值转为代理,Proxy不会深度代理,
           if (isObject(res)) {
               return isReadonly ? readonly(res) : reactive(res);
           }
@@ -191,8 +210,15 @@ var VueReactivity = (function (exports) {
                   Number(key) < target.length
               :
                   hasOwn(target, key);
+          // Reflect.set 设置失败了  有返回值
           const result = Reflect.set(target, key, value, receiver);
+          /**
+           * 如果数组push,会走两次set  一次是    "3" "100" (push的下标和值)  一次是"length" 4 (新的长度)
+           * 所以需要对数组特殊处理
+           */
+          // console.log(target, key, value, receiver,result,'target, key, value, receiver')
           if (!hadKey) {
+              // 新增属性
               trigger(target, "add" /* ADD */, key, value);
           }
           else if (hasChanged(value, oldValue)) {

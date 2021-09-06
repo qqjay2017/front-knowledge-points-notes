@@ -7,16 +7,21 @@
     <title>Document</title>
   </head>
   <body>
-      <div id="app"></div>
-    <script src="../node_modules/@vue/reactivity/dist/reactivity.global.js"></script>
+    <div id="app"></div>
+    <!-- <script src="../node_modules/@vue/reactivity/dist/reactivity.global.js"></script> -->
+    <script src="../packages/reactivity/dist/reactivity.global.js"></script>
     <script>
       let { reactive, shallowReactive, readonly, shallowReadonly, effect } =
         VueReactivity;
 
-
-
-
-      let school = { name: "zf", age: 12 };
+      let school = {
+        name: "zf",
+        age: 12,
+        address: {
+          num: 517,
+        },
+        arr: [1, 2, 3],
+      };
 
       /**
        * reactive  ,返回一个代理对象
@@ -24,20 +29,20 @@
        * 当代理对象 赋值的时候  会重新执行effect
        **/
 
-       /*
+      /*
        *reactive 所有的都代理
        shallowReactive  只代理第一层对象
        readonly  会进行代理,但是不进行依赖收集,可以节约性能
        */
 
       let obj = reactive(school);
-      
 
-        effect(()=>{
-            app.innerHTML = obj.name
-        })
+      effect(()=>{
+        console.log( JSON.stringify(obj.arr))
+      })
 
-        obj.name = 'zff'
+      obj.arr.push('100')
+     
 
     </script>
   </body>
