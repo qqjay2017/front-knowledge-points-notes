@@ -2,7 +2,7 @@
     "name": "algorithm",
     "version": "0.0.1",
     "description": "algorithm",
-    "main": "index.js"
+    "main": "dist/algorithm.cjs.js"
 
   }
   

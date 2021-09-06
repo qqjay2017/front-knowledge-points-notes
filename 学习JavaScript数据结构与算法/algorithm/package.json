@@ -6,7 +6,7 @@
     "packages/*"
   ],
   "scripts": {
-    "dev":"tsc  packages/algorithm/src/index.ts  -w"
+    "dev":"node script/dev.js"
   },
   "keywords": [],
   "license": "ISC",
