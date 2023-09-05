@@ -1,77 +1,57 @@
-/**
- * bind返回新的函数
- * 使用call实现bind
- * 会有构造函数new的问题,instanceof指向错误
- */
-// (function (prototype) {
-//   function bind(context, ...outerArgs) {
-//
-//     return (...innerArgs) => {
-//       this.call(context, ...outerArgs, ...innerArgs);
-//     };
-//   }
-//   prototype.bind = bind;
-// })(Function.prototype);
+// 第一种写法
+const add = (function (totalLength) {
+  let allArgs = [];
+  function _add(...args) {
+    allArgs = [...allArgs, ...args];
 
-/**
- *
- * bind实现高级版,考虑new的情况进去
- */
+    if (allArgs.length >= totalLength) {
+      const ret = allArgs.reduce((memo, cur) => memo + cur, 0);
+      allArgs = [];
+      return ret;
+    } else {
+      return _add;
+    }
+  }
+  return _add;
+})(5);
 
-~(function (prototype) {
-  prototype.bind = function (context, ...outerArgs) {
-    Object.create = function (prototype) {
-      function F() {}
-      F.prototype = prototype;
-      return new F();
-    };
-    let thatFunc = this;
-    let fBound = function (...innerArgs) {
-      // 如果this instanceof thatFunc,说明是new 的
-      return thatFunc.apply(this instanceof thatFunc ? this : context, [
-        ...outerArgs,
-        ...innerArgs,
-      ]);
-    };
-    fBound.prototype = Object.create(thatFunc.prototype);
+console.log(add(1, 2, 3, 4, 5)); // 15
+console.log(add(1)(2)(3)(4)(5)); //15
+console.log(add(1, 2)(3, 4, 5)); //15
 
-    return fBound;
+console.log("-------------");
+
+function add1(...args) {
+  let _add = add1.bind(null, ...args);
+  _add.toString = function () {
+    return args.reduce((memo, cur) => memo + cur, 0);
   };
-})(Function.prototype);
-
-function sum(...args) {
-  return (
-    this.prefix +
-    args.reduce(
-      (previousValue, currentValue) => previousValue + currentValue,
-      0
-    )
-  );
+  return _add;
 }
 
-let obj = {
-  prefix: "$",
-};
+console.log(add1(1, 2, 3, 4, 5).toString()); // 15
+console.log(add1(1)(2)(3)(4)(5).toString()); //15
+console.log(add1(1, 2)(3, 4, 5).toString()); //15
 
-const bindSum = sum.bind(obj, 1, 2, 3);
+console.log("------");
 
-console.log(bindSum(4, 5));
+/**
+ * 柯里化
+ * 把接收多个参数的函数,变成接收一个单一参数的函数,并且返回接收余下参数,返回结果的技术
+ */
 
-console.log("----------------");
-
-function Point(x, y) {
-  this.x = x;
-  this.y = y;
+function curry(fn, ...args) {
+  return args.length < fn.length
+    ? (...innerArgs) => curry(fn, ...args, ...innerArgs)
+    : fn(...args);
 }
 
-Point.prototype.toString = function () {
-  return this.x + "," + this.y;
-};
+function addFn(a, b, c, d, e) {
+  return a + b + c + d + e;
+}
 
-let emptyObj = {};
-let YPoint = Point.bind(null, 1);
-let axiosPoint = new YPoint(2);
+let curryAdd = curry(addFn);
 
-console.log(axiosPoint.toString());
-console.log(axiosPoint instanceof YPoint); //true
-console.log(axiosPoint instanceof Point); //true
+console.log(curryAdd(1, 2, 3, 4, 5), "curryAdd"); // 15
+console.log(curryAdd(1)(2)(3)(4)(5), "curryAdd"); //15
+console.log(curryAdd(1, 2)(3, 4, 5), "curryAdd"); //15
