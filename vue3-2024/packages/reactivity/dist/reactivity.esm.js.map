@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../shared/src/index.ts", "../src/index.ts"],
+  "sourcesContent": ["export function isObj(value) {\r\n  return value !== null && typeof value === \"object\";\r\n}\r\n", "import { isObj } from \"@core/shared\";\r\n\r\nconsole.log(isObj({}));\r\n\r\nexport { isObj };\r\n"],
+  "mappings": ";AAAO,SAAS,MAAM,OAAO;AAC3B,SAAO,UAAU,QAAQ,OAAO,UAAU;AAC5C;;;ACAA,QAAQ,IAAI,MAAM,CAAC,CAAC,CAAC;",
+  "names": []
+}
