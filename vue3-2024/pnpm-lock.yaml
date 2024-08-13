@@ -22,6 +22,14 @@ importers:
         specifier: ^5.5.4
         version: 5.5.4
 
+  packages/reactivity:
+    dependencies:
+      '@core/shared':
+        specifier: workspace:^1.0.0
+        version: link:../shared
+
+  packages/shared: {}
+
 packages:
 
   '@babel/helper-string-parser@7.24.8':

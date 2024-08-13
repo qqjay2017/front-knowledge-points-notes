@@ -1,5 +1,2 @@
-import { isObj } from "@core/shared";
-
-console.log(isObj({}));
-
-export { isObj };
+export * from './effect'
+export * from './reactive'

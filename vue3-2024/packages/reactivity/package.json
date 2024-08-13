@@ -10,7 +10,7 @@
   "keywords": [],
   "author": "",
   "dependencies": {
-    " @core/shared": "workspace:^1.0.0"
+    "@core/shared": "workspace:^1.0.0"
   },
   "buildOptions": {
     "name": "VueReactivity",
