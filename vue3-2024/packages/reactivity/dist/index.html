@@ -9,6 +9,7 @@
     <div id="app"></div>
     <button id="btn">++</button>
     <script type="module">
+      //  import { reactive, effect } from "/node_modules/@vue/reactivity/dist/reactivity.esm-browser.js";
       import { reactive, effect } from "./reactivity.esm.js";
       // 1.reactive 创建响应式对象  2. effect 副作用函数,默认会执行一次,数据变化后会再次执行
       const t = {
@@ -19,15 +20,25 @@
 
 
 
-      effect(() => {
+     const runner =  effect(() => {
+        console.log("执行effect")
         app.innerHTML = state.name+state.name2
+      },{
+        // 类似于watch api的回调
+        // 后面的组件更新都是基于这个scheduler来实现的
+        scheduler(){
+          console.log("数据变化了 ")
+          runner()
+        }
       });
 
-      effect(() => {
-        console.log(state.name+state.name2,"effect222")
-      });
+      console.log(runner.effect,"runner")
+
+    
       btn.addEventListener("click", () => {
         state.name++;
+        state.name2++;
+
       });
     </script>
   </body>
