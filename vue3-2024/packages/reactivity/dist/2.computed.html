@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <button id="btn">++</button>
+    <script type="module">
+      //   import {
+      //     reactive,
+      //     effect,
+      //     computed,
+      //   } from "/node_modules/@vue/reactivity/dist/reactivity.esm-browser.js";
+      import { reactive, effect, computed } from "./reactivity.esm.js";
+      const t = {
+        name: 123,
+        name2: 345,
+      };
+      const state = reactive(t);
+      // 计算属性的目的是根据状态衍生属性
+      // 具有缓存功能,如果依赖的数据不变,就不会重新计算
+      // 取值的时候,这个函数才会执行
+      let aliasName = computed(() => {
+        console.log(state.name, "first");
+        return state.name + 1;
+      });
+
+      effect(() => {
+        app.innerHTML = aliasName.value;
+      });
+
+      btn.addEventListener("click", () => {
+        state.name++;
+        state.name2++;
+        console.log(aliasName.value);
+      });
+    </script>
+  </body>
+</html>

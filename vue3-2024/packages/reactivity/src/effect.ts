@@ -15,13 +15,13 @@ function cleanupEffect(effect) {
   effect.deps.length = 0;
 }
 
-class ReactiveEffect {
+export class ReactiveEffect {
   // 依赖项
   public deps = [];
   // 是否激活
   public active = true;
   public parent = undefined;
-  constructor(public fn, public scheduler) {}
+  constructor(public fn, private scheduler) {}
   run() {
     if (!this.active) {
       // 未激活,直接执行
@@ -74,7 +74,10 @@ export function track(target, key) {
   if (!dep) {
     depsMap.set(key, (dep = new Set()));
   }
+  trackEffect(dep);
+}
 
+export function trackEffect(dep) {
   let shouldTrack = !dep.has(activeEffect);
 
   if (shouldTrack) {
@@ -84,6 +87,20 @@ export function track(target, key) {
 
     // 一个属性对应多个effect,一个effect对应多个属性
   }
+}
+
+export function triggerEffect(dep) {
+  const effects = [...dep];
+  effects.forEach((effect) => {
+    // 避免死循环,重新执行effct时候,会将当前的effect放在全局上
+    if (activeEffect !== effect) {
+      if (!effect.scheduler) {
+        effect.run();
+      } else {
+        effect.scheduler();
+      }
+    }
+  });
 }
 
 /**
@@ -101,16 +118,6 @@ export function trigger(target, key, newValue, oldValue) {
   }
   const dep = depsMap.get(key);
   if (dep) {
-    const effects = [...dep];
-    effects.forEach((effect) => {
-      // 避免死循环,重新执行effct时候,会将当前的effect放在全局上
-      if (activeEffect !== effect) {
-        if (!effect.scheduler) {
-          effect.run();
-        } else {
-          effect.scheduler();
-        }
-      }
-    });
+    triggerEffect(dep);
   }
 }

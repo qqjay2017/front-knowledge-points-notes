@@ -58,11 +58,26 @@ function track(target, key) {
   if (!dep) {
     depsMap.set(key, dep = /* @__PURE__ */ new Set());
   }
+  trackEffect(dep);
+}
+function trackEffect(dep) {
   let shouldTrack = !dep.has(activeEffect);
   if (shouldTrack) {
     dep.add(activeEffect);
     activeEffect.deps.push(dep);
   }
+}
+function triggerEffect(dep) {
+  const effects = [...dep];
+  effects.forEach((effect2) => {
+    if (activeEffect !== effect2) {
+      if (!effect2.scheduler) {
+        effect2.run();
+      } else {
+        effect2.scheduler();
+      }
+    }
+  });
 }
 function trigger(target, key, newValue, oldValue) {
   const depsMap = targetMap.get(target);
@@ -71,22 +86,16 @@ function trigger(target, key, newValue, oldValue) {
   }
   const dep = depsMap.get(key);
   if (dep) {
-    const effects = [...dep];
-    effects.forEach((effect2) => {
-      if (activeEffect !== effect2) {
-        if (!effect2.scheduler) {
-          effect2.run();
-        } else {
-          effect2.scheduler();
-        }
-      }
-    });
+    triggerEffect(dep);
   }
 }
 
 // packages/shared/src/index.ts
 function isObject(value) {
   return value !== null && typeof value === "object";
+}
+function isFunction(value) {
+  return typeof value === "function";
 }
 
 // packages/reactivity/src/baseHandlers.ts
@@ -96,7 +105,11 @@ var mutableHandlers = {
       return true;
     }
     track(target, p);
-    return Reflect.get(target, p, receiver);
+    const r = Reflect.get(target, p, receiver);
+    if (isObject(r)) {
+      return reactive(r);
+    }
+    return r;
   },
   set(target, p, newValue, receiver) {
     let oldValue = target[p];
@@ -128,12 +141,68 @@ function reactive(target) {
   reactiveMap.set(target, proxy);
   return proxy;
 }
+
+// packages/reactivity/src/computed.ts
+var ComputedRefImpl = class {
+  constructor(getter, setter) {
+    this.dep = void 0;
+    this._dirty = true;
+    // 意味着有这个属性,需要用.value来取值
+    this.__v_isRef = true;
+    // 缓存的值
+    this._value = void 0;
+    this._setter = setter;
+    this.effect = new ReactiveEffect(getter, () => {
+      this._dirty = true;
+      if (this.dep) {
+        triggerEffect(this.dep);
+      }
+    });
+  }
+  // 执行才取值,类的属性访问器
+  get value() {
+    if (activeEffect) {
+      trackEffect(this.dep || (this.dep = /* @__PURE__ */ new Set()));
+    }
+    if (this._dirty) {
+      this._value = this.effect.run();
+      this._dirty = false;
+    }
+    return this._value;
+  }
+  set value(newValue) {
+    this._setter(newValue);
+  }
+};
+var noop = () => {
+};
+function computed(getterOroptions) {
+  let onlyGetter = isFunction(getterOroptions);
+  let getter;
+  let setter;
+  if (onlyGetter) {
+    getter = getterOroptions;
+    setter = noop;
+  } else {
+    getter = getterOroptions.get;
+    setter = getterOroptions.set || noop;
+  }
+  if (!getter) {
+    return;
+  }
+  const computedRefImpl = new ComputedRefImpl(getter, setter);
+  return computedRefImpl;
+}
 export {
+  ReactiveEffect,
   ReactiveFlags,
   activeEffect,
+  computed,
   effect,
   reactive,
   track,
-  trigger
+  trackEffect,
+  trigger,
+  triggerEffect
 };
 //# sourceMappingURL=reactivity.esm.js.map

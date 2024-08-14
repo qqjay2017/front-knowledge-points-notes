@@ -1,5 +1,6 @@
+import { isObject } from "@core/shared";
 import { activeEffect, track, trigger } from "./effect";
-import { ReactiveFlags } from "./reactive";
+import { reactive, ReactiveFlags } from "./reactive";
 
 export const mutableHandlers = {
   get(target, p, receiver) {
@@ -11,7 +12,12 @@ export const mutableHandlers = {
     track(target, p);
 
     // 处理了this问题
-    return Reflect.get(target, p, receiver);
+    const r = Reflect.get(target, p, receiver);
+    if (isObject(r)) {
+      // 只有用户取值的时候，才会进行二次代理
+      return reactive(r);
+    }
+    return r;
   },
   set(target, p, newValue, receiver) {
     let oldValue = target[p];
