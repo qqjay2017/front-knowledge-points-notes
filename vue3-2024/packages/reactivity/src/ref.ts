@@ -53,3 +53,40 @@ export function ref(target){
     return new RefImpl(target)
 
 }
+
+
+class ObjectRefImpl {
+    __v_isRef=true
+    defaultValue=undefined;
+    _key=''
+    _object;
+
+    constructor(target,key){
+        this._object = target;
+        this._key = key
+
+    }
+
+
+    get value(){
+        return this._object[this._key]
+    }
+
+    set value(newValue){
+        this._object[this._key] = newValue
+
+    }
+}
+
+
+export function toRef(target,key){
+    return new ObjectRefImpl(target,key)
+}
+
+export function toRefs(object){
+    const ret = {}
+    for(let key in object){
+        ret[key] = toRef(object,key)
+    }
+    return ret
+}
