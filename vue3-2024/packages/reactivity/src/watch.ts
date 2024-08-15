@@ -26,7 +26,9 @@ function traverse(source, s = new Set()) {
  * @param cb 
  * @param options immediate deep
  */
-export function watch(source, cb, options: any = {}) {
+
+
+export function doWatch(source, cb, options: any = {}) {
     // 最终都处理成函数
     let getter;
 
@@ -38,21 +40,54 @@ export function watch(source, cb, options: any = {}) {
         getter = source
     } else {
         getter = () => source
+    }
 
+
+
+    
+    let oldValue
+    let cleanup
+
+    const onCleanup = (userCb)=>{
+        cleanup = userCb
+
+       
     }
     const job = () => {
-        // 内部要调用watch的回调
-        console.log('job ok')
-        let newValue = effect.run()
-        cb && cb(newValue, oldValue)
-        oldValue = newValue;
+       
+       
+        if (cb) {
+            // watch api
+            // 内部要调用watch的回调
+            let newValue = effect.run()
 
+            if(cleanup){
+                cleanup()
+                 
+            }
+            cb && cb(newValue, oldValue, onCleanup)
+            oldValue = newValue;
+        } else {
+            // watchEffct
+            effect.run()
+
+        }
     };
     const effect = new ReactiveEffect(getter, job);
     if (options && options.immediate) {
         // 默认执行一次
-      return   job()
+        return job()
     }
-    let oldValue = effect.run()
-    
+     oldValue = effect.run()
+}
+
+/**
+ * watch本身就是一个effect+自定义scheduler调度函数
+ * @param source 
+ * @param cb 
+ * @param options 
+ */
+
+export function watch(source, cb, options: any = {}) {
+    doWatch(source, cb, options)
 }

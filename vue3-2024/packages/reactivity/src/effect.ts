@@ -21,7 +21,7 @@ export class ReactiveEffect {
   // 是否激活
   public active = true;
   public parent = undefined;
-  constructor(public fn, private scheduler) {}
+  constructor(public fn, private scheduler?:Function) {}
   run() {
     if (!this.active) {
       // 未激活,直接执行

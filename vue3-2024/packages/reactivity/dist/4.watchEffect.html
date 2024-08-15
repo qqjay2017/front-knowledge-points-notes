@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <button id="btn">++</button>
+    <script type="module">
+   
+      //  import { reactive, effect, computed ,watchEffect} from "/node_modules/vue/dist/vue.esm-browser.js";
+      import { reactive, effect, computed ,watchEffect}  from "./reactivity.esm.js";
+      const t = {
+        name: 123,
+        name2: 345,
+      };
+      const state = reactive(t);
+      // 默认watchEffect会立即执行,会让用到的响应式数据,收集当前的effect,数据变化后,再次执行回调
+      watchEffect(()=>{ 
+       app.innerHTML = state.name
+
+      }
+      )
+     
+
+      btn.addEventListener("click", () => {
+        state.name++;
+        // state.name2++;
+
+      });
+    </script>
+  </body>
+</html>

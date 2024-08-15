@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <button id="btn">++</button>
+    <script type="module">
+   
+      // import { reactive, effect, computed ,watch} from "/node_modules/vue/dist/vue.esm-browser.js";
+      import { reactive, effect, computed ,watch}  from "./reactivity.esm.js";
+
+
+      let timer = 5000;
+      function getData(r){
+        return new Promise((resolve)=>{
+
+          setTimeout(() => {
+
+            resolve(r)
+          }, timer -=1000);
+        })
+      }
+      const t = {
+        name: 123,
+        name2: 345,
+      };
+      const state = reactive(t);
+      let arr = []
+      //  解决竞态问题 , vue2中的写法,做一个flag,使用闭包,清空
+      // watch(()=>state.name,async (newValue,oldValue)=>{ // 对象是引用地址,无法区分新的老的
+      //   let flag = true
+      //   while(arr.length>0){
+      //     let cb = arr.shift()
+      //     cb()
+      //   }
+      //   arr.push(()=>{
+      //     flag = false;
+      //   })
+
+      //   if(flag){
+      //     let r = await getData(newValue)
+
+      //     if(flag){
+      //       app.innerHTML = r
+      //     } 
+      //   }
+      
+
+      // },  { immediate: true }
+      // )
+
+
+      watch(()=>state.name,async(newValue,oldValue,onCleanup)=>{
+        let flag = true
+        onCleanup(()=>{
+          flag=false
+        })
+        if(flag){
+          let r = await getData(newValue)
+          if(flag){
+            app.innerHTML = r
+          } 
+        }
+
+      }, { immediate: true })
+     
+
+      btn.addEventListener("click", () => {
+        state.name++;
+        // state.name2++;
+
+      });
+    </script>
+  </body>
+</html>
