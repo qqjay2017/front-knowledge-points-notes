@@ -90,3 +90,26 @@ export function toRefs(object){
     }
     return ret
 }
+
+export function proxyRefs(objectWithRef){
+    return new Proxy(objectWithRef,{
+        get(target,key,receiver){
+            const v = Reflect.get(target,key,receiver)
+            if(v['__v_isRef']){
+                return v.value
+            }
+            return v
+        },
+        set(target,key,newValue,receiver){
+            const oldValue = target[key]
+            if(oldValue['__v_isRef']){
+                 oldValue.value = newValue
+                 return true
+            }
+            let v = Reflect.set(target,key,newValue,receiver)
+            return v;
+
+        }
+    })
+
+}
