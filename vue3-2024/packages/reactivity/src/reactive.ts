@@ -6,6 +6,11 @@ export const enum ReactiveFlags {
 }
 
 
+export function isReactive(target){
+    return !!( target && target[ReactiveFlags.IS_REACTIVE])
+}
+
+
 
 const reactiveMap = new WeakMap();
 

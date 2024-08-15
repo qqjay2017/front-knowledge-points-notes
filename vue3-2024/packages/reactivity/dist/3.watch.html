@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <button id="btn">++</button>
+    <script type="module">
+   
+      // import { reactive, effect, computed ,watch} from "/node_modules/vue/dist/vue.esm-browser.js";
+      import { reactive, effect, computed ,watch}  from "./reactivity.esm.js";
+      const t = {
+        name: 123,
+        name2: 345,
+      };
+      const state = reactive(t);
+      //  常见的两种,直接一个对象,和一个函数返回要监控的值
+      watch(state,(newValue,oldValue)=>{ // 对象是引用地址,无法区分新的老的
+        console.log(newValue,oldValue,"newValue,oldValue")
+
+      },  { immediate: true }
+      )
+      // watch(()=>state.name,(newValue,oldValue)=>{ // 对象是引用地址,无法区分新的老的
+      //   console.log(newValue,oldValue,"newValue,oldValue name")
+
+      // })
+
+      // watch(state.name,(newValue,oldValue)=>{ // 对象是引用地址,无法区分新的老的
+      //   console.log(newValue,oldValue,"newValue,oldValue name222")
+
+      // })
+
+      btn.addEventListener("click", () => {
+        state.name++;
+        // state.name2++;
+
+      });
+    </script>
+  </body>
+</html>

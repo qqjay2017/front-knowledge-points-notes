@@ -126,6 +126,9 @@ var ReactiveFlags = /* @__PURE__ */ ((ReactiveFlags2) => {
   ReactiveFlags2["IS_REACTIVE"] = "__v_isReactive";
   return ReactiveFlags2;
 })(ReactiveFlags || {});
+function isReactive(target) {
+  return !!(target && target["__v_isReactive" /* IS_REACTIVE */]);
+}
 var reactiveMap = /* @__PURE__ */ new WeakMap();
 function reactive(target) {
   if (!isObject(target)) {
@@ -193,16 +196,54 @@ function computed(getterOroptions) {
   const computedRefImpl = new ComputedRefImpl(getter, setter);
   return computedRefImpl;
 }
+
+// packages/reactivity/src/watch.ts
+function traverse(source, s = /* @__PURE__ */ new Set()) {
+  if (!isObject(source)) {
+    return source;
+  }
+  if (s.has(source)) {
+    return source;
+  }
+  s.add(source);
+  for (let key in source) {
+    traverse(source[key], s);
+  }
+  return source;
+}
+function watch(source, cb, options = {}) {
+  let getter;
+  if (isReactive(source)) {
+    getter = () => traverse(source);
+  } else if (isFunction(source)) {
+    getter = source;
+  } else {
+    getter = () => source;
+  }
+  const job = () => {
+    console.log("job ok");
+    let newValue = effect2.run();
+    cb && cb(newValue, oldValue);
+    oldValue = newValue;
+  };
+  const effect2 = new ReactiveEffect(getter, job);
+  if (options && options.immediate) {
+    return job();
+  }
+  let oldValue = effect2.run();
+}
 export {
   ReactiveEffect,
   ReactiveFlags,
   activeEffect,
   computed,
   effect,
+  isReactive,
   reactive,
   track,
   trackEffect,
   trigger,
-  triggerEffect
+  triggerEffect,
+  watch
 };
 //# sourceMappingURL=reactivity.esm.js.map
