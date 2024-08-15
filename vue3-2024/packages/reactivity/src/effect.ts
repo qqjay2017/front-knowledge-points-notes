@@ -78,6 +78,9 @@ export function track(target, key) {
 }
 
 export function trackEffect(dep) {
+  if(!dep){
+    return 
+  }
   let shouldTrack = !dep.has(activeEffect);
 
   if (shouldTrack) {
@@ -90,6 +93,9 @@ export function trackEffect(dep) {
 }
 
 export function triggerEffect(dep) {
+  if(!dep){
+    return 
+  }
   const effects = [...dep];
   effects.forEach((effect) => {
     // 避免死循环,重新执行effct时候,会将当前的effect放在全局上

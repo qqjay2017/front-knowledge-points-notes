@@ -9,6 +9,6 @@ import { doWatch } from "./watch"
  * @param effect 
  */
 
-export function watchEffect(effect){
-    doWatch(effect,null,{})
+export function watchEffect(effect,options:any={}){
+    doWatch(effect,null,options)
 }

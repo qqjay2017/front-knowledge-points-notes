@@ -61,6 +61,9 @@ function track(target, key) {
   trackEffect(dep);
 }
 function trackEffect(dep) {
+  if (!dep) {
+    return;
+  }
   let shouldTrack = !dep.has(activeEffect);
   if (shouldTrack) {
     dep.add(activeEffect);
@@ -68,6 +71,9 @@ function trackEffect(dep) {
   }
 }
 function triggerEffect(dep) {
+  if (!dep) {
+    return;
+  }
   const effects = [...dep];
   effects.forEach((effect2) => {
     if (activeEffect !== effect2) {
@@ -248,8 +254,39 @@ function watch(source, cb, options = {}) {
 }
 
 // packages/reactivity/src/watchEffect.ts
-function watchEffect(effect2) {
-  doWatch(effect2, null, {});
+function watchEffect(effect2, options = {}) {
+  doWatch(effect2, null, options);
+}
+
+// packages/reactivity/src/ref.ts
+function toReactive(value) {
+  if (isObject(value)) {
+    return reactive(value);
+  }
+  return value;
+}
+var RefImpl = class {
+  constructor(rawValue) {
+    this.__v_isRef = true;
+    this._rawValue = rawValue;
+    this._value = toReactive(rawValue);
+  }
+  get value() {
+    if (activeEffect) {
+      trackEffect(this.dep || (this.dep = /* @__PURE__ */ new Set()));
+    }
+    return this._value;
+  }
+  set value(newValue) {
+    if (newValue !== this._rawValue) {
+      this._value = toReactive(newValue);
+      this._rawValue = newValue;
+      triggerEffect(this.dep);
+    }
+  }
+};
+function ref(target) {
+  return new RefImpl(target);
 }
 export {
   ReactiveEffect,
@@ -260,6 +297,7 @@ export {
   effect,
   isReactive,
   reactive,
+  ref,
   track,
   trackEffect,
   trigger,
