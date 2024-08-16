@@ -1,3 +1,40 @@
+// packages/reactivity/src/effectScope.ts
+var activeEffectScope;
+var EffectScope = class {
+  constructor() {
+    this.active = true;
+    this.effects = [];
+  }
+  run(fn) {
+    if (this.active) {
+      try {
+        this.parent = activeEffectScope;
+        activeEffectScope = this;
+        return fn();
+      } finally {
+        activeEffectScope = this.parent;
+        this.parent = void 0;
+      }
+    }
+  }
+  stop() {
+    if (this.active) {
+      for (let i = 0; i < this.effects.length; i++) {
+        this.effects[i].stop();
+      }
+      this.active = false;
+    }
+  }
+};
+function recordEffectScope(effect2) {
+  if (effect2 && activeEffectScope && activeEffectScope.active) {
+    activeEffectScope.effects.push(effect2);
+  }
+}
+function effectScope() {
+  return new EffectScope();
+}
+
 // packages/reactivity/src/effect.ts
 var activeEffect;
 function cleanupEffect(effect2) {
@@ -16,6 +53,7 @@ var ReactiveEffect = class {
     // 是否激活
     this.active = true;
     this.parent = void 0;
+    recordEffectScope(this);
   }
   run() {
     if (!this.active) {
@@ -337,12 +375,15 @@ export {
   ReactiveEffect,
   ReactiveFlags,
   activeEffect,
+  activeEffectScope,
   computed,
   doWatch,
   effect,
+  effectScope,
   isReactive,
   proxyRefs,
   reactive,
+  recordEffectScope,
   ref,
   toRef,
   toRefs,

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="module">
+    //   import {
+    //     reactive,
+    //     effectScope,
+    //     effect
+    //   } from "/node_modules/vue/dist/vue.esm-browser.js";
+    import {  reactive,
+       effectScope,
+      effect } from "./reactivity.esm.js";
+
+      const scope = effectScope();
+
+      scope.run(()=>{
+        const state = reactive({ age: 30 });
+        effect(() => {
+          console.log(state.age, "state");
+        });
+        setTimeout(() => {
+            state.age+=1;
+        }, 1000);
+      });
+      scope.run(()=>{
+        const state = reactive({ age: 310 });
+        effect(() => {
+          console.log(state.age, "state");
+        });
+        setTimeout(() => {
+            state.age+=1;
+        }, 1000);
+      });
+    //   scope.stop()
+    </script>
+  </body>
+</html>

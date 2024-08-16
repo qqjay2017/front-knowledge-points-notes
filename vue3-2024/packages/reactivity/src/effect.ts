@@ -1,3 +1,5 @@
+import { recordEffectScope } from "./effectScope";
+
 export let activeEffect; // 当前的effect
 
 /**
@@ -21,7 +23,9 @@ export class ReactiveEffect {
   // 是否激活
   public active = true;
   public parent = undefined;
-  constructor(public fn, private scheduler?:Function) {}
+  constructor(public fn, private scheduler?:Function) {
+    recordEffectScope(this)
+  }
   run() {
     if (!this.active) {
       // 未激活,直接执行
