@@ -141,12 +141,7 @@ z-index:
 - 必须带有content:""属性，否则不生效
 - content:""只能用于伪元素
 
-### 10.如何生成bfc---(脱离文档流)
-* 消除bfc的4种方法
-> 1.position:absolute|fixed;
-> 2.display:inline-block|table-cell|table-caption
-> 3.float:left/right;
-> 4.overflow:hidden;
+
 
 
 ### 11.nav注意事项------三件套

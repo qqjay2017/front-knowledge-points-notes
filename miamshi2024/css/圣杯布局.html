@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .content {
+            padding-left: 150px;
+            padding-right: 200px;
+        }
+        .content .column {
+            float: left;
+        }
+        .middle {
+            width: 100%;
+            background-color: blue;
+        }
+        .left {
+            position: relative;
+            left: -150px;
+            width: 150px;
+            margin-left: -100%;
+            background-color: red;
+        }
+        .right {
+            width: 200px;
+            margin-right: -100%;
+            background-color: aqua;
+        }
+
+        .footer {
+
+        }
+        
+        .clearfix:after {
+            content: '';
+            display: table;
+            clear: both;
+        }
+
+    </style>
+</head>
+<body>
+    <header>header</header>
+    <div class="content clearfix">
+        <div class="middle column">中间的</div>
+        <div class="left column">left</div>
+        <div class="right column">right</div>
+    </div>
+    <footer class="footer">footer</footer>
+</body>
+</html>
