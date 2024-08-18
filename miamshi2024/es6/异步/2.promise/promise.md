@@ -22,6 +22,10 @@ rejected状态,会触发后续的catch回调函数
 1. catch正常返回resolved,里面有报错则返回rejected
 
 
+
+
+
+
 ### 题目
 
 1. 第一题

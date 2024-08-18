@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script type="module">
+        async function async1(){
+            console.log('async1 start');
+            await async2();
+            // await 是同步的，但是await后面的代码是异步的，都可以看作是callback里的内容
+            console.log('async1 end');
+        }
+        async function async2(){
+            console.log('async2');
+        }
+        console.log('script start');
+        async1();
+        console.log('script end');
+
+
+        /**
+         * 输出结果
+         * script start
+         * async1 start
+         * async2
+         * script end
+         * async1 end
+         * 
+         */
+    </script>
+</body>
+</html>
